@@ -1,3 +1,18 @@
+# OWASP Web Security Testing Guide - Traducción completa al Español
+
+Esta es una traducción comunitaria completa al español (neutro, profesional) de la versión latest del OWASP Web Security Testing Guide (WSTG).
+
+- Basada en la versión oficial: https://github.com/OWASP/wstg
+- Todos los documentos en `/document/` traducidos al español.
+- Terminología técnica estándar en español de ciberseguridad.
+
+¡Bienvenidas mejoras y sugerencias! Abre issues o PRs.
+
+Mantenedor: @frangelbarrera
+
+Si usas esta traducción en reports, conferencias o cursos, ¡menciónanos!
+
+
 # Guía de Pruebas de Seguridad Web de OWASP
 
 [![Contribuciones Bienvenidas](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/OWASP/wstg/issues)
