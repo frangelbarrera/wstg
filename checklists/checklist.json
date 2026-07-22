@@ -180,31 +180,30 @@
           ]
         },
         {
-          "name": "Test for Subdomain Takeover",
+          "name": "Probar Subdomain Takeover",
           "id": "WSTG-CONF-10",
           "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/02-Configuration_and_Deployment_Management_Testing/10-Test_for_Subdomain_Takeover",
           "objectives": [
-            "Enumerate all possible domains (previous and current).",
-            "Identify any forgotten or misconfigured domains."
+            ""
           ],
           "cre_ids": [
             "336-512"
           ]
         },
         {
-          "name": "Test Cloud Storage",
+          "name": "Probar Almacenamiento en la Nube",
           "id": "WSTG-CONF-11",
           "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/02-Configuration_and_Deployment_Management_Testing/11-Test_Cloud_Storage",
           "objectives": [
-            "Assess that the access control configuration for the storage services is properly in place."
+            ""
           ]
         },
         {
-          "name": "Testing for Content Security Policy",
+          "name": "Pruebas de Content Security Policy",
           "id": "WSTG-CONF-12",
           "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/02-Configuration_and_Deployment_Management_Testing/12-Test_for_Content_Security_Policy",
           "objectives": [
-            "Review the Content-Security-Policy header or meta element to identify misconfigurations."
+            ""
           ]
         },
         {

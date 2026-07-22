@@ -16,7 +16,7 @@ En esta carpeta se encuentra un archivo de Excel que proporciona las siguientes 
 
 ## Hash del Archivo Excel
 
-SHA-256: 9fb729ab1d2bbb665a7a582ca330008350f5f7de62430c2bab4a05b21df26099
+SHA-256: 162a330d4e81d5e59564fba27611fc2774be4a0b0f3b37e37c111574048b45c1
 
 ## Plantilla de Google Sheets
 
