@@ -1,152 +1,152 @@
-# Testing for Account Enumeration and Guessable User Account
+# Pruebas de Enumeración de Cuentas y Cuenta de Usuario Adivinable
 
 |ID          |
 |------------|
 |WSTG-IDNT-04|
 
-## Summary
+## Resumen
 
-The scope of this test is to verify if it is possible to collect a set of valid usernames by interacting with the authentication mechanism of the application. This test will be useful for brute force testing, in which the tester verifies if, given a valid username, it is possible to find the corresponding password.
+El alcance de esta prueba es verificar si es posible recolectar un conjunto de nombres de usuario válidos interactuando con el mecanismo de autenticación de la aplicación. Esta prueba será útil para pruebas de fuerza bruta, en las cuales el tester verifica si, dado un nombre de usuario válido, es posible encontrar la contraseña correspondiente.
 
-Often, web applications reveal when a username exists on system, either as a consequence of mis-configuration or as a design decision. For example, sometimes, when we submit wrong credentials, we receive a message that states that either the username is present on the system or the provided password is wrong. The information obtained can be used by an attacker to gain a list of users on system. This information can be used to attack the web application, for example, through a brute force or default username and password attack.
+A menudo, las aplicaciones web revelan cuando un nombre de usuario existe en el sistema, ya sea como consecuencia de mala configuración o como una decisión de diseño. Por ejemplo, a veces, cuando enviamos credenciales incorrectas, recibimos un mensaje que establece que el nombre de usuario está presente en el sistema o que la contraseña proporcionada es incorrecta. La información obtenida puede ser usada por un atacante para ganar una lista de usuarios en el sistema. Esta información puede usarse para atacar la aplicación web, por ejemplo, a través de un ataque de fuerza bruta o de nombre de usuario y contraseña por defecto.
 
-The tester should interact with the authentication mechanism of the application to understand if sending particular requests causes the application to answer in different manners. This issue exists because the information released from web application or web server when the user provides a valid username is different than when they use an invalid one.
+El tester debería interactuar con el mecanismo de autenticación de la aplicación para entender si el envío de solicitudes particulares causa que la aplicación responda de diferentes maneras. Este problema existe porque la información liberada desde la aplicación web o servidor web cuando el usuario proporciona un nombre de usuario válido es diferente a cuando usan uno inválido.
 
-In some cases, a message is received that reveals if the provided credentials are wrong because an invalid username or an invalid password was used. Sometimes, testers can enumerate the existing users by sending a username and an empty password.
+En algunos casos, se recibe un mensaje que revela si las credenciales proporcionadas son incorrectas porque se usó un nombre de usuario inválido o una contraseña inválida. A veces, los testers pueden enumerar los usuarios existentes enviando un nombre de usuario y una contraseña vacía.
 
-> Note: Some applications do not consider usernames sensitive, and may provide functionality that lets you directly view or list usernames. Ensure that you understand the security requirements of the application before reporting issues around username enumeration.
+> Nota: Algunas aplicaciones no consideran los nombres de usuario sensibles, y podrían proporcionar funcionalidad que permite ver o listar directamente los nombres de usuario. Asegurarse de entender los requisitos de seguridad de la aplicación antes de reportar problemas alrededor de enumeración de nombre de usuario.
 
-## Test Objectives
+## Objetivos de Prueba
 
-- Review processes that pertain to user identification (*e.g.* registration, login, etc.).
-- Enumerate users where possible through response analysis.
+- Revisar procesos que pertenezcan a identificación de usuario (*por ejemplo* registro, login, etc.).
+- Enumerar usuarios donde sea posible a través de análisis de respuesta.
 
-## How to Test
+## Cómo Probar
 
-In black-box testing, the tester knows nothing about the specific application, username, application logic, error messages on log in page, or password recovery facilities. If the application is vulnerable, the tester receives a response message that reveals, directly or indirectly, some information useful for enumerating users.
+En pruebas de caja negra, el tester no sabe nada sobre la aplicación específica, nombre de usuario, lógica de aplicación, mensajes de error en la página de login, o facilidades de recuperación de contraseña. Si la aplicación es vulnerable, el tester recibe un mensaje de respuesta que revela, directa o indirectamente, alguna información útil para enumerar usuarios.
 
-### HTTP Response Message
+### Mensaje de Respuesta HTTP
 
-#### Testing for Valid Credentials
+#### Probar Credenciales Válidas
 
-Record the server answer when you submit a valid user ID and valid password.
+Registrar la respuesta del servidor cuando se envía un ID de usuario válido y contraseña válida.
 
-> Using a web proxy, notice the information retrieved from this successful authentication (HTTP 200 Response, length of the response).
+> Usando un proxy web, notar la información recuperada de esta autenticación exitosa (Respuesta HTTP 200, longitud de la respuesta).
 
-#### Testing for Valid User with Wrong Password
+#### Probar Usuario Válido con Contraseña Incorrecta
 
-Now, the tester should try to insert a valid user ID and a wrong password and record the error message generated by the application.
+Ahora, el tester debería intentar insertar un ID de usuario válido y una contraseña incorrecta y registrar el mensaje de error generado por la aplicación.
 
-> The browser should display a message similar to the following one:
+> El navegador debería mostrar un mensaje similar al siguiente:
 >
 > ![Authentication Failed](images/AuthenticationFailed.png)\
-> *Figure 4.3.4-1: Authentication Failed*
+> *Figura 4.3.4-1: Authentication Failed*
 >
-> Unlike any message that reveals the existence of the user like the following:
+> A diferencia de cualquier mensaje que revele la existencia del usuario como el siguiente:
 >
 > `Login for User foo: invalid password`
 >
-> Using a web proxy, notice the information retrieved from this unsuccessful authentication attempt (HTTP 200 Response, length of the response).
+> Usando un proxy web, notar la información recuperada de este intento de autenticación no exitoso (Respuesta HTTP 200, longitud de la respuesta).
 
-#### Testing for a Nonexistent Username
+#### Probar un Nombre de Usuario Inexistente
 
-Now, the tester should try to insert an invalid user ID and a wrong password and record the server answer (the tester should be confident that the username is not valid in the application). Record the error message and the server answer.
+Ahora, el tester debería intentar insertar un ID de usuario inválido y una contraseña incorrecta y registrar la respuesta del servidor (el tester debería estar confiado de que el nombre de usuario no es válido en la aplicación). Registrar el mensaje de error y la respuesta del servidor.
 
-> If the tester enters a nonexistent user ID, they can receive a message similar to:
+> Si el tester ingresa un ID de usuario no existente, podría recibir un mensaje similar a:
 >
 > ![This User is Not Active](images/Userisnotactive.png)\
-> *Figure 4.3.4-3: This User is Not Active*
+> *Figura 4.3.4-3: This User is Not Active*
 >
-> or a message like the following one:
+> o un mensaje como el siguiente:
 >
-> `Login failed for User foo: invalid Account`
+> `Login failed for User foo: invalid Account`
 >
-> Generally the application should respond with the same error message and length to the different incorrect requests. If the responses are not the same, the tester should investigate and find out the key that creates a difference between the two responses. For example:
+> Generalmente la aplicación debería responder con el mismo mensaje de error y longitud a las diferentes solicitudes incorrectas. Si las respuestas no son las mismas, el tester debería investigar y averiguar la clave que crea una diferencia entre las dos respuestas. Por ejemplo:
 >
-> 1. Client request: Valid user/wrong password
-> 2. Server response: The password is not correct
-> 3. Client request: Wrong user/wrong password
-> 4. Server response: User not recognized
+> 1. Solicitud del cliente: Usuario válido/contraseña incorrecta
+> 2. Respuesta del servidor: La contraseña no es correcta
+> 3. Solicitud del cliente: Usuario incorrecto/contraseña incorrecta
+> 4. Respuesta del servidor: Usuario no reconocido
 >
-> The above responses let the client understand that for the first request they have a valid username. So they can interact with the application requesting a set of possible user IDs and observing the answer.
+> Las respuestas anteriores permiten al cliente entender que para la primera solicitud tienen un nombre de usuario válido. Así que pueden interactuar con la aplicación solicitando un conjunto de posibles IDs de usuario y observando la respuesta.
 >
-> Looking at the second server response, the tester understand in the same way that they don't hold a valid username. So they can interact in the same manner and create a list of valid user ID looking at the server answers.
+> Mirando la segunda respuesta del servidor, el tester entiende de la misma manera que no tienen un nombre de usuario válido. Así que pueden interactuar de la misma manera y crear una lista de IDs de usuario válidos mirando las respuestas del servidor.
 
-### Other Ways to Enumerate Users
+### Otras Maneras de Enumerar Usuarios
 
-Testers can enumerate users in several ways, such as:
+Los testers pueden enumerar usuarios de varias maneras, tales como:
 
-#### Analyzing the Error Code Received on Login Pages
+#### Analizar el Código de Error Recibido en Páginas de Login
 
-Some web application release a specific error code or message that we can analyze.
+Algunas aplicaciones web liberan un código de error o mensaje específico que podemos analizar.
 
-#### Analyzing URLs and URL Redirections
+#### Analizar URLs y Redirecciones de URL
 
-For example:
+Por ejemplo:
 
 - `https://www.foo.com/err.jsp?User=baduser&Error=0`
 - `https://www.foo.com/err.jsp?User=gooduser&Error=2`
 
-As is seen above, when a tester provides a user ID and password to the web application, they see a message indication that an error has occurred in the URL. In the first case they have provided a bad user ID and bad password. In the second, a good user ID and a bad password, so they can identify a valid user ID.
+Como se ve arriba, cuando un tester proporciona un ID de usuario y contraseña a la aplicación web, ven un mensaje de indicación de que ha ocurrido un error en la URL. En el primer caso han proporcionado un ID de usuario malo y contraseña mala. En el segundo, un ID de usuario bueno y una contraseña mala, así que pueden identificar un ID de usuario válido.
 
 #### URI Probing
 
-Sometimes a web server responds differently if it receives a request for an existing directory or not. For instance in some portals every user is associated with a directory. If testers try to access an existing directory they could receive a web server error.
+A veces un servidor web responde de manera diferente si recibe una solicitud para un directorio existente o no. Por ejemplo en algunos portales cada usuario está asociado a un directorio. Si los testers intentan acceder a un directorio existente podrían recibir un error del servidor web.
 
-Some of the common errors received from web servers are:
+Algunos de los errores comunes recibidos de servidores web son:
 
-- 403 Forbidden error code
-- 404 Not found error code
+- Código de error 403 Forbidden
+- Código de error 404 Not found
 
-Example:
+Ejemplo:
 
-- `https://www.foo.com/account1` - we receive from web server: 403 Forbidden
-- `https://www.foo.com/account2` - we receive from web server: 404 file Not Found
+- `https://www.foo.com/account1` - recibimos del servidor web: 403 Forbidden
+- `https://www.foo.com/account2` - recibimos del servidor web: 404 file Not Found
 
-In the first case the user exists, but the tester cannot view the web page, in second case instead the user "account2" does not exist. By collecting this information testers can enumerate the users.
+En el primer caso el usuario existe, pero el tester no puede ver la página web, en el segundo caso en cambio el usuario "account2" no existe. Recolectando esta información los testers pueden enumerar los usuarios.
 
-#### Analyzing Web Page Titles
+#### Analizar Títulos de Páginas Web
 
-Testers can receive useful information on Title of web page, where they can obtain a specific error code or messages that reveal if the problems are with the username or password.
+Los testers pueden recibir información útil en el Título de la página web, donde pueden obtener un código de error o mensajes específicos que revelan si los problemas son con el nombre de usuario o contraseña.
 
-For instance, if a user cannot authenticate to an application and receives a web page whose title is similar to:
+Por ejemplo, si un usuario no puede autenticarse a una aplicación y recibe una página web cuyo título es similar a:
 
-- `Invalid user`
-- `Invalid authentication`
+- `Invalid user`
+- `Invalid authentication`
 
-#### Analyzing a Message Received from a Recovery Facility
+#### Analizar un Mensaje Recibido de una Facilidad de Recuperación
 
-When we use a recovery facility (i.e. a forgotten password function) a vulnerable application might return a message that reveals if a username exists or not.
+Cuando usamos una facilidad de recuperación (i.e. una función de contraseña olvidada) una aplicación vulnerable podría devolver un mensaje que revela si un nombre de usuario existe o no.
 
-For example, messages similar to the following:
+Por ejemplo, mensajes similares a los siguientes:
 
 - `Invalid username: email address is not valid or the specified user was not found.`
-- `Valid username: Your password has been successfully sent to the email address you registered with.`
+- `Valid username: Your password has been successfully sent to the email address you registered with.`
 
-#### Friendly 404 Error Message
+#### Mensaje de Error 404 Amigable
 
-When we request a user within the directory that does not exist, we don't always receive 404 error code. Instead, we may receive "200 OK" with an image, in this case we can assume that when we receive the specific image the user does not exist. This logic can be applied to other web server response; the trick is a good analysis of web server and web application messages.
+Cuando solicitamos un usuario dentro del directorio que no existe, no siempre recibimos código de error 404. En su lugar, podríamos recibir "200 OK" con una imagen, en este caso podemos asumir que cuando recibimos la imagen específica el usuario no existe. Esta lógica puede aplicarse a otra respuesta del servidor web; el truco es un buen análisis de mensajes del servidor web y aplicación web.
 
-#### Analyzing Response Times
+#### Analizar Tiempos de Respuesta
 
-As well as looking at the content of the responses, the time that the response takes should also be considered. Particularly where the request causes an interaction with an external service (such as sending a forgotten password email), this can add several hundred milliseconds to the response, which can be used to determine whether the requested user is valid.
+Así como mirar el contenido de las respuestas, el tiempo que toma la respuesta también debería considerarse. Particularmente donde la solicitud causa una interacción con un servicio externo (tal como enviar un correo electrónico de contraseña olvidada), esto puede añadir varios cientos de milisegundos a la respuesta, lo cual puede usarse para determinar si el usuario solicitado es válido.
 
-### Guessing Users
+### Adivinar Usuarios
 
-#### Predictable Username Structures
+#### Estructuras Predecibles de Nombre de Usuario
 
-In many organizations, usernames follow consistent patterns (e.g., first initial + last name such as jbloggs, or structured identifiers such as CN000100). If the naming convention can be identified, valid usernames can often be derived systematically.
+En muchas organizaciones, los nombres de usuario siguen patrones consistentes (por ejemplo, inicial del nombre + apellido tal como jbloggs, o identificadores estructurados tales como CN000100). Si la convención de nomenclatura puede identificarse, los nombres de usuario válidos a menudo pueden derivarse sistemáticamente.
 
-Testers should:
+Los testers deberían:
 
-- Identify whether usernames follow a predictable structure.
-- Attempt to generate additional usernames based on observed patterns.
-- Use username dictionaries derived from organizational data (e.g., staff names, email formats).
-- Observe application responses to determine whether generated usernames are valid.
+- Identificar si los nombres de usuario siguen una estructura predecible.
+- Intentar generar nombres de usuario adicionales basados en patrones observados.
+- Usar diccionarios de nombre de usuario derivados de datos organizacionales (por ejemplo, nombres de personal, formatos de email).
+- Observar respuestas de la aplicación para determinar si los nombres de usuario generados son válidos.
 
-Predictable username structures significantly reduce the effort required to enumerate valid accounts and can facilitate further attacks such as brute force attempts.
+Las estructuras predecibles de nombre de usuario reducen significativamente el esfuerzo requerido para enumerar cuentas válidas y pueden facilitar ataques adicionales tales como intentos de fuerza bruta.
 
-In some cases the user IDs are created with specific policies of administrator or company. For example we can view a user with a user ID created in sequential order:
+En algunos casos los IDs de usuario se crean con políticas específicas de administrador o compañía. Por ejemplo podemos ver un usuario con un ID de usuario creado en orden secuencial:
 
 ```text
 CN000100
@@ -154,58 +154,58 @@ CN000101
 ...
 ```
 
-Sometimes the usernames are created with a REALM alias and then a sequential numbers:
+A veces los nombres de usuario se crean con un alias REALM y luego números secuenciales:
 
-- R1001 – user 001 for REALM1
-- R2001 – user 001 for REALM2
+- R1001 – usuario 001 para REALM1
+- R2001 – usuario 001 para REALM2
 
-In the above sample we can create simple shell scripts that compose user IDs and submit a request with tool like wget to automate a web query to discern valid user IDs. To create a script we can also use Perl and curl.
+En el ejemplo anterior podemos crear scripts shell simples que componen IDs de usuario y envían una solicitud con herramienta como wget para automatizar una consulta web para discernir IDs de usuario válidos. Para crear un script también podemos usar Perl y curl.
 
-Other possibilities are: - user IDs associated with credit card numbers, or in general numbers with a pattern. - user IDs associated with real names, e.g. if Freddie Mercury has a user ID of "fmercury", then you might guess Roger Taylor to have the user ID of "rtaylor".
+Otras posibilidades son: - IDs de usuario asociados con números de tarjeta de crédito, o en general números con un patrón. - IDs de usuario asociados con nombres reales, por ejemplo, si Freddie Mercury tiene un ID de usuario de "fmercury", entonces podrías adivinar que Roger Taylor tiene el ID de usuario de "rtaylor".
 
-Again, we can guess a username from the information received from an LDAP query or from Google information gathering, for example, from a specific domain. Google can help to find domain users through specific queries or through a simple shell script or tool.
+Nuevamente, podemos adivinar un nombre de usuario de la información recibida de una consulta LDAP o de recolección de información de Google, por ejemplo, de un dominio específico. Google puede ayudar a encontrar usuarios de dominio a través de consultas específicas o a través de un script shell simple o herramienta.
 
-> By enumerating user accounts, you risk locking out accounts after a predefined number of failed probes (based on application policy). Also, sometimes, your IP address can be banned by dynamic rules on the application firewall or Intrusion Prevention System.
+> Al enumerar cuentas de usuario, se arriesga a bloquear cuentas después de un número predefinido de sondas fallidas (basado en la política de aplicación). Además, a veces, la dirección IP puede ser baneada por reglas dinámicas en el firewall de aplicación o Sistema de Prevención de Intrusos.
 
-### Testing Staff Impersonation
+### Probar Suplantación de Personal
 
-Ensure that unregistered users are unable to select reserved usernames (e.g., admin, administrator, moderator) during the registration process. Additionally, verify that users cannot edit their current username to one of these reserved usernames on the profile editing page.
+Asegurar que los usuarios no registrados no puedan seleccionar nombres de usuario reservados (por ejemplo, admin, administrator, moderator) durante el proceso de registro. Adicionalmente, verificar que los usuarios no puedan editar su nombre de usuario actual a uno de estos nombres de usuario reservados en la página de edición de perfil.
 
-If the web application has features that allow a user to access the web application's registration and profile editing functionality, the interactions to test include the following:
+Si la aplicación web tiene características que permiten a un usuario acceder a la funcionalidad de registro y edición de perfil de la aplicación web, las interacciones a probar incluyen las siguientes:
 
-- Registration process:
-    - Access the registration page as an unregistered user and fill in the registration form, entering one of the reserved usernames (e.g., admin, administrator, moderator), submit the registration form, and then verify the response.
-    - The registration process should reject the form submission and display an error message indicating that the selected username is not available for registration.
-- Profile editing page:
-    - Log into the web application using valid credentials and navigate to the profile editing page. Attempt to change the current username to one of the reserved usernames (e.g., admin, administrator, moderator) and save the changes to verify the behavior.
-    - The profile editing process should reject the username change request and display an error message indicating that the selected username is not available.
-- Test for variants and similarities:
-    - Repeat the above steps for different variations of the reserved usernames (e.g., Admin, ADMIN, Administrator) and perform tests with different combinations of uppercase and lowercase letters to ensure case insensitivity is handled correctly.
-    - The web application should treat these variants as identical to the reserved usernames, rejecting their selection or modification.
+- Proceso de registro:
+    - Acceder a la página de registro como usuario no registrado y llenar el formulario de registro, ingresando uno de los nombres de usuario reservados (por ejemplo, admin, administrator, moderator), enviar el formulario de registro, y luego verificar la respuesta.
+    - El proceso de registro debería rechazar el envío del formulario y mostrar un mensaje de error indicando que el nombre de usuario seleccionado no está disponible para registro.
+- Página de edición de perfil:
+    - Iniciar sesión en la aplicación web usando credenciales válidas y navegar a la página de edición de perfil. Intentar cambiar el nombre de usuario actual a uno de los nombres de usuario reservados (por ejemplo, admin, administrator, moderator) y guardar los cambios para verificar el comportamiento.
+    - El proceso de edición de perfil debería rechazar la solicitud de cambio de nombre de usuario y mostrar un mensaje de error indicando que el nombre de usuario seleccionado no está disponible.
+- Probar variantes y similitudes:
+    - Repetir los pasos anteriores para diferentes variaciones de los nombres de usuario reservados (por ejemplo, Admin, ADMIN, Administrator) y realizar pruebas con diferentes combinaciones de letras mayúsculas y minúsculas para asegurar que la insensibilidad a mayúsculas se maneje correctamente.
+    - La aplicación web debería tratar estas variantes como idénticas a los nombres de usuario reservados, rechazando su selección o modificación.
 
-### Gray-Box Testing
+### Pruebas de Caja Gris
 
-#### Testing for Authentication Error Messages
+#### Probar Mensajes de Error de Autenticación
 
-Verify that the application answers in the same manner for every client request that produces a failed authentication. For this issue the black-box testing and gray-box testing have the same concept based on the analysis of messages or error codes received from web application.
+Verificar que la aplicación responda de la misma manera para cada solicitud del cliente que produce una autenticación fallida. Para este problema las pruebas de caja negra y caja gris tienen el mismo concepto basado en el análisis de mensajes o códigos de error recibidos de la aplicación web.
 
-> The application should answer in the same manner for every failed attempt of authentication.
+> La aplicación debería responder de la misma manera para cada intento fallido de autenticación.
 >
-> For Example: *Credentials submitted are not valid*
+> Por Ejemplo: *Credentials submitted are not valid*
 
-## Remediation
+## Remediación
 
-Ensure the application returns consistent generic error messages in response to invalid account name, password or other user credentials entered during the log in process.
+Asegurar que la aplicación devuelve mensajes de error genéricos consistentes en respuesta a nombre de cuenta, contraseña u otras credenciales de usuario inválidas ingresadas durante el proceso de login.
 
-Ensure default system accounts and test accounts are deleted prior to releasing the system into production (or exposing it to an untrusted network).
+Asegurar que las cuentas de sistema por defecto y cuentas de prueba se eliminen antes de liberar el sistema a producción (o exponerlo a una red no confiable).
 
-## Tools
+## Herramientas
 
 - [Zed Attack Proxy (ZAP)](https://www.zaproxy.org)
 - [curl](https://curl.haxx.se/)
 - [PERL](https://www.perl.org)
 
-## References
+## Referencias
 
 - [Username Enumeration Vulnerabilities](https://www.gnucitizen.org/blog/username-enumeration-vulnerabilities/)
 - [Prevent WordPress Username Enumeration](https://www.jinsonvarghese.com/prevent-wordpress-username-enumeration/)

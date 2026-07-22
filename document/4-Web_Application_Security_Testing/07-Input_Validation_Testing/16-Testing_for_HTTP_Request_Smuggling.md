@@ -1,42 +1,42 @@
-# Testing for HTTP Request Smuggling
+# Pruebas de HTTP Request Smuggling
 
 |ID          |
 |------------|
 |WSTG-INPV-16|
 
-## Summary
+## Resumen
 
-HTTP Request Smuggling is a class of vulnerabilities caused by inconsistencies in how HTTP requests are parsed by frontend and backend components. When intermediaries such as reverse proxies, load balancers, or API gateways interpret request boundaries differently from backend servers, attackers may inject or "smuggle" hidden requests that are processed out of sequence.
+HTTP Request Smuggling es una clase de vulnerabilidades causada por inconsistencias en cómo se analizan las solicitudes HTTP por componentes frontend y backend. Cuando intermediarios tales como reverse proxies, load balancers, o API gateways interpretan los límites de solicitud de manera diferente a los servidores backend, los atacantes podrían inyectar o "smugglear" solicitudes ocultas que se procesan fuera de secuencia.
 
-Modern infrastructures significantly expand the attack surface by introducing HTTP/2, protocol downgrades (HTTP/2 → HTTP/1.1), and cleartext upgrades (H2C), where request normalization and translation logic frequently diverges from RFC expectations.
+Las infraestructuras modernas expanden significativamente la superficie de ataque introduciendo HTTP/2, downgrades de protocolo (HTTP/2 → HTTP/1.1), y upgrades en texto claro (H2C), donde la lógica de normalización y traducción de solicitudes frecuentemente diverge de las expectativas RFC.
 
-Request smuggling exploits arise when two or more HTTP parsers disagree on where a request begins or ends. Historically, this discrepancy was most commonly observed in conflicting interpretations of the `Content-Length` (CL) and `Transfer-Encoding` (TE) headers.
+Las explotaciones de request smuggling surgen cuando dos o más parsers HTTP no se ponen de acuerdo sobre dónde comienza o termina una solicitud. Históricamente, esta discrepancia se observó más comúnmente en interpretaciones en conflicto de los encabezados `Content-Length` (CL) y `Transfer-Encoding` (TE).
 
-In modern architectures, additional desynchronization vectors emerge from:
+En arquitecturas modernas, vectores adicionales de desincronización emergen de:
 
-- HTTP/2 to HTTP/1.1 translation layers
-- Cleartext HTTP/2 (H2C) upgrade mechanisms
-- Header normalization mismatches
-- Reintroduced forbidden headers during protocol downgrade
-- Connection reuse across protocol boundaries
+- Capas de traducción HTTP/2 a HTTP/1.1
+- Mecanismos de upgrade Cleartext HTTP/2 (H2C)
+- Desajustes de normalización de encabezados
+- Reintroducción de encabezados prohibidos durante downgrade de protocolo
+- Reuso de conexión a través de límites de protocolo
 
-These behaviors can lead to persistent desynchronization, cache poisoning, credential hijacking, and access control bypass.
+Estos comportamientos pueden llevar a desincronización persistente, cache poisoning, hijacking de credenciales, y evasión de control de acceso.
 
-## Test Objectives
+## Objetivos de Prueba
 
-- Identify request boundary inconsistencies between frontend and backend components
-- Detect classic CL/TE desynchronization vulnerabilities
-- Evaluate protocol translation logic (HTTP/2 → HTTP/1.1)
-- Assess H2C upgrade handling and downgrade safety
-- Confirm backend request queue poisoning
+- Identificar inconsistencias de límite de solicitud entre componentes frontend y backend
+- Detectar vulnerabilidades clásicas de desincronización CL/TE
+- Evaluar lógica de traducción de protocolo (HTTP/2 → HTTP/1.1)
+- Evaluar manejo de upgrade H2C y seguridad de downgrade
+- Confirmar envenenamiento de cola de solicitudes del backend
 
-## How to Test
+## Cómo Probar
 
-### Black-Box Testing
+### Pruebas de Caja Negra
 
-#### Testing for CL.TE Desynchronization
+#### Probar Desincronización CL.TE
 
-In a CL.TE scenario, the frontend uses `Content-Length` to determine request size, while the backend honors `Transfer-Encoding`.
+En un escenario CL.TE, el frontend usa `Content-Length` para determinar el tamaño de la solicitud, mientras el backend honora `Transfer-Encoding`.
 
 ```http
 POST / HTTP/1.1
@@ -50,15 +50,15 @@ GET /404 HTTP/1.1
 Foo: x
 ```
 
-Expected Result:
+Resultado Esperado:
 
-- Backend stops parsing at the `0` chunk
-- Smuggled request remains buffered
-- Subsequent legitimate requests are corrupted or return unexpected responses (e.g., 404)
+- El backend deja de analizar en el chunk `0`
+- La solicitud smuggleada permanece bufferizada
+- Las solicitudes legítimas subsiguientes se corrompen o devuelven respuestas inesperadas (por ejemplo, 404)
 
-#### Testing for TE.CL Desynchronization
+#### Probar Desincronización TE.CL
 
-In a TE.CL scenario, the frontend processes chunked encoding correctly, but the backend relies on `Content-Length`.
+En un escenario TE.CL, el frontend procesa chunked encoding correctamente, pero el backend depende de `Content-Length`.
 
 ```http
 POST / HTTP/1.1
@@ -73,21 +73,21 @@ Content-Length: 0
 0
 ```
 
-Expected Result:
+Resultado Esperado:
 
-- Backend stops early
-- Remaining payload is interpreted as a new request
-- Unauthorized endpoint access or request poisoning may occur
+- El backend se detiene temprano
+- El payload restante se interpreta como una nueva solicitud
+- Podría ocurrir acceso no autorizado a endpoint o envenenamiento de solicitud
 
-#### Testing for TE.TE (Obfuscated Transfer-Encoding)
+#### Probar TE.TE (Transfer-Encoding Ofuscado)
 
-If both servers support `Transfer-Encoding`, header obfuscation may cause one parser to ignore it.
+Si ambos servidores soportan `Transfer-Encoding`, la ofuscación de encabezado podría causar que un parser lo ignore.
 
-Common techniques include:
+Las técnicas comunes incluyen:
 
-- Whitespace manipulation
-- Header duplication
-- Non-standard separators
+- Manipulación de espacios en blanco
+- Duplicación de encabezados
+- Separadores no estándar
 
 ```http
 POST / HTTP/1.1
@@ -102,47 +102,47 @@ GET /404 HTTP/1.1
 Foo: bar
 ```
 
-### Modern Attack Vectors
+### Vectores de Ataque Modernos
 
-#### HTTP/2 to HTTP/1.1 Desynchronization
+#### Desincronización HTTP/2 a HTTP/1.1
 
-In many deployments, clients communicate with edge servers using HTTP/2, while backend services still operate over HTTP/1.1. During protocol translation, intermediaries must reconstruct HTTP/1.1 requests from HTTP/2 frames.
+En muchos despliegues, los clientes se comunican con servidores edge usando HTTP/2, mientras los servicios backend aún operan sobre HTTP/1.1. Durante la traducción de protocolo, los intermediarios deben reconstruir solicitudes HTTP/1.1 desde frames HTTP/2.
 
-Common failure points include:
+Los puntos de falla comunes incluyen:
 
-- Incorrect reconstruction of `Content-Length`
-- Reintroduction of hop-by-hop headers
-- Multiple logical requests collapsed into a single backend request
+- Reconstrucción incorrecta de `Content-Length`
+- Reintroducción de encabezados hop-by-hop
+- Múltiples solicitudes lógicas colapsadas en una sola solicitud backend
 
-> Note: HTTP/2 downgrading is not inherently vulnerable by itself.  
-> Exploitation becomes possible when protocol translation reconstructs an HTTP/1.1 request that violates backend parsing assumptions, leading to request boundary desynchronization.
+> Nota: El downgrade HTTP/2 no es inherentemente vulnerable por sí mismo.
+> La explotación se vuelve posible cuando la traducción de protocolo reconstruye una solicitud HTTP/1.1 que viola las suposiciones de análisis del backend, llevando a desincronización de límite de solicitud.
 
-Testing Approach:
+Enfoque de Prueba:
 
-- Send multiple HTTP/2 DATA frames with conflicting length semantics
-- Observe backend behavior via timing discrepancies or response splitting
-- Monitor for request queue poisoning
+- Enviar múltiples frames DATA HTTP/2 con semántica de longitud en conflicto
+- Observar el comportamiento del backend vía discrepancias de tiempo o response splitting
+- Monitorear envenenamiento de cola de solicitudes
 
-##### Example: HTTP/2 Downgrade Smuggling via Request Reconstruction
+##### Ejemplo: Smuggling HTTP/2 Downgrade vía Reconstrucción de Solicitud
 
-In this scenario, the client communicates with the frontend over HTTP/2, while the backend only supports HTTP/1.1. The intermediary reconstructs an HTTP/1.1 request from multiple HTTP/2 DATA frames.
+En este escenario, el cliente se comunica con el frontend sobre HTTP/2, mientras el backend solo soporta HTTP/1.1. El intermediario reconstruye una solicitud HTTP/1.1 desde múltiples frames DATA HTTP/2.
 
-**HTTP/2 (Conceptual Representation):**
+**HTTP/2 (Representación Conceptual):**
 
-- DATA frame 1:
+- Frame DATA 1:
 
 ```http
 0\r\n\r\n
 ```
 
-- DATA frame 2:
+- Frame DATA 2:
 
 ```http
 GET /admin HTTP/1.1
 Host: internal
 ```
 
-**Reconstructed HTTP/1.1 Request (Backend View):**
+**Solicitud HTTP/1.1 Reconstruida (Vista del Backend):**
 
 ```http
 POST / HTTP/1.1
@@ -153,16 +153,16 @@ GET /admin HTTP/1.1
 Host: internal
 ```
 
-If the frontend treats the request as complete while the backend continues parsing buffered data, the second request may be processed out of sequence, resulting in request smuggling.
+Si el frontend trata la solicitud como completa mientras el backend continúa analizando datos bufferizados, la segunda solicitud podría procesarse fuera de secuencia, resultando en request smuggling.
 
-> Implicit Downgrades:
-> Even in the absence of an explicit `Upgrade: h2c` mechanism, many CDNs and reverse proxies silently downgrade HTTP/2 client connections to HTTP/1.1 when forwarding requests to backend services.  
-> These implicit downgrades expand the smuggling attack surface, especially when combined with connection reuse and insufficient request normalization.
+> Downgrades Implícitos:
+> Incluso en ausencia de un mecanismo explícito `Upgrade: h2c`, muchos CDNs y reverse proxies silenciosamente hacen downgrade de conexiones de cliente HTTP/2 a HTTP/1.1 al reenviar solicitudes a servicios backend.
+> Estos downgrades implícitos expanden la superficie de ataque de smuggling, especialmente cuando se combinan con reuso de conexión y normalización insuficiente de solicitudes.
 
-#### H2C Smuggling (Cleartext HTTP/2 Upgrade)
+#### Smuggling H2C (Upgrade Cleartext HTTP/2)
 
-H2C allows upgrading an HTTP/1.1 connection to HTTP/2 using the `Upgrade: h2c` mechanism.  
-Unlike protocol downgrades, H2C smuggling occurs during an in-place protocol transition, where frontend and backend components may temporarily disagree on the active parsing state of the same connection, potentially leaving residual bytes in the backend buffer.
+H2C permite upgrade de una conexión HTTP/1.1 a HTTP/2 usando el mecanismo `Upgrade: h2c`.
+A diferencia de los downgrades de protocolo, el smuggling H2C ocurre durante una transición de protocolo in-place, donde los componentes frontend y backend podrían temporalmente no estar de acuerdo sobre el estado activo de análisis de la misma conexión, potencialmente dejando bytes residuales en el buffer del backend.
 
 ```http
 POST / HTTP/1.1
@@ -177,44 +177,44 @@ GET /admin HTTP/1.1
 Host: internal
 ```
 
-Risk Factors:
+Factores de Riesgo:
 
-- Partial upgrade acceptance
-- Backend continues parsing as HTTP/1.1
-- Smuggled request processed post-upgrade
+- Aceptación parcial de upgrade
+- El backend continúa analizando como HTTP/1.1
+- La solicitud smuggleada se procesa post-upgrade
 
-#### Request Queue Poisoning via Protocol Downgrade
+#### Envenenamiento de Cola de Solicitudes vía Downgrade de Protocolo
 
-Some proxies downgrade HTTP/2 requests to HTTP/1.1 but fail to fully sanitize:
+Algunos proxies hacen downgrade de solicitudes HTTP/2 a HTTP/1.1 pero fallan en sanitizar completamente:
 
 - `Content-Length`
-- Duplicated headers
-- Invalid pseudo-header ordering
+- Encabezados duplicados
+- Ordenamiento inválido de pseudo-encabezados
 
-Attackers can exploit this to poison persistent backend connections, impacting multiple users.
+Los atacantes pueden explotar esto para envenenar conexiones backend persistentes, impactando a múltiples usuarios.
 
-### Indicators of Vulnerability
+### Indicadores de Vulnerabilidad
 
-- Inconsistent responses across identical requests
-- Unexpected 404 or 400 responses
-- Delayed or mismatched responses
-- Cross-user response leakage
+- Respuestas inconsistentes a través de solicitudes idénticas
+- Respuestas 404 o 400 inesperadas
+- Respuestas demoradas o desajustadas
+- Fuga de respuesta cross-user
 
-## Remediation
+## Remediación
 
-- Enforce strict RFC-compliant parsing
-- Normalize request handling across all intermediaries
-- Disable H2C where not required
-- Avoid protocol downgrades on untrusted connections
-- Terminate and revalidate backend connections upon parsing errors
+- Imponer análisis estricto que cumpla con RFC
+- Normalizar manejo de solicitudes a través de todos los intermediarios
+- Deshabilitar H2C donde no se requiera
+- Evitar downgrades de protocolo en conexiones no confiables
+- Terminar y revalidar conexiones backend ante errores de análisis
 
-## Tools
+## Herramientas
 
-- [HTTP Request Smuggler (Burp Suite Extension)](https://portswigger.net/bappstore/aaaa60ef945341e8a450217a54a11646)
-- [Smuggler (Python) by defparam](https://github.com/defparam/smuggler)
-- [h2csmuggler by Bishop Fox](https://github.com/BishopFox/h2csmuggler)
+- [HTTP Request Smuggler (Extensión de Burp Suite)](https://portswigger.net/bappstore/aaaa60ef945341e8a450217a54a11646)
+- [Smuggler (Python) por defparam](https://github.com/defparam/smuggler)
+- [h2csmuggler por Bishop Fox](https://github.com/BishopFox/h2csmuggler)
 
-## References
+## Referencias
 
 - [James Kettle, "HTTP Desync Attacks: Request Smuggling Reborn" (PortSwigger Research)](https://portswigger.net/research/http-desync-attacks-request-smuggling-reborn)
 - [James Kettle, "HTTP/2: The Sequel is Always Worse" (PortSwigger Research)](https://portswigger.net/research/http2)
