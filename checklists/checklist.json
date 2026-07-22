@@ -442,11 +442,11 @@
           ]
         },
         {
-          "name": "Testing for OAuth Weaknesses",
+          "name": "Pruebas de Debilidades de OAuth",
           "id": "WSTG-ATHZ-05",
           "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/05-Authorization_Testing/05-Testing_for_OAuth_Weaknesses",
           "objectives": [
-            "Determine if OAuth2 implementation is vulnerable or using a deprecated or custom implementation."
+            ""
           ]
         }
       ]
