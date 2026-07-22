@@ -28,14 +28,11 @@
           ]
         },
         {
-          "name": "Attack Surface Identification",
+          "name": "Identificación de Superficie de Ataque",
           "id": "WSTG-INFO-04",
           "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/01-Information_Gathering/04-Attack_Surface_Identification",
           "objectives": [
-            "Enumerate all web applications within scope.",
-            "Identify DNS names, domains, and virtual hosts associated with the target.",
-            "Discover additional domains and subdomains using passive and active DNS techniques.",
-            "Analyze digital certificates and Certificate Transparency logs for additional hostnames."
+            ""
           ]
         },
         {
@@ -215,13 +212,11 @@
           ]
         },
         {
-          "name": "Test Other HTTP Security Header Misconfigurations",
+          "name": "Probar Otras Mala Configuraciones de Encabezados de Seguridad HTTP",
           "id": "WSTG-CONF-14",
           "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/02-Configuration_and_Deployment_Management_Testing/14-Test_Other_HTTP_Security_Header_Misconfigurations",
           "objectives": [
-            "Identify improperly configured security headers.",
-            "Assess the impact of misconfigured security headers.",
-            "Validate the correct implementation of required security headers."
+            ""
           ]
         }
       ]
