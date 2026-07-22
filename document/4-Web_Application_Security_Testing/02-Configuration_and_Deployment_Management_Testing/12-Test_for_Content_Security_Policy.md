@@ -1,153 +1,153 @@
-# Testing for Content Security Policy
+# Pruebas de Content Security Policy
 
 |ID          |
 |------------|
 |WSTG-CONF-12|
 
-## Summary
+## Resumen
 
-Content Security Policy (CSP) is a declarative allow-list policy enforced through `Content-Security-Policy` response header or equivalent `<meta>` element. It allows developers to restrict the sources from which resources such as JavaScript, CSS, images, files etc. are loaded. CSP is an effective defense in depth technique to mitigate the risk of vulnerabilities such as Cross Site Scripting (XSS) and Clickjacking.
+Content Security Policy (CSP) es una política declarativa de lista de permitidos impuesta a través del encabezado de respuesta `Content-Security-Policy` o elemento `<meta>` equivalente. Permite a los desarrolladores restringir las fuentes desde las cuales se cargan recursos tales como JavaScript, CSS, imágenes, archivos, etc. CSP es una técnica efectiva de defensa en profundidad para mitigar el riesgo de vulnerabilidades tales como Cross Site Scripting (XSS) y Clickjacking.
 
-Content Security Policy supports directives which allow granular control to the flow of policies. (See [References](#references) for further details.)
+Content Security Policy soporta directivas que permiten control granular al flujo de políticas. (Ver [Referencias](#referencias) para más detalles.)
 
-## Test Objectives
+## Objetivos de Prueba
 
-- Review the Content-Security-Policy header or meta element to identify misconfigurations.
+- Revisar el encabezado Content-Security-Policy o elemento meta para identificar malas configuraciones.
 
-## How to Test
+## Cómo Probar
 
-Testing for Content Security Policy (CSP) weaknesses requires more than verifying the presence of the header. The tester should evaluate whether the policy meaningfully reduces the attack surface and is properly enforced.
+Probar las debilidades de Content Security Policy (CSP) requiere más que verificar la presencia del encabezado. El tester debería evaluar si la política reduce significativamente la superficie de ataque y se impone propiamente.
 
-### Identify and Confirm CSP Enforcement
+### Identificar y Confirmar la Imposición de CSP
 
-- Inspect HTTP responses for the presence of the `Content-Security-Policy` header.
-- Check for `Content-Security-Policy-Report-Only`. If only Report-Only is present, the policy is not enforced.
-- Verify whether CSP is delivered via HTTP header or `<meta>` tag (HTTP headers are preferred).
-- Consider that CSP delivered via `<meta>` tags does not support certain directives such as `frame-ancestors`, `report-uri`, `report-to`, or `sandbox`.
-- Confirm that the policy is consistently applied across sensitive endpoints.
+- Inspeccionar respuestas HTTP para la presencia del encabezado `Content-Security-Policy`.
+- Verificar `Content-Security-Policy-Report-Only`. Si solo está presente Report-Only, la política no se impone.
+- Verificar si CSP se entrega vía encabezado HTTP o etiqueta `<meta>` (se prefieren encabezados HTTP).
+- Considerar que CSP entregada vía etiquetas `<meta>` no soporta ciertas directivas tales como `frame-ancestors`, `report-uri`, `report-to`, o `sandbox`.
+- Confirmar que la política se aplica consistentemente a través de endpoints sensibles.
 
-### Review High-Risk Directives
+### Revisar Directivas de Alto Riesgo
 
-Inspect the policy for insecure or overly permissive directives:
+Inspeccionar la política en busca de directivas inseguras o demasiado permisivas:
 
-- `unsafe-inline` allows inline scripts or styles and significantly weakens XSS protections.
-- `unsafe-eval` permits dynamic code evaluation (`eval()`), increasing bypass risk.
-- `unsafe-hashes` may allow inline execution if hashes are predictable or improperly scoped.
-- Wildcard (`*`) sources may allow loading resources from any origin.
-    - Partial wildcards such as `https://*` or `*.cdn.com` should be carefully evaluated.
-    - Determine whether allowlisted domains host JSONP endpoints or user-controlled content.
-- Absence or misuse of `frame-ancestors` may expose the application to clickjacking.
-- Missing `object-src`, `base-uri`, or restrictive `default-src` directives may weaken policy effectiveness.
-- Review usage of `require-trusted-types-for` and `trusted-types`. In high-risk applications, absence of Trusted Types may leave DOM-based injection sinks exposed. If `trusted-types` policies are defined, ensure they are not overly permissive.
-- Check for duplicate directives or conflicting policy definitions that may result in unintended enforcement behavior.
+- `unsafe-inline` permite scripts o estilos inline y debilita significativamente las protecciones XSS.
+- `unsafe-eval` permite evaluación dinámica de código (`eval()`), aumentando el riesgo de evasión.
+- `unsafe-hashes` podría permitir ejecución inline si los hashes son predecibles o impropiamente delimitados.
+- Fuentes comodín (`*`) podrían permitir cargar recursos desde cualquier origen.
+    - Comodines parciales tales como `https://*` o `*.cdn.com` deberían evaluarse cuidadosamente.
+    - Determinar si los dominios en lista blanca hospedan endpoints JSONP o contenido controlado por el usuario.
+- Ausencia o mal uso de `frame-ancestors` podría exponer la aplicación a clickjacking.
+- Directivas `object-src`, `base-uri` o `default-src` restrictivas faltantes podrían debilitar la efectividad de la política.
+- Revisar el uso de `require-trusted-types-for` y `trusted-types`. En aplicaciones de alto riesgo, la ausencia de Trusted Types podría dejar sinks de inyección basados en DOM expuestos. Si se definen políticas `trusted-types`, asegurar que no sean demasiado permisivas.
+- Verificar directivas duplicadas o definiciones de política en conflicto que podrían resultar en comportamiento de imposición no previsto.
 
-### Validate Nonce and strict-dynamic Usage
+### Validar Uso de Nonce y strict-dynamic
 
-If the policy uses nonces:
+Si la política usa nonces:
 
-- Confirm that nonces are cryptographically random.
-- Verify that nonces are regenerated per response and not reused.
-- Ensure that legacy inline script patterns are not inadvertently trusted.
+- Confirmar que los nonces son criptográficamente aleatorios.
+- Verificar que los nonces se regeneran por respuesta y no se reutilizan.
+- Asegurar que los patrones de script inline heredados no se confíen inadvertidamente.
 
-If `strict-dynamic` is used:
+Si se usa `strict-dynamic`:
 
-- Understand that trust propagates from nonce- or hash-based scripts.
-- Confirm that no unsafe trust chain allows attacker-controlled script loading.
+- Entender que la confianza propaga desde scripts basados en nonce o hash.
+- Confirmar que ninguna cadena de confianza insegura permite carga de scripts controlados por el atacante.
 
-### Evaluate CSP Reporting Mechanisms
+### Evaluar Mecanismos de Reporte CSP
 
-If `report-uri` or `report-to` is configured:
+Si `report-uri` o `report-to` está configurado:
 
-- Verify that reporting endpoints are reachable and functional.
-- Determine whether sensitive information is exposed in reports.
-- Confirm that reporting does not create new injection or denial-of-service vectors.
+- Verificar que los endpoints de reporte sean alcanzables y funcionales.
+- Determinar si información sensible se expone en reportes.
+- Confirmar que el reporte no cree nuevos vectores de inyección o denegación de servicio.
 
-### Attempt Controlled Bypass Techniques
+### Intentar Técnicas de Evasión Controladas
 
-Where appropriate and authorized, attempt to validate enforcement by testing controlled payloads:
+Donde sea apropiado y autorizado, intentar validar la imposición probando payloads controlados:
 
-- Inline script injection attempts.
-- Data URL–based payloads.
-- JSONP callback manipulation from allowlisted domains.
-- DOM-based gadget chaining using trusted script sources.
+- Intentos de inyección de script inline.
+- Payloads basados en data URL.
+- Manipulación de callback JSONP desde dominios en lista blanca.
+- Encadenamiento de gadgets basados en DOM usando fuentes de script confiables.
 
-Successful execution of injected JavaScript indicates CSP misconfiguration or ineffective enforcement.
+La ejecución exitosa de JavaScript inyectado indica mala configuración CSP o imposición inefectiva.
 
-### Assess Policy Strength
+### Evaluar la Fuerza de la Política
 
-Business-critical applications should aim to implement a strict policy. A robust CSP typically:
+Las aplicaciones críticas para el negocio deberían aspirar a implementar una política estricta. Un CSP robusto típicamente:
 
-- Avoids `unsafe-inline` and `unsafe-eval`.
-- Uses nonce- or hash-based script controls.
-- Restricts object embedding (`object-src 'none'`).
-- Restricts base tag manipulation (`base-uri 'none'`).
-- Restricts framing using `frame-ancestors`.
+- Evita `unsafe-inline` y `unsafe-eval`.
+- Usa controles de script basados en nonce o hash.
+- Restringe embebido de objetos (`object-src 'none'`).
+- Restringe manipulación de etiqueta base (`base-uri 'none'`).
+- Restringe enmarcado usando `frame-ancestors`.
 
-### Common CSP Bypass Patterns
+### Patrones Comunes de Evasión CSP
 
-Even when CSP is present, misconfigurations or design weaknesses may allow bypass. Testers should consider the following common patterns:
+Incluso cuando CSP está presente, malas configuraciones o debilidades de diseño podrían permitir evasión. Los testers deberían considerar los siguientes patrones comunes:
 
-#### JSONP and Trusted Third-Party Endpoints
+#### JSONP y Endpoints de Terceros Confiables
 
-If a CSP allowlists third-party domains (e.g., CDNs), determine whether those domains expose JSONP endpoints or user-controlled content. Attackers may leverage callback injection to execute arbitrary JavaScript while still complying with the policy.
+Si un CSP lista dominios de terceros (por ejemplo, CDNs), determinar si esos dominios exponen endpoints JSONP o contenido controlado por el usuario. Los atacantes podrían aprovechar la inyección de callback para ejecutar JavaScript arbitrario mientras aún cumplen con la política.
 
-#### Wildcard and Broad Source Policies
+#### Políticas de Fuente Comodín y Amplias
 
-Policies that rely on wildcards (`*`, `https://*`, `*.example.com`) significantly expand the trust boundary. Subdomain takeovers or compromised third-party services may enable bypass within the allowed scope.
+Las políticas que dependen de comodines (`*`, `https://*`, `*.example.com`) expanden significativamente el límite de confianza. Subdomain takeovers o servicios de terceros comprometidos podrían habilitar evasión dentro del alcance permitido.
 
-#### Nonce Reuse or Predictable Nonces
+#### Reuso de Nonce o Nonces Predecibles
 
-If nonces are reused across requests or generated predictably, attackers may reuse or guess them to execute injected scripts. Each response should generate a fresh, cryptographically strong nonce.
+Si los nonces se reutilizan a través de solicitudes o se generan predeciblemente, los atacantes podrían reutilizarlos o adivinarlos para ejecutar scripts inyectados. Cada respuesta debería generar un nonce fresco y criptográficamente fuerte.
 
-#### Over-Reliance on strict-dynamic
+#### Sobre-dependencia en strict-dynamic
 
-While `strict-dynamic` improves nonce-based policies, trust propagates from trusted scripts. If a trusted script loads attacker-controlled resources, the protection may be weakened.
+Mientras que `strict-dynamic` mejora las políticas basadas en nonce, la confianza propaga desde scripts confiables. Si un script confiable carga recursos controlados por el atacante, la protección podría debilitarse.
 
-#### Missing Defense-in-Depth Directives
+#### Directivas de Defensa en Profundidad Faltantes
 
-Absence of directives such as:
+La ausencia de directivas tales como:
 
 - `object-src 'none'`
 - `base-uri 'none'`
 - `frame-ancestors`
 
-may leave the application exposed to object injection, base tag manipulation, or clickjacking, even if script execution is partially restricted.
+podría dejar la aplicación expuesta a inyección de objetos, manipulación de etiqueta base, o clickjacking, incluso si la ejecución de script está parcialmente restringida.
 
-#### CSP in Report-Only Mode
+#### CSP en Modo Report-Only
 
-Applications sometimes deploy CSP in `Report-Only` mode indefinitely. In such cases, violations are logged but not blocked, providing no real protection.
+Las aplicaciones a veces despliegan CSP en modo `Report-Only` indefinidamente. En tales casos, las violaciones se registran pero no se bloquean, proporcionando ninguna protección real.
 
-## Remediation
+## Remediación
 
-Organizations should implement a strong, well-scoped Content Security Policy that meaningfully reduces the attack surface rather than simply satisfying compliance requirements.
+Las organizaciones deberían implementar una Content Security Policy fuerte y bien delimitada que reduzca significativamente la superficie de ataque en lugar de simplemente satisfacer requisitos de cumplimiento.
 
-### General Recommendations
+### Recomendaciones Generales
 
-- Avoid use of `unsafe-inline` and `unsafe-eval`.
-- Prefer nonce- or hash-based script controls.
-- Use a restrictive `default-src` directive.
-- Explicitly define:
+- Evitar el uso de `unsafe-inline` y `unsafe-eval`.
+- Preferir controles de script basados en nonce o hash.
+- Usar una directiva `default-src` restrictiva.
+- Definir explícitamente:
     - `object-src 'none'`
     - `base-uri 'none'`
     - `frame-ancestors`
-- Minimize the number of allowlisted third-party domains.
-- Regularly review CSP policies when introducing new frontend dependencies.
+- Minimizar el número de dominios de terceros en lista blanca.
+- Revisar regularmente las políticas CSP al introducir nuevas dependencias frontend.
 
-### Deployment Best Practices
+### Mejores Prácticas de Despliegue
 
-- Deploy `Content-Security-Policy-Report-Only` temporarily for testing, then enforce `Content-Security-Policy` once validated.
-- Monitor violation reports for legitimate breakage and potential attack attempts.
-- Prefer `report-to` (CSP Level 3) while maintaining `report-uri` for backward compatibility where required.
-- Ensure nonces are cryptographically random and regenerated per response.
-- Review policies during major frontend refactoring or framework changes.
+- Desplegar `Content-Security-Policy-Report-Only` temporalmente para pruebas, luego imponer `Content-Security-Policy` una vez validado.
+- Monitorear reportes de violación para ruptura legítima e intentos de ataque potenciales.
+- Preferir `report-to` (CSP Level 3) mientras se mantiene `report-uri` para compatibilidad hacia atrás donde se requiera.
+- Asegurar que los nonces sean criptográficamente aleatorios y regenerados por respuesta.
+- Revisar políticas durante refactorización importante del frontend o cambios de framework.
 
-### Strict Policy Guidance
+### Guía de Política Estricta
 
-A strict policy provides protection against stored, reflected, and certain DOM-based XSS attacks and should be the goal for high-risk or business-critical applications.
+Una política estricta proporciona protección contra ataques XSS almacenados, reflejados y ciertos basados en DOM y debería ser la meta para aplicaciones de alto riesgo o críticas para el negocio.
 
-Based on nonce-based approaches, example policies include:
+Basado en enfoques basados en nonce, políticas de ejemplo incluyen:
 
-Moderate Strict Policy:
+Política Estricta Moderada:
 
 ```HTTP
 script-src 'nonce-r4nd0m' 'strict-dynamic';
@@ -155,7 +155,7 @@ object-src 'none';
 base-uri 'none';
 ```
 
-Locked Down Strict Policy:
+Política Estricta Bloqueada:
 
 ```HTTP
 script-src 'nonce-r4nd0m';
@@ -163,22 +163,22 @@ object-src 'none';
 base-uri 'none';
 ```
 
-> Note: `'nonce-r4nd0m'` is shown as an example placeholder. In practice, nonces must be cryptographically strong, base64-encoded values that are uniquely generated for every HTTP response.
+> Nota: `'nonce-r4nd0m'` se muestra como placeholder de ejemplo. En la práctica, los nonces deben ser valores criptográficamente fuertes, codificados en base64, que se generan de manera única para cada respuesta HTTP.
 
-Teams should adapt strict policies carefully, ensuring compatibility with application architecture while maintaining security objectives.
+Los equipos deberían adaptar políticas estrictas cuidadosamente, asegurando compatibilidad con la arquitectura de aplicación mientras mantienen objetivos de seguridad.
 
-## Tools
+## Herramientas
 
 - [Google CSP Evaluator](https://csp-evaluator.withgoogle.com/)
-- [CSP Auditor - Burp Suite Extension](https://portswigger.net/bappstore/35237408a06043e9945a11016fcbac18)
+- [CSP Auditor - Extensión de Burp Suite](https://portswigger.net/bappstore/35237408a06043e9945a11016fcbac18)
 - [CSP Generator Chrome](https://chrome.google.com/webstore/detail/content-security-policy-c/ahlnecfloencbkpfnpljbojmjkfgnmdc) / [Firefox](https://addons.mozilla.org/en-US/firefox/addon/csp-generator/)
 - [CSP Validator](https://cspvalidator.netlify.app/)
-- [OWASP ZAP](https://www.zaproxy.org/) – Includes automated and passive analysis for CSP misconfigurations.
-- [CSPBypass](https://cspbypass.com/) – Tool designed to help security testers analyze and attempt bypass techniques against restrictive CSP implementations.
+- [OWASP ZAP](https://www.zaproxy.org/) – Incluye análisis automatizado y pasivo para malas configuraciones CSP.
+- [CSPBypass](https://cspbypass.com/) – Herramienta diseñada para ayudar a testers de seguridad a analizar e intentar técnicas de evasión contra implementaciones restrictivas de CSP.
 
-## References
+## Referencias
 
-- [OWASP Content Security Policy Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Content_Security_Policy_Cheat_Sheet.html)
+- [Hoja de Referencia de Content Security Policy de OWASP](https://cheatsheetseries.owasp.org/cheatsheets/Content_Security_Policy_Cheat_Sheet.html)
 - [Mozilla Developer Network: Content Security Policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP)
 - [CSP Level 3 W3C](https://www.w3.org/TR/CSP3/)
 - [CSP with Google](https://csp.withgoogle.com/docs/index.html)

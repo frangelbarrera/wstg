@@ -1,87 +1,87 @@
-# Test Cloud Storage
+# Probar Almacenamiento en la Nube
 
 |ID          |
 |------------|
 |WSTG-CONF-11|
 
-## Summary
+## Resumen
 
-Cloud storage services allow web applications and services to store and access objects in the storage service. Improper access control configuration, however, may lead to the exposure of sensitive information, data tampering, or unauthorized access.
+Los servicios de almacenamiento en la nube permiten a las aplicaciones web y servicios almacenar y acceder a objetos en el servicio de almacenamiento. La mala configuración del control de acceso, sin embargo, podría llevar a la exposición de información sensible, manipulación de datos, o acceso no autorizado.
 
-A known example is where an Amazon S3 bucket is misconfigured, although the other cloud storage services may also be exposed to similar risks. By default, all S3 buckets are private and can be accessed only by users who are explicitly granted access. Users can grant public access not only to the bucket itself but also to individual objects stored within that bucket. This may lead to an unauthorized user being able to upload new files, modify or read stored files.
+Un ejemplo conocido es donde un bucket de Amazon S3 está mal configurado, aunque los otros servicios de almacenamiento en la nube también podrían estar expuestos a riesgos similares. Por defecto, todos los buckets de S3 son privados y pueden ser accedidos solo por usuarios a quienes se les ha otorgado acceso explícitamente. Los usuarios pueden otorgar acceso público no solo al bucket mismo sino también a objetos individuales almacenados dentro de ese bucket. Esto podría llevar a que un usuario no autorizado sea capaz de subir nuevos archivos, modificar o leer archivos almacenados.
 
-## Test Objectives
+## Objetivos de Prueba
 
-- Assess that the access control configuration for the storage services is properly in place.
+- Evaluar que la configuración de control de acceso para los servicios de almacenamiento esté propiamente en su lugar.
 
-## How to Test
+## Cómo Probar
 
-First, identify the URL to access the data in the storage service, and then consider the following tests:
+Primero, identificar la URL para acceder a los datos en el servicio de almacenamiento, y luego considerar las siguientes pruebas:
 
-- Read unauthorized data
-- Upload a new arbitrary file
+- Leer datos no autorizados
+- Subir un nuevo archivo arbitrario
 
-You may use curl for the tests with the following commands and see if unauthorized actions can be performed successfully.
+Se puede usar curl para las pruebas con los siguientes comandos y ver si las acciones no autorizadas pueden realizarse exitosamente.
 
-To test the ability to read an object:
+Para probar la capacidad de leer un objeto:
 
 ```bash
 curl -X GET https://<cloud-storage-service>/<object>
 ```
 
-To test the ability to upload a file:
+Para probar la capacidad de subir un archivo:
 
 ```bash
 curl -X PUT -d 'test' 'https://<cloud-storage-service>/test.txt'
 ```
 
-In the above command, it is recommended to replace the single quotes (') with double quotes (") when running the command on a Windows machine.
+En el comando anterior, se recomienda reemplazar las comillas simples (') con comillas dobles (") cuando se ejecute el comando en una máquina Windows.
 
-### Testing for Amazon S3 Bucket Misconfiguration
+### Pruebas de Mala Configuración de Amazon S3 Bucket
 
-The Amazon S3 bucket URLs follow one of two formats, either virtual host style or path-style.
+Las URLs de buckets de Amazon S3 siguen uno de dos formatos, ya sea estilo virtual host o estilo path.
 
-- Virtual Hosted Style Access
+- Acceso Estilo Virtual Hosted
 
 ```text
 https://bucket-name.s3.Region.amazonaws.com/key-name
 ```
 
-In the following example, `my-bucket` is the bucket name, `us-west-2` is the region, and `puppy.png` is the key-name:
+En el siguiente ejemplo, `my-bucket` es el nombre del bucket, `us-west-2` es la región, y `puppy.png` es el key-name:
 
 ```text
 https://my-bucket.s3.us-west-2.amazonaws.com/puppy.png
 ```
 
-- Path-Style Access
+- Acceso Estilo Path
 
 ```text
 https://s3.Region.amazonaws.com/bucket-name/key-name
 ```
 
-As above, in the following example, `my-bucket` is the bucket name, `us-west-2` is the region, and `puppy.png` is the key-name:
+Como arriba, en el siguiente ejemplo, `my-bucket` es el nombre del bucket, `us-west-2` es la región, y `puppy.png` es el key-name:
 
 ```text
 https://s3.us-west-2.amazonaws.com/my-bucket/puppy.png
 ```
 
-For some regions, the legacy global endpoint that does not specify a region-specific endpoint can be used. Its format is also either virtual hosted style or path-style.
+Para algunas regiones, se puede usar el endpoint global heredado que no especifica un endpoint específico de región. Su formato es también ya sea estilo virtual hosted o estilo path.
 
-- Virtual Hosted Style Access
+- Acceso Estilo Virtual Hosted
 
 ```text
 https://bucket-name.s3.amazonaws.com
 ```
 
-- Path-Style Access
+- Acceso Estilo Path
 
 ```text
 https://s3.amazonaws.com/bucket-name
 ```
 
-#### Identify Bucket URL
+#### Identificar URL del Bucket
 
-For black-box testing, S3 URLs can be found in the HTTP messages. The following example shows a bucket URL is sent in the `img` tag in an HTTP response.
+Para pruebas de caja negra, las URLs de S3 pueden encontrarse en los mensajes HTTP. El siguiente ejemplo muestra una URL de bucket enviada en la etiqueta `img` en una respuesta HTTP.
 
 ```html
 ...
@@ -89,55 +89,55 @@ For black-box testing, S3 URLs can be found in the HTTP messages. The following 
 ...
 ```
 
-For gray-box testing, you can obtain bucket URLs from Amazon's web interface, documents, source code, and any other available sources.
+Para pruebas de caja gris, se pueden obtener URLs de bucket desde la interfaz web de Amazon, documentos, código fuente, y cualquier otra fuente disponible.
 
-#### Testing with AWS-CLI
+#### Pruebas con AWS-CLI
 
-In addition to testing with curl, you can also test with the AWS command-line tool. In this case `s3://` URI scheme is used.
+Además de probar con curl, también se puede probar con la herramienta de línea de comandos de AWS. En este caso se usa el esquema de URI `s3://`.
 
-##### List
+##### Listar
 
-The following command lists all the objects of the bucket when it is configured public:
+El siguiente comando lista todos los objetos del bucket cuando está configurado público:
 
 ```bash
 aws s3 ls s3://<bucket-name>
 ```
 
-##### Upload
+##### Subir
 
-The following is the command to upload a file:
+El siguiente es el comando para subir un archivo:
 
 ```bash
 aws s3 cp arbitrary-file s3://bucket-name/path-to-save
 ```
 
-This example shows the result when the upload has been successful.
+Este ejemplo muestra el resultado cuando la subida ha sido exitosa.
 
 ```bash
 $ aws s3 cp test.txt s3://bucket-name/test.txt
 upload: ./test.txt to s3://bucket-name/test.txt
 ```
 
-This example shows the result when the upload has failed.
+Este ejemplo muestra el resultado cuando la subida ha fallado.
 
 ```bash
 $ aws s3 cp test.txt s3://bucket-name/test.txt
 upload failed: ./test2.txt to s3://bucket-name/test2.txt An error occurred (AccessDenied) when calling the PutObject operation: Access Denied
 ```
 
-##### Remove
+##### Remover
 
-The following is the command to remove an object:
+El siguiente es el comando para remover un objeto:
 
 ```bash
 aws s3 rm s3://bucket-name/object-to-remove
 ```
 
-## Tools
+## Herramientas
 
 - [AWS CLI](https://aws.amazon.com/cli/)
 
-## References
+## Referencias
 
 - [Working with Amazon S3 Buckets](https://docs.aws.amazon.com/AmazonS3/latest/dev/UsingBucket.html)
 - [flAWS 2 - Learn AWS Security](http://flaws2.cloud)

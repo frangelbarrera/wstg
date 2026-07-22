@@ -1,59 +1,59 @@
-# Test for Subdomain Takeover
+# Probar Subdomain Takeover
 
 |ID          |
 |------------|
 |WSTG-CONF-10|
 
-## Summary
+## Resumen
 
-A successful exploitation of this kind of vulnerability allows an adversary to claim and take control of the victim's subdomain. This attack relies on the following:
+Una explotación exitosa de este tipo de vulnerabilidad permite a un adversario reclamar y tomar control del subdominio de la víctima. Este ataque depende de lo siguiente:
 
-1. The victim's external DNS server subdomain record is configured to point to a non-existing or non-active resource/external service/endpoint. The proliferation of XaaS (Anything as a Service) products and public cloud services offer a lot of potential targets to consider.
-2. The service provider hosting the resource/external service/endpoint does not handle subdomain ownership verification properly.
+1. El registro de subdominio del servidor DNS externo de la víctima está configurado para apuntar a un recurso/servicio externo/endpoint no existente o no activo. La proliferación de productos XaaS (Anything as a Service) y servicios en la nube públicos ofrecen muchos objetivos potenciales a considerar.
+2. El proveedor de servicios que hospeda el recurso/servicio externo/endpoint no maneja la verificación de propiedad del subdominio apropiadamente.
 
-If the subdomain takeover is successful, a wide variety of attacks are possible (serving malicious content, phishing, stealing user session cookies, credentials, etc.). This vulnerability could be exploited for a wide variety of DNS resource records including: `A`, `CNAME`, `MX`, `NS`, `TXT` etc. In terms of the attack severity, an `NS` subdomain takeover (although less likely) has the highest impact, because a successful attack could result in full control over the whole DNS zone and the victim's domain.
+Si el subdomain takeover es exitoso, una amplia variedad de ataques son posibles (servir contenido malicioso, phishing, robar cookies de sesión de usuario, credenciales, etc.). Esta vulnerabilidad podría explotarse para una amplia variedad de registros de recursos DNS incluyendo: `A`, `CNAME`, `MX`, `NS`, `TXT` etc. En términos de severidad del ataque, un subdomain takeover de `NS` (aunque menos probable) tiene el mayor impacto, porque un ataque exitoso podría resultar en control completo sobre toda la zona DNS y el dominio de la víctima.
 
 ### GitHub
 
-1. The victim (victim.com) uses GitHub for development and configured a DNS record (`coderepo.victim.com`) to access it.
-2. The victim decides to migrate their code repository from GitHub to a commercial platform and does not remove `coderepo.victim.com` from their DNS server.
-3. An adversary discovers that `coderepo.victim.com` is hosted on GitHub and claims it using GitHub Pages and their own GitHub account.
+1. La víctima (victim.com) usa GitHub para desarrollo y configuró un registro DNS (`coderepo.victim.com`) para acceder a él.
+2. La víctima decide migrar su repositorio de código de GitHub a una plataforma comercial y no remueve `coderepo.victim.com` de su servidor DNS.
+3. Un adversario descubre que `coderepo.victim.com` está hospedado en GitHub y lo reclama usando GitHub Pages y su propia cuenta de GitHub.
 
-### Expired Domain
+### Dominio Expirado
 
-1. The victim (victim.com) owns another domain (victimotherdomain.com) and uses a CNAME record (www) to reference the other domain (`www.victim.com` --> `victimotherdomain.com`)
-2. At some point, victimotherdomain.com expires, becoming available for registration by anyone. Since the CNAME record is not deleted from the victim.com DNS zone, anyone who registers `victimotherdomain.com` has full control over `www.victim.com` until the DNS record is removed or updated.
+1. La víctima (victim.com) posee otro dominio (victimotherdomain.com) y usa un registro CNAME (www) para referenciar el otro dominio (`www.victim.com` --> `victimotherdomain.com`)
+2. En algún punto, victimotherdomain.com expira, volviéndose disponible para registro por cualquiera. Como el registro CNAME no se elimina de la zona DNS de victim.com, cualquiera que registre `victimotherdomain.com` tiene control completo sobre `www.victim.com` hasta que el registro DNS se remueva o actualice.
 
-## Test Objectives
+## Objetivos de Prueba
 
-- Enumerate all possible domains (previous and current).
-- Identify any forgotten or misconfigured domains.
+- Enumerar todos los dominios posibles (previos y actuales).
+- Identificar cualquier dominio olvidado o mal configurado.
 
-## How to Test
+## Cómo Probar
 
-### Black-Box Testing
+### Pruebas de Caja Negra
 
-Testing for subdomain takeover follows three phases: subdomain enumeration, automated fingerprint-based detection, and manual validation.
+Las pruebas para subdomain takeover siguen tres fases: enumeración de subdominios, detección automatizada basada en fingerprint, y validación manual.
 
-A dangling DNS record occurs when a DNS entry points to an external resource that no longer exists or has been deprovisioned. For example, a CNAME record pointing to a GitHub Pages site that the owner deleted still resolves, but the underlying resource is unclaimed. An attacker can register that resource and take control of the subdomain.
+Un registro DNS colgante ocurre cuando una entrada DNS apunta a un recurso externo que ya no existe o ha sido desprovisto. Por ejemplo, un registro CNAME apuntando a un sitio de GitHub Pages que el propietario eliminó todavía resuelve, pero el recurso subyacente está sin reclamar. Un atacante puede registrar ese recurso y tomar control del subdominio.
 
-#### Subdomain Enumeration
+#### Enumeración de Subdominios
 
-Use [subfinder](https://github.com/projectdiscovery/subfinder) to discover subdomains for the target domain: `subfinder -d victim.com -o subdomains.txt`
+Usar [subfinder](https://github.com/projectdiscovery/subfinder) para descubrir subdominios para el dominio objetivo: `subfinder -d victim.com -o subdomains.txt`
 
-This produces a list of subdomains to use in the detection phase.
+Esto produce una lista de subdominios para usar en la fase de detección.
 
-#### Fingerprint-Based Detection
+#### Detección Basada en Fingerprint
 
-Fingerprint-based detection works by comparing each subdomain's HTTP response against a database of known vulnerable service responses. The [can-i-take-over-xyz](https://github.com/EdOverflow/can-i-take-over-xyz) project maintains this database, cataloging the specific response strings returned by service providers such as GitHub Pages, AWS S3, Heroku, and Fastly when a resource is unclaimed.
+La detección basada en fingerprint funciona comparando la respuesta HTTP de cada subdominio contra una base de datos de respuestas de servicios vulnerables conocidos. El proyecto [can-i-take-over-xyz](https://github.com/EdOverflow/can-i-take-over-xyz) mantiene esta base de datos, catalogando las cadenas de respuesta específicas devueltas por proveedores de servicios tales como GitHub Pages, AWS S3, Heroku y Fastly cuando un recurso está sin reclamar.
 
-Use [subzy](https://github.com/LukaSikic/subzy) for a quick initial scan: `subzy run --targets subdomains.txt`
+Usar [subzy](https://github.com/LukaSikic/subzy) para un escaneo inicial rápido: `subzy run --targets subdomains.txt`
 
-Follow up with [nuclei](https://github.com/projectdiscovery/nuclei) using the dedicated takeover templates for a more accurate result: `nuclei -l subdomains.txt -t takeovers/`
+Seguir con [nuclei](https://github.com/projectdiscovery/nuclei) usando las plantillas dedicadas de takeover para un resultado más preciso: `nuclei -l subdomains.txt -t takeovers/`
 
-A positive result from either tool indicates that a subdomain's response matched a known vulnerable fingerprint, suggesting a dangling DNS record pointing to an unclaimed resource on a third-party service.
+Un resultado positivo de cualquiera de las herramientas indica que la respuesta de un subdominio coincidió con un fingerprint vulnerable conocido, sugiriendo un registro DNS colgante apuntando a un recurso sin reclamar en un servicio de terceros.
 
-For example, a subdomain pointing to an unclaimed GitHub Pages site returns the following response:
+Por ejemplo, un subdominio apuntando a un sitio de GitHub Pages sin reclamar devuelve la siguiente respuesta:
 
 ```http
 HTTP/1.1 404 Not Found
@@ -61,45 +61,45 @@ HTTP/1.1 404 Not Found
 <p>There isn't a GitHub Pages site here.</p>
 ```
 
-This specific string is listed in can-i-take-over-xyz as the GitHub Pages fingerprint. When subzy or nuclei matches this response, it flags the subdomain as potentially vulnerable.
+Esta cadena específica está listada en can-i-take-over-xyz como el fingerprint de GitHub Pages. Cuando subzy o nuclei coincide esta respuesta, marca el subdominio como potencialmente vulnerable.
 
-#### Manual Validation
+#### Validación Manual
 
-Automated tools produce false positives. Validate each finding manually before reporting it.
+Las herramientas automatizadas producen falsos positivos. Validar cada hallazgo manualmente antes de reportarlo.
 
-1. Confirm the DNS record and where it points: `dig CNAME subdomain.victim.com`
+1. Confirmar el registro DNS y a dónde apunta: `dig CNAME subdomain.victim.com`
 
-1. Confirm the response matches the expected fingerprint for that service provider as listed in [can-i-take-over-xyz](https://github.com/EdOverflow/can-i-take-over-xyz): `curl -i http://subdomain.victim.com`
+1. Confirmar que la respuesta coincide con el fingerprint esperado para ese proveedor de servicios como se lista en [can-i-take-over-xyz](https://github.com/EdOverflow/can-i-take-over-xyz): `curl -i http://subdomain.victim.com`
 
-1. Confirm the resource is unclaimed on the service provider's platform. Do not claim it.
+1. Confirmar que el recurso está sin reclamar en la plataforma del proveedor de servicios. No reclamarlo.
 
-#### Cloud-Specific Takeovers
+#### Takeovers Específicos de la Nube
 
-Major cloud providers have distinct takeover patterns worth specific attention:
+Los principales proveedores de la nube tienen patrones de takeover distintos que merecen atención específica:
 
-- AWS S3: A CNAME pointing to an S3 bucket URL (for example, `bucket.s3.amazonaws.com`) where the bucket no longer exists returns a `NoSuchBucket` response. Anyone who creates a bucket with the same name in any AWS account can claim the subdomain.
-- Azure: Dangling CNAMEs pointing to deprovisioned Azure resources such as App Services or Traffic Manager endpoints can be claimed by registering the same resource name in a different Azure subscription.
-- GCP: Similar patterns exist for Cloud Storage buckets and Firebase Hosting endpoints.
+- AWS S3: Un CNAME apuntando a una URL de bucket S3 (por ejemplo, `bucket.s3.amazonaws.com`) donde el bucket ya no existe devuelve una respuesta `NoSuchBucket`. Cualquiera que cree un bucket con el mismo nombre en cualquier cuenta de AWS puede reclamar el subdominio.
+- Azure: CNAMEs colgantes apuntando a recursos de Azure desprovistos tales como App Services o endpoints de Traffic Manager pueden ser reclamados registrando el mismo nombre de recurso en una suscripción de Azure diferente.
+- GCP: Patrones similares existen para buckets de Cloud Storage y endpoints de Firebase Hosting.
 
-### Gray-Box Testing
+### Pruebas de Caja Gris
 
-The tester has the DNS zone file available, which means DNS enumeration is not necessary. The testing methodology is the same.
+El tester tiene el archivo de zona DNS disponible, lo que significa que la enumeración DNS no es necesaria. La metodología de pruebas es la misma.
 
-## Remediation
+## Remediación
 
-To mitigate the risk of subdomain takeover, the vulnerable DNS resource record(s) should be removed from the DNS zone. Continuous monitoring and periodic checks are recommended as best practice.
+Para mitigar el riesgo de subdomain takeover, los registros de recursos DNS vulnerables deberían removerse de la zona DNS. Se recomiendan monitoreo continuo y verificaciones periódicas como mejores prácticas.
 
-## Tools
+## Herramientas
 
-- [subfinder - Subdomain enumeration tool](https://github.com/projectdiscovery/subfinder)
-- [subzy - Subdomain takeover detection tool](https://github.com/LukaSikic/subzy)
-- [nuclei - Vulnerability scanner with takeover templates](https://github.com/projectdiscovery/nuclei)
-- [nuclei-templates - Community takeover templates](https://github.com/projectdiscovery/nuclei-templates)
-- [can-i-take-over-xyz - Vulnerable service fingerprint database](https://github.com/EdOverflow/can-i-take-over-xyz)
-- [dig - DNS lookup utility](https://man.cx/dig)
+- [subfinder - Herramienta de enumeración de subdominios](https://github.com/projectdiscovery/subfinder)
+- [subzy - Herramienta de detección de subdomain takeover](https://github.com/LukaSikic/subzy)
+- [nuclei - Escáner de vulnerabilidades con plantillas de takeover](https://github.com/projectdiscovery/nuclei)
+- [nuclei-templates - Plantillas de takeover de la comunidad](https://github.com/projectdiscovery/nuclei-templates)
+- [can-i-take-over-xyz - Base de datos de fingerprints de servicios vulnerables](https://github.com/EdOverflow/can-i-take-over-xyz)
+- [dig - Utilidad de lookup DNS](https://man.cx/dig)
 - [OWASP Domain Protect](https://owasp.org/www-project-domain-protect)
 
-## References
+## Referencias
 
 - [HackerOne - A Guide To Subdomain Takeovers](https://www.hackerone.com/blog/Guide-Subdomain-Takeovers)
 - [Subdomain Takeover: Basics](https://0xpatrik.com/subdomain-takeover-basics/)
