@@ -57,7 +57,7 @@ https://foo.bar/showImage?img=img00011
 
 En este caso, el valor del parámetro `file` se utiliza para indicar a la aplicación qué archivo el usuario intenta recuperar. Al proporcionar el nombre o identificador de un archivo diferente (por ejemplo, file=image00012.jpg), el atacante podrá recuperar objetos pertenecientes a otros usuarios.
 
-Para probar este caso, el evaluador debe obtener una referencia que el usuario no se supone que pueda acceder y intentar acceder a ella utilizándola como el valor del parámetro `file`. Nota: Esta vulnerabilidad a menudo se explota en conjunto con una vulnerabilidad de traversal de directorio/ruta (ver [Pruebas de traversal de directorio/inclusión de archivos](01-Testing_Directory_Traversal_File_Include-es.md))
+Para probar este caso, el evaluador debe obtener una referencia que el usuario no se supone que pueda acceder y intentar acceder a ella utilizándola como el valor del parámetro `file`. Nota: Esta vulnerabilidad a menudo se explota en conjunto con una vulnerabilidad de traversal de directorio/ruta (ver [Pruebas de traversal de directorio/inclusión de archivos](01-Testing_Directory_Traversal_File_Include.md))
 
 ### El valor de un parámetro se utiliza directamente para acceder a la funcionalidad de la aplicación
 

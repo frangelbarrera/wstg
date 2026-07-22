@@ -24,7 +24,7 @@ Las secciones abajo proporcionan una visión general de alto nivel de componente
 
 #### Servidor Web
 
-Aplicaciones simples pueden ejecutarse en un solo servidor, que puede identificarse usando los pasos discutidos en la sección [Huella Digital del Servidor Web](02-Fingerprint_Web_Server-es.md) de la guía.
+Aplicaciones simples pueden ejecutarse en un solo servidor, que puede identificarse usando los pasos discutidos en la sección [Huella Digital del Servidor Web](02-Fingerprint_Web_Server.md) de la guía.
 
 #### Platform-as-a-Service (PaaS)
 
@@ -67,7 +67,7 @@ Estas cuentas de almacenamiento a menudo pueden exponer archivos sensibles, como
 La mayoría de aplicaciones web no triviales usan algún tipo de base de datos para almacenar contenido dinámico. En algunos casos, es posible determinar la base de datos. Esto a menudo puede hacerse por:
 
 - Escaneando puertos del servidor y buscando cualquier puerto abierto asociado con bases de datos específicas
-- Triggering mensajes de error relacionados con SQL (o NoSQL) (o encontrando errores existentes de un [motor de búsqueda](../01-Information_Gathering/01-Conduct_Search_Engine_Discovery_Reconnaissance_for_Information_Leakage-es.md)
+- Triggering mensajes de error relacionados con SQL (o NoSQL) (o encontrando errores existentes de un [motor de búsqueda](../01-Information_Gathering/01-Conduct_Search_Engine_Discovery_Reconnaissance_for_Information_Leakage.md)
 
 Cuando no es posible determinar concluyentemente la base de datos, el probador a menudo puede hacer una suposición educada basada en otros aspectos de la aplicación:
 

@@ -39,7 +39,7 @@ El XSS almacenado es particularmente peligroso en áreas de aplicación donde us
 
 ### Pruebas de Caja Negra
 
-El proceso para identificar vulnerabilidades de XSS almacenado es similar al proceso descrito durante las [pruebas de XSS reflejado](01-Testing_for_Reflected_Cross_Site_Scripting-es.md).
+El proceso para identificar vulnerabilidades de XSS almacenado es similar al proceso descrito durante las [pruebas de XSS reflejado](01-Testing_for_Reflected_Cross_Site_Scripting.md).
 
 #### Formularios de Entrada
 
@@ -94,7 +94,7 @@ Asegúrese de que la entrada se envíe a través de la aplicación. Esto normalm
 > <input class="inputbox" type="text" name="email" size="40" value="aaa@aa.com"><script>alert(document.cookie)</script>
 > ```
 >
-> La entrada se almacena y la carga útil XSS se ejecuta por el navegador al recargar la página. Si la entrada es escapada por la aplicación, los probadores deberían probar la aplicación para filtros XSS. Por ejemplo, si la cadena "SCRIPT" se reemplaza por un espacio o por un carácter NULL, entonces esto podría ser una señal potencial de filtrado XSS en acción. Muchas técnicas existen para evadir filtros de entrada (ver capítulo de [pruebas de XSS reflejado](01-Testing_for_Reflected_Cross_Site_Scripting-es.md)). Se recomienda encarecidamente que los probadores se refieran a [XSS Filter Evasion](https://owasp.org/www-community/xss-filter-evasion-cheatsheet) y páginas de trucos [Mario](https://cybersecurity.wtf/encoder/) XSS, que proporcionan una lista extensa de ataques XSS y bypasses de filtrado. Consulte la sección de whitepapers y herramientas para información más detallada.
+> La entrada se almacena y la carga útil XSS se ejecuta por el navegador al recargar la página. Si la entrada es escapada por la aplicación, los probadores deberían probar la aplicación para filtros XSS. Por ejemplo, si la cadena "SCRIPT" se reemplaza por un espacio o por un carácter NULL, entonces esto podría ser una señal potencial de filtrado XSS en acción. Muchas técnicas existen para evadir filtros de entrada (ver capítulo de [pruebas de XSS reflejado](01-Testing_for_Reflected_Cross_Site_Scripting.md)). Se recomienda encarecidamente que los probadores se refieran a [XSS Filter Evasion](https://owasp.org/www-community/xss-filter-evasion-cheatsheet) y páginas de trucos [Mario](https://cybersecurity.wtf/encoder/) XSS, que proporcionan una lista extensa de ataques XSS y bypasses de filtrado. Consulte la sección de whitepapers y herramientas para información más detallada.
 
 #### Aprovechar XSS Almacenado con BeEF
 
