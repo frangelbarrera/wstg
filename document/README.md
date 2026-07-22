@@ -1,52 +1,52 @@
-# Table of Contents
+# Tabla de Contenidos
 
-## 0. [Foreword](0-Foreword/README.md)
+## 0. [Prefacio](0-Foreword/README.md)
 
-## 1. [Frontispiece](1-Frontispiece/)
+## 1. [Frontispicio](1-Frontispiece/)
 
-## 2. [Introduction](2-Introduction/)
+## 2. [Introducción](2-Introduction/)
 
-### 2.1 [The OWASP Testing Project](2-Introduction/README.md#The-OWASP-Testing-Project)
+### 2.1 [El Proyecto de Pruebas de OWASP](2-Introduction/README.md#The-OWASP-Testing-Project)
 
-### 2.2 [Principles of Testing](2-Introduction/README.md#Principles-of-Testing)
+### 2.2 [Principios de Pruebas](2-Introduction/README.md#Principles-of-Testing)
 
-### 2.3 [Testing Techniques Explained](2-Introduction/README.md#Testing-Techniques-Explained)
+### 2.3 [Técnicas de Pruebas Explicadas](2-Introduction/README.md#Testing-Techniques-Explained)
 
-### 2.4 [Manual Inspections and Reviews](2-Introduction/README.md#Manual-Inspections-and-Reviews)
+### 2.4 [Inspecciones y Revisiones Manuales](2-Introduction/README.md#Manual-Inspections-and-Reviews)
 
-### 2.5 [Threat Modeling](2-Introduction/README.md#Threat-Modeling)
+### 2.5 [Modelado de Amenazas](2-Introduction/README.md#Threat-Modeling)
 
-### 2.6 [Source Code Review](2-Introduction/README.md#Source-Code-Review)
+### 2.6 [Revisión de Código Fuente](2-Introduction/README.md#Source-Code-Review)
 
-### 2.7 [Penetration Testing](2-Introduction/README.md#Penetration-Testing)
+### 2.7 [Pruebas de Penetración](2-Introduction/README.md#Penetration-Testing)
 
-### 2.8 [The Need for a Balanced Approach](2-Introduction/README.md#The-Need-for-a-Balanced-Approach)
+### 2.8 [La Necesidad de un Enfoque Equilibrado](2-Introduction/README.md#The-Need-for-a-Balanced-Approach)
 
-### 2.9 [Deriving Security Test Requirements](2-Introduction/README.md#Deriving-Security-Test-Requirements)
+### 2.9 [Derivación de Requisitos de Pruebas de Seguridad](2-Introduction/README.md#Deriving-Security-Test-Requirements)
 
-### 2.10 [Security Tests Integrated in Development and Testing Workflows](2-Introduction/README.md#Security-Tests-Integrated-in-Development-and-Testing-Workflows)
+### 2.10 [Pruebas de Seguridad Integradas en Flujos de Trabajo de Desarrollo y Pruebas](2-Introduction/README.md#Security-Tests-Integrated-in-Development-and-Testing-Workflows)
 
-### 2.11 [Security Test Data Analysis and Reporting](2-Introduction/README.md#Security-Test-Data-Analysis-and-Reporting)
+### 2.11 [Análisis y Reportes de Datos de Pruebas de Seguridad](2-Introduction/README.md#Security-Test-Data-Analysis-and-Reporting)
 
-## 3. [The OWASP Testing Framework](3-The_OWASP_Testing_Framework/)
+## 3. [El Marco de Pruebas de OWASP](3-The_OWASP_Testing_Framework/)
 
-### 3.1 [The Web Security Testing Framework](3-The_OWASP_Testing_Framework/0-The_Web_Security_Testing_Framework.md)
+### 3.1 [El Marco de Pruebas de Seguridad Web](3-The_OWASP_Testing_Framework/0-The_Web_Security_Testing_Framework.md)
 
-### 3.2 [Phase 1 Before Development Begins](3-The_OWASP_Testing_Framework/0-The_Web_Security_Testing_Framework.md#Phase-1-Before-Development-Begins)
+### 3.2 [Fase 1 Antes de que Comience el Desarrollo](3-The_OWASP_Testing_Framework/0-The_Web_Security_Testing_Framework.md#Phase-1-Before-Development-Begins)
 
-### 3.3 [Phase 2 During Definition and Design](3-The_OWASP_Testing_Framework/0-The_Web_Security_Testing_Framework.md#Phase-2-During-Definition-and-Design)
+### 3.3 [Fase 2 Durante la Definición y Diseño](3-The_OWASP_Testing_Framework/0-The_Web_Security_Testing_Framework.md#Phase-2-During-Definition-and-Design)
 
-### 3.4 [Phase 3 During Development](3-The_OWASP_Testing_Framework/0-The_Web_Security_Testing_Framework.md#Phase-3-During-Development)
+### 3.4 [Fase 3 Durante el Desarrollo](3-The_OWASP_Testing_Framework/0-The_Web_Security_Testing_Framework.md#Phase-3-During-Development)
 
-### 3.5 [Phase 4 During Deployment](3-The_OWASP_Testing_Framework/0-The_Web_Security_Testing_Framework.md#Phase-4-During-Deployment)
+### 3.5 [Fase 4 Durante el Despliegue](3-The_OWASP_Testing_Framework/0-The_Web_Security_Testing_Framework.md#Phase-4-During-Deployment)
 
-### 3.6 [Phase 5 During Maintenance and Operations](3-The_OWASP_Testing_Framework/0-The_Web_Security_Testing_Framework.md#Phase-5-During-Maintenance-and-Operations)
+### 3.6 [Fase 5 Durante el Mantenimiento y Operaciones](3-The_OWASP_Testing_Framework/0-The_Web_Security_Testing_Framework.md#Phase-5-During-Maintenance-and-Operations)
 
-### 3.7 [A Typical SDLC Testing Workflow](3-The_OWASP_Testing_Framework/0-The_Web_Security_Testing_Framework.md#A-Typical-SDLC-Testing-Workflow)
+### 3.7 [Un Flujo de Trabajo Típico de Pruebas SDLC](3-The_OWASP_Testing_Framework/0-The_Web_Security_Testing_Framework.md#A-Typical-SDLC-Testing-Workflow)
 
-### 3.8 [Penetration Testing Methodologies](3-The_OWASP_Testing_Framework/1-Penetration_Testing_Methodologies.md)
+### 3.8 [Metodologías de Pruebas de Penetración](3-The_OWASP_Testing_Framework/1-Penetration_Testing_Methodologies.md)
 
-## 4. [Web Application Security Testing](4-Web_Application_Security_Testing/)
+## 4. [Pruebas de Seguridad de Aplicaciones Web](4-Web_Application_Security_Testing/)
 
 ### 4.0 [Introduction and Objectives](4-Web_Application_Security_Testing/00-Introduction_and_Objectives/README.md)
 
@@ -330,7 +330,7 @@
 
 #### 4.12.99 [Testing GraphQL](4-Web_Application_Security_Testing/12-API_Testing/99-Testing_GraphQL.md)
 
-## 5. [Reporting](5-Reporting/README.md)
+## 5. [Reportes](5-Reporting/README.md)
 
 ### 5.1 [Reporting Structure](5-Reporting/01-Reporting_Structure.md)
 

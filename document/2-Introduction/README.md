@@ -1,6 +1,6 @@
-# Introduction
+# Introducción
 
-## The OWASP Testing Project
+## El Proyecto de Pruebas de OWASP
 
 The OWASP Testing Project has been in development for many years. The aim of the project is to help people understand the *what*, *why*, *when*, *where*, and *how* of testing web applications. The project has delivered a complete testing framework, not merely a simple checklist or prescription of issues that should be addressed. Readers can use this framework as a template to build their own testing programs or to qualify other people’s processes. The Testing Guide describes in detail both the general testing framework and the techniques required to implement the framework in practice.
 
@@ -10,7 +10,7 @@ However, the group is very satisfied with the results of the project. Many indus
 
 The rest of this guide is organized as follows: this introduction covers the pre-requisites of testing web applications and the scope of testing. It also covers the principles of successful testing and testing techniques, best practices for reporting, and business cases for security testing. Chapter 3 presents the OWASP Testing Framework and explains its techniques and tasks in relation to the various phases of the software development lifecycle. Chapter 4 covers how to test for specific vulnerabilities (e.g., SQL Injection) by code inspection and penetration testing.
 
-### Measuring Security: the Economics of Insecure Software
+### Midiendo Seguridad: la Economía del Software Inseguro
 
 A basic tenet of software engineering is summed up in a quote from [Controlling Software Projects: Management, Measurement, and Estimates](https://isbnsearch.org/isbn/9780131717114) by [Tom DeMarco](https://en.wikiquote.org/wiki/Tom_DeMarco):
 
@@ -26,7 +26,7 @@ While estimating the cost of insecure software may appear a daunting task, there
 
 The framework described in this document encourages people to measure security throughout the entire development process. They can then relate the cost of insecure software to the impact it has on the business, and consequently develop appropriate business processes, and assign resources to manage the risk. Remember that measuring and testing web applications is even more critical than for other software, since web applications are exposed to millions of users through the internet.
 
-### What is Testing?
+### ¿Qué es la Prueba?
 
 Many things need to be tested during the development lifecycle of a web application, but what does testing actually mean? The Oxford Dictionary of English defines "test" as:
 
@@ -34,20 +34,20 @@ Many things need to be tested during the development lifecycle of a web applicat
 
 For the purposes of this document, testing is a process of comparing the state of a system or application against a set of criteria. In the security industry, people frequently test against a set of mental criteria that are neither well defined nor complete. As a result of this, many outsiders regard security testing as a black art. The aim of this document is to change that perception, and to make it easier for people without in-depth security knowledge to make a difference in testing.
 
-### Why Perform Testing?
+### ¿Por Qué Realizar Pruebas?
 
 This document is designed to help organizations understand what comprises a testing program, and to help them identify the steps that need to be undertaken to build and operate a modern web application testing program. The guide gives a broad view of the elements required to make a comprehensive web application security program. This guide can be used as a reference and as a methodology to help determine the gap between existing practices and industry best practices. This guide allows organizations to compare themselves against industry peers, to understand the magnitude of resources required to test and maintain software, or to prepare for an audit. This chapter does not go into the technical details of how to test an application, as the intent is to provide a typical security organizational framework. The technical details about how to test an application, as part of a penetration test or code review, will be covered in the remaining parts of this document.
 
-### When to Test?
+### ¿Cuándo Probar?
 
 Most people today don’t test software until it has already been created and is in the deployment phase of its lifecycle (i.e., code has been created and instantiated into a working web application). This is generally a very ineffective and cost-prohibitive practice. One of the best methods to prevent security bugs from appearing in production applications is to improve the Software Development lifecycle (SDLC) by including security in each of its phases. An SDLC is a structure imposed on the development of software artifacts. If an SDLC is not currently being used in your environment, it is time to pick one! The following figure shows a generic SDLC model as well as the (estimated) increasing cost of fixing security bugs in such a model.
 
 ![Generic SDLC Model](images/SDLC.jpg)\
-*Figure 2-1: Generic SDLC Model*
+*Figura 2-1: Generic SDLC Model*
 
 Companies should inspect their overall SDLC to ensure that security is an integral part of the development process. SDLCs should include security tests to ensure security is adequately covered and controls are effective throughout the development process.
 
-### What to Test?
+### ¿Qué Probar?
 
 It can be helpful to think of software development as a combination of people, process, and technology. If these are the factors that "create" software, then it is logical that these are the factors that must be tested. Today most people generally test the technology or the software itself.
 
@@ -63,7 +63,7 @@ Denis Verdon, Head of Information Security at [Fidelity National Financial](http
 
 > If cars were built like applications ... safety tests would assume frontal impact only. Cars would not be roll tested, or tested for stability in emergency maneuvers, brake effectiveness, side impact, and resistance to theft.
 
-### How to Reference WSTG Scenarios
+### Cómo Referenciar Escenarios WSTG
 
 Each scenario has an identifier in the format `WSTG-<category>-<number>`, where: 'category' is a 4 character upper case string that identifies the type of test or weakness, and 'number' is a zero-padded numeric value from 01 to 99. For example:`WSTG-INFO-02` is the second Information Gathering test.
 
@@ -71,23 +71,23 @@ The identifiers may change between versions therefore it is preferable that othe
 
 If identifiers are used without including the `<version>` element then they should be assumed to refer to the latest Web Security Testing Guide content. Obviously as the guide grows and changes this becomes problematic, which is why writers or developers should include the version element.
 
-#### Linking
+#### Enlazado
 
 Linking to Web Security Testing Guide scenarios should be done using versioned links not `stable` or `latest` which will definitely change with time. However, it is the project team's intention that versioned links not change. For example: `https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/01-Information_Gathering/02-Fingerprint_Web_Server`. Note: the `v42` element refers to version 4.2.
 
-### Feedback and Comments
+### Retroalimentación y Comentarios
 
 As with all OWASP projects, we welcome comments and feedback. We especially like to know that our work is being used and that it is effective and accurate.
 
-## Principles of Testing
+## Principios de Pruebas
 
 There are some common misconceptions when developing a testing methodology to find security bugs in software. This chapter covers some of the basic principles that professionals should take into account when performing security tests on software.
 
-### There is No Silver Bullet
+### No Hay Bala de Plata
 
 While it is tempting to think that a security scanner or application firewall will provide many defenses against attack or identify a multitude of problems, in reality there is no silver bullet to the problem of insecure software. Application security assessment software, while useful as a first pass to find low-hanging fruit, is generally immature and ineffective at in-depth assessment or providing adequate test coverage. Remember that security is a process and not a product.
 
-### Think Strategically, Not Tactically
+### Pensar Estratégicamente, No Tácticamente
 
 Security professionals have come to realize the fallacy of the patch-and-penetrate model that was pervasive in information security during the 1990’s. The patch-and-penetrate model involves fixing a reported bug, but without proper investigation of the root cause. This model is usually associated with the window of vulnerability, also referred to as window of exposure, shown in the figure below. The evolution of vulnerabilities in common software used worldwide has shown the ineffectiveness of this model. For more information about windows of exposure, see [Schneier on Security](https://www.schneier.com/crypto-gram/archives/2000/0915.html).
 
@@ -96,7 +96,7 @@ Vulnerability studies such as [Symantec's Security Threat Report](https://www.sy
 There are several incorrect assumptions in the patch-and-penetrate model. Many users believe that patches interfere with normal operations or might break existing applications. It is also incorrect to assume that all users are aware of newly released patches. Consequently not all users of a product will apply patches, either because they think patching may interfere with how the software works, or because they lack knowledge about the existence of the patch.
 
 ![Window of Vulnerability](images/WindowExposure.png)\
-*Figure 2-2: Window of Vulnerability*
+*Figura 2-2: Window of Vulnerability*
 
 It is essential to build security into the Software Development Lifecycle (SDLC) to prevent reoccurring security problems within an application. Developers can build security into the SDLC by developing standards, policies, and guidelines that fit and work within the development methodology. Threat modeling and other techniques should be used to help assign appropriate resources to those parts of a system that are most at risk.
 
@@ -160,7 +160,7 @@ To conclude the testing process, it is important to produce a formal record of w
 
 The report should clearly identify to the business owner where material risks exist, and do so in a manner sufficient to get their backing for subsequent mitigation actions. The report should also be clear to the developer in pin-pointing the exact function that is affected by the vulnerability and associated recommendations for resolving issues in a language that the developer will understand. The report should also allow another security tester to reproduce the results. Writing the report should not be overly burdensome on the security tester themselves. Security testers are not generally renowned for their creative writing skills, and agreeing on a complex report can lead to instances where test results are not properly documented. Using a security test report template can save time and ensure that results are documented accurately and consistently, and are in a format that is suitable for the audience.
 
-## Testing Techniques Explained
+## Técnicas de Pruebas Explicadas
 
 This section presents a high-level overview of various testing techniques that can be employed when building a testing program. It does not present specific methodologies for these techniques, as this information is covered in Chapter 3. This section is included to provide context for the framework presented in the next chapter and to highlight the advantages or disadvantages of some of the techniques that should be considered. In particular, we will cover:
 
@@ -276,7 +276,7 @@ Many people use web application penetration testing as their primary security te
 - Too late in the SDLC
 - Front-impact testing only
 
-## The Need for a Balanced Approach
+## La Necesidad de un Enfoque Equilibrado
 
 With so many techniques and approaches to testing the security of web applications, it can be difficult to understand which techniques to use or when to use them. Experience shows that there is no right or wrong answer to the question of exactly which techniques should be used to build a testing framework. In fact, all techniques should be used to test all the areas that need to be tested.
 
@@ -289,12 +289,12 @@ Of course there are times and circumstances where only one technique is possible
 A balanced approach varies depending on many factors, such as the maturity of the testing process and corporate culture. It is recommended that a balanced testing framework should look something like the representations shown in Figure 3 and Figure 4. The following figure shows a typical proportional representation overlaid onto the SLDC. In keeping with research and experience, it is essential that companies place a higher emphasis on the early stages of development.
 
 ![Proportion of Test Effort in SDLC](images/ProportionSDLC.png)\
-*Figure 2-3: Proportion of Test Effort in SDLC*
+*Figura 2-3: Proportion of Test Effort in SDLC*
 
 The following figure shows a typical proportional representation overlaid onto testing techniques.
 
 ![Proportion of Test Effort According to Test Technique](images/ProportionTest.png)\
-*Figure 2-4: Proportion of Test Effort According to Test Technique*
+*Figura 2-4: Proportion of Test Effort According to Test Technique*
 
 ### A Note about Web Application Scanners
 
@@ -339,7 +339,7 @@ As the scheme is explained the inadequacies can be worked out. Anyone that figur
 
 Many organizations have started to use static source code scanners. While they undoubtedly have a place in a comprehensive testing program, it is necessary to highlight some fundamental issues about why this approach is not effective when used alone. Static source code analysis alone cannot identify issues due to flaws in the design, since it cannot understand the context in which the code is constructed. Source code analysis tools are useful in determining security issues due to coding errors, however significant manual effort is required to validate the findings.
 
-## Deriving Security Test Requirements
+## Derivación de Requisitos de Pruebas de Seguridad
 
 To have a successful testing program, one must know what the testing objectives are. These objectives are specified by the security requirements. This section discusses in detail how to document requirements for security testing by deriving them from applicable standards and regulations, from positive application requirements (specifying what the application is supposed to do), and from negative application requirements (specifying what the application should not do). It also discusses how security requirements effectively drive security testing during the SDLC and how security test data can be used to effectively manage software security risks.
 
@@ -347,7 +347,7 @@ To have a successful testing program, one must know what the testing objectives 
 
 One of the objectives of security testing is to validate that security controls operate as expected. This is documented via `security requirements` that describe the functionality of the security control. At a high level, this means proving confidentiality, integrity, and availability of the data as well as the service. The other objective is to validate that security controls are implemented with few or no vulnerabilities. These are common vulnerabilities, such as the [OWASP Top Ten](https://owasp.org/www-project-top-ten/), as well as vulnerabilities that have been previously identified with security assessments during the SDLC, such as threat modeling, source code analysis, and penetration test.
 
-### Security Requirements Documentation
+### Documentación de Requisitos de Seguridad
 
 The first step in the documentation of security requirements is to understand the `business requirements`. A business requirement document can provide initial high-level information on the expected functionality of the application. For example, the main purpose of an application may be to provide financial services to customers or to allow goods to be purchased from an on-line catalog. A security section of the business requirements should highlight the need to protect the customer data as well as to comply with applicable security documentation such as regulations, standards, and policies.
 
@@ -418,7 +418,7 @@ For example, in the case of authentication controls, the following security requ
 
 Threat modeling tools such as threat trees and attack libraries can be useful to derive the negative test scenarios. A threat tree will assume a root attack (e.g., attacker might be able to read other users' messages) and identify different exploits of security controls (e.g., data validation fails because of a SQL injection vulnerability) and necessary countermeasures (e.g., implement data validation and parametrized queries) that could be validated to be effective in mitigating such attacks.
 
-### Deriving Security Test Requirements Through Use and Misuse Cases
+### Derivación de Requisitos de Pruebas de Seguridad Through Use and Misuse Cases
 
 A prerequisite to describing the application functionality is to understand what the application is supposed to do and how. This can be done by describing use cases. Use cases, in the graphical form as is commonly used in software engineering, show the interactions of actors and their relations. They help to identify the actors in the application, their relationships, the intended sequence of actions for each scenario, alternative actions, special requirements, preconditions, and post-conditions.
 
@@ -441,7 +441,7 @@ Attacker breaks the authentication through a brute force or dictionary attack of
 The graphical example below depicts the derivation of security requirements via use and misuse cases. The functional scenario consists of the user actions (entering a username and password) and the application actions (authenticating the user and providing an error message if validation fails). The misuse case consists of the attacker actions, i.e. trying to break authentication by brute forcing the password via a dictionary attack and by guessing the valid usernames from error messages. By graphically representing the threats to the user actions (misuses), it is possible to derive the countermeasures as the application actions that mitigate such threats.
 
 ![Use and Misuse case](images/640px-UseAndMisuseCase.png)\
-*Figure 2-5: Use and Misuse Case*
+*Figura 2-5: Use and Misuse Case*
 
 #### Step 4: Elicit the Security Requirements
 
@@ -453,7 +453,7 @@ In this case, the following security requirements for authentication are derived
 
 These security requirements need to be documented and tested.
 
-## Security Tests Integrated in Development and Testing Workflows
+## Pruebas de Seguridad Integradas en Flujos de Trabajo de Desarrollo y Pruebas
 
 ### Security Testing in the Development Workflow
 
@@ -520,7 +520,7 @@ A more in-depth security test might require the tester’s knowledge of speciali
 
 The next level of security testing after integration system tests is to perform security tests in the user acceptance environment. There are unique advantages to performing security tests in the operational environment. The user acceptance test (UAT) environment is the one that is most representative of the release configuration, with the exception of the data (e.g., test data is used in place of real data). A characteristic of security testing in UAT is testing for security configuration issues. In some cases these vulnerabilities might represent high risks. For example, the server that hosts the web application might not be configured with minimum privileges, valid HTTPS certificate and secure configuration, essential services disabled, and web root directory cleaned of test and administration web pages.
 
-## Security Test Data Analysis and Reporting
+## Análisis y Reportes de Datos de Pruebas de Seguridad
 
 ### Goals for Security Test Metrics and Measurements
 
