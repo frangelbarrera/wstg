@@ -319,7 +319,7 @@
           "id": "WSTG-ATHN-05",
           "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/04-Authentication_Testing/05-Testing_for_Vulnerable_Remember_Password",
           "objectives": [
-            "Validar que la sesión generada se gestione de manera segura y no ponga en peligro las credenciales del usuario."
+            ""
           ]
         },
         {
@@ -327,8 +327,7 @@
           "id": "WSTG-ATHN-06",
           "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/04-Authentication_Testing/06-Testing_for_Browser_Cache_Weaknesses",
           "objectives": [
-            "Revisar si la aplicación almacena información sensible en el lado del cliente.",
-            "Revisar si se puede acceder sin autorización."
+            ""
           ],
           "cre_ids": [
             "473-758"
@@ -434,8 +433,7 @@
           "id": "WSTG-ATHZ-04",
           "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/05-Authorization_Testing/04-Testing_for_Insecure_Direct_Object_References",
           "objectives": [
-            "Identificar puntos donde pueden ocurrir referencias a objetos.",
-            "Evaluar las medidas de control de acceso y si son vulnerables a IDOR."
+            ""
           ],
           "cre_ids": [
             "304-667"
@@ -513,7 +511,7 @@
           "id": "WSTG-SESS-05",
           "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/06-Session_Management_Testing/05-Testing_for_Cross_Site_Request_Forgery",
           "objectives": [
-            "Determinar si es posible iniciar solicitudes en nombre de un usuario que no son iniciadas por el usuario."
+            ""
           ],
           "cre_ids": [
             "464-084",
@@ -629,12 +627,11 @@
           ]
         },
         {
-          "name": "Testing for SQL Injection",
+          "name": "Pruebas de Inyección SQL",
           "id": "WSTG-INPV-05",
           "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/07-Input_Validation_Testing/05-Testing_for_SQL_Injection",
           "objectives": [
-            "Identificar puntos de inyección SQL.",
-            "Evaluar la gravedad de la inyección y el nivel de acceso que se puede lograr a través de ella."
+            ""
           ],
           "cre_ids": [
             "064-808",
