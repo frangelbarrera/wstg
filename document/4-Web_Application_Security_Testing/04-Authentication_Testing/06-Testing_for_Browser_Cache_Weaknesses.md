@@ -4,18 +4,18 @@
 |------------|
 |WSTG-ATHN-06|
 
-## Summary
+## Resumen
 
 En esta fase, el probador verifica que la aplicación instruya correctamente al navegador para que no retenga datos sensibles.
 
 Los navegadores pueden almacenar información con fines de caché e historial. La caché se utiliza para mejorar el rendimiento, de modo que la información previamente mostrada no necesite descargarse nuevamente. Los mecanismos de historial se utilizan para la comodidad del usuario, para que pueda ver exactamente lo que vio en el momento en que se recuperó el recurso. Si se muestra información sensible al usuario (como su dirección, detalles de tarjeta de crédito, número de seguridad social o nombre de usuario), entonces esta información podría almacenarse con fines de caché o historial, y por lo tanto ser recuperable examinando la caché del navegador o simplemente presionando el botón **Atrás** del navegador.
 
-## Test Objectives
+## Objetivos de Prueba
 
 - Revisar si la aplicación almacena información sensible en el lado del cliente.
 - Revisar si se puede acceder sin autorización.
 
-## How to Test
+## Cómo Probar
 
 ### Browser History
 
@@ -80,15 +80,15 @@ El manejo de directivas de caché puede ser completamente diferente para navegad
 
 Además, proxies personales como ZAP y Burp Suite permiten al probador especificar qué `User-Agent` debe enviarse por sus arañas/rastreadores. Esto podría configurarse para coincidir con una cadena de `User-Agent` de navegador móvil y usarse para ver qué directivas de caché se envían por la aplicación que se está probando.
 
-### Gray-Box Testing
+### Pruebas de Caja Gris
 
 La metodología para las pruebas es equivalente al caso de caja negra, ya que en ambos escenarios los probadores tienen acceso completo a los encabezados de respuesta del servidor y al código HTML. Sin embargo, con pruebas de caja gris, el probador puede tener acceso a credenciales de cuenta que les permitirán probar páginas sensibles que son accesibles solo para usuarios autenticados.
 
-## Tools
+## Herramientas
 
 - [Zed Attack Proxy (ZAP)](https://www.zaproxy.org)
 
-## References
+## Referencias
 
 ### Whitepapers
 

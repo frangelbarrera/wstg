@@ -186,7 +186,7 @@ A menudo, los paneles de administración o bits relacionados con la administraci
 Nota: Incluir un elemento de puerto junto con la dirección o nombre de host también puede ayudar a omitir protecciones de borde como firewalls de aplicaciones web, etc.
 Por ejemplo: `127.0.0.4:80`, `127.0.0.4:443`, `127.0.0.4:43982`
 
-## Remediation
+## Remediación
 
 Emplee los principios de menor privilegio en los usuarios, roles y recursos para asegurar que no ocurra acceso no autorizado.
 

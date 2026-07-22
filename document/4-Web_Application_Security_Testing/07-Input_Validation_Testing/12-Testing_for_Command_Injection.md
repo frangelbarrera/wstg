@@ -148,7 +148,7 @@ Tenga en cuenta el uso de las siguientes API ya que pueden introducir riesgos de
 - `proc_open`
 - `eval`
 
-## Remediation
+## Remediación
 
 ### Sanitización
 

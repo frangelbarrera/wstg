@@ -32,7 +32,7 @@ Durante una assessment, para descubrir flaws de path traversal y file include, t
 
 ## Cómo Probar
 
-### Black-Box Testing
+### Pruebas de Caja Negra
 
 #### Input Vectors Enumeration
 
@@ -110,7 +110,7 @@ Puedes encontrar técnicas de encoding y payloads de directory traversal listos 
     - May be equivalent to a drive letter such as `c:\`, or even a drive volume without an assigned letter: `\\.\GLOBALROOT\Device\HarddiskVolume1\`
     - Refers to the first disc drive on the machine: `\\.\CdRom0\`
 
-### Gray-Box Testing
+### Pruebas de Caja Gris
 
 Cuando el analysis se realiza con un gray-box testing approach, testers tienen que follow la misma methodology como en black-box testing. However, since they can review the source code, it is possible to search the input vectors more easily and accurately. During a source code review, they can use simple tools (such as the *grep* command) to search for one or more common patterns within the application code: inclusion functions/methods, filesystem operations, and so on.
 

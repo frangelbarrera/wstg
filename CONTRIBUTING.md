@@ -21,7 +21,7 @@ Ya sea que estés enviando una nueva sección o agregando información a una exi
 
 Al enviar tu [solicitud de extracción](#cómo-enviar-una-solicitud-de-extracción), los autores deberían vincular contribuciones a un issue:
 
-1. Abre un [issue de Agregar Nuevo Contenido](https://github.com/OWASP/wstg/issues/new?assignees=&labels=New&template=new-content.md&title=), o elige un [issue de nuevo contenido no asignado](https://github.com/OWASP/wstg/issues?q=is%3Aopen+is%3Aissue+label%3ANew+no%3Aassignee) y pide ser asignado a él.
+1. Abre un [issue de Agregar Nuevo Contenido](https://github.com/frangelbarrera/wstg/issues/new?assignees=&labels=New&template=new-content.md&title=), o elige un [issue de nuevo contenido no asignado](https://github.com/frangelbarrera/wstg/issues?q=is%3Aopen+is%3Aissue+label%3ANew+no%3Aassignee) y pide ser asignado a él.
 2. Crea y cambia a una nueva rama local con el nombre `new-<número de issue>`. Por ejemplo, `git checkout -b new-164`.
 
 ## Conviértete en Revisor o Editor
@@ -30,7 +30,7 @@ Al enviar tu [solicitud de extracción](#cómo-enviar-una-solicitud-de-extracci�
 
 Al enviar tu [solicitud de extracción](#cómo-enviar-una-solicitud-de-extracción), revisores y editores deberían vincular contribuciones a un issue:
 
-1. Elige un [issue abierto con la etiqueta `help wanted`](https://github.com/OWASP/wstg/labels/help%20wanted) para trabajar, o [abre un issue](https://github.com/OWASP/wstg/issues/new/choose) tú mismo. Publica un comentario en el issue y solicita ser asignado a él.
+1. Elige un [issue abierto con la etiqueta `help wanted`](https://github.com/frangelbarrera/wstg/labels/help%20wanted) para trabajar, o [abre un issue](https://github.com/frangelbarrera/wstg/issues/new/choose) tú mismo. Publica un comentario en el issue y solicita ser asignado a él.
 2. Crea y cambia a una nueva rama local con el nombre `fix-<número de issue>`. Por ejemplo, `git checkout -b fix-88`.
 
 ### Revisión Técnica
@@ -53,13 +53,13 @@ Por favor no dudes en hacer tantos cambios como veas fit, especialmente si notas
 
 Debido a desafíos con sincronizar imágenes y contenido removido, el WSTG ya no está abordando esfuerzos de traducción entrante directamente.
 
-En este momento sugerimos que inicies otro repositorio en el que abordar traducciones de un idioma específico. Una vez que hayas producido un PDF para una versión dada de la guía estaremos felices de adjuntarlo al release apropiado. Simplemente [abre un issue](https://github.com/OWASP/wstg/issues/new) aquí pidiendo que lo hagamos.
+En este momento sugerimos que inicies otro repositorio en el que abordar traducciones de un idioma específico. Una vez que hayas producido un PDF para una versión dada de la guía estaremos felices de adjuntarlo al release apropiado. Simplemente [abre un issue](https://github.com/frangelbarrera/wstg/issues/new) aquí pidiendo que lo hagamos.
 
-También estamos dispuestos a listar tu repositorio de traducción, solo [házlo saber](https://github.com/OWASP/wstg/issues/new) dónde está.
+También estamos dispuestos a listar tu repositorio de traducción, solo [házlo saber](https://github.com/frangelbarrera/wstg/issues/new) dónde está.
 
 ## Cómo Abrir un Issue
 
-[Crea un issue](https://github.com/OWASP/wstg/issues/new/choose) usando la plantilla apropiada.
+[Crea un issue](https://github.com/frangelbarrera/wstg/issues/new/choose) usando la plantilla apropiada.
 
 Elige un título corto, descriptivo. Explica brevemente qué crees que necesita cambiar. Entre otras cosas, tus sugerencias pueden incluir errores de gramática o ortografía, o abordar contenido insuficiente o desactualizado.
 
@@ -68,7 +68,7 @@ Elige un título corto, descriptivo. Explica brevemente qué crees que necesita 
 Aquí están los pasos para crear y enviar una Solicitud de Extracción (PR) que podamos revisar y fusionar rápidamente.
 
 1. [Configura tu entorno](#cómo-configurar-tu-entorno-de-contribuidor) para forkear el proyecto e instalar un linter de Markdown.
-2. Asocia tu contribución con un [issue](https://github.com/OWASP/wstg/issues). Para cambiar contenido existente, lee [Conviértete en Revisor o Editor](#conviértete-en-revisor-o-editor). Para hacer adiciones, lee [Conviértete en Autor](#conviértete-en-autor).
+2. Asocia tu contribución con un [issue](https://github.com/frangelbarrera/wstg/issues). Para cambiar contenido existente, lee [Conviértete en Revisor o Editor](#conviértete-en-revisor-o-editor). Para hacer adiciones, lee [Conviértete en Autor](#conviértete-en-autor).
 3. Haz tus modificaciones. Asegúrate de seguir nuestra [guía de estilo](style_guide.md).
 4. Cuando estés listo para enviar tu trabajo, empuja tus cambios a tu fork. Asegura que tu fork esté [sincronizado con `master`](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/syncing-a-fork).
 5. Puedes enviar una [PR borrador](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/about-pull-requests#draft-pull-requests) o una [PR regular](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request-from-a-fork). Si tu trabajo no está listo para revisión y fusión, elige una PR borrador. Cuando tus cambios estén listos para ser revisados, puedes convertir a una PR regular. Ver [cómo cambiar el stage de una PR](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/changing-the-stage-of-a-pull-request) para más.

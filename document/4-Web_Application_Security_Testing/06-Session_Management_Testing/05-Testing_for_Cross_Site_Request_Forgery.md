@@ -4,7 +4,7 @@
 |------------|
 |WSTG-SESS-05|
 
-## Summary
+## Resumen
 
 La Falsificación de Solicitud entre Sitios ([CSRF](https://owasp.org/www-community/attacks/csrf)) es un ataque que fuerza a un usuario final a ejecutar acciones no intencionadas en una aplicación web en la que están actualmente autenticados. Con un poco de ayuda de ingeniería social (como enviar un enlace por correo electrónico o chat), un atacante puede forzar a los usuarios de una aplicación web a ejecutar acciones de su elección. Un exploit CSRF exitoso puede comprometer los datos y operaciones del usuario final cuando apunta a un usuario normal. Si el usuario final objetivo es la cuenta de administrador, un ataque CSRF puede comprometer toda la aplicación web.
 
@@ -110,11 +110,11 @@ Una cosa interesante es que estas vulnerabilidades pueden ejercerse detrás de u
 
 Aplicaciones auto-vulnerables, es decir, aplicaciones que se usan tanto como vector de ataque como objetivo (como aplicaciones de correo web), empeoran las cosas. Dado que los usuarios están conectados cuando leen sus mensajes de correo electrónico, una aplicación vulnerable de este tipo puede permitir a los atacantes realizar acciones como eliminar mensajes o enviar mensajes que parecen originarse de la víctima.
 
-## Test Objectives
+## Objetivos de Prueba
 
 - Determinar si es posible iniciar solicitudes en nombre de un usuario que no son iniciadas por el usuario.
 
-## How to Test
+## Cómo Probar
 
 Audite la aplicación para determinar si su gestión de sesiones es vulnerable. Si la gestión de sesiones depende únicamente de valores del lado del cliente (información disponible para el navegador), entonces la aplicación es vulnerable. "Valores del lado del cliente" se refiere a cookies y credenciales de autenticación HTTP (Autenticación Básica y otras formas de autenticación HTTP; no autenticación basada en formularios, que es autenticación a nivel de aplicación).
 
@@ -165,17 +165,17 @@ Content-Type: text/plain
 
 Cuando estos datos se envían como una solicitud POST, el servidor aceptará felizmente los campos de nombre y contraseña e ignorará el de relleno ya que no lo necesita.
 
-## Remediation
+## Remediación
 
 - Consulte la [OWASP CSRF Prevention Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html) para medidas de prevención.
 
-## Tools
+## Herramientas
 
 - [ZAP](https://www.zaproxy.org/)
 - [CSRF Tester](https://wiki.owasp.org/index.php/Category:OWASP_CSRFTester_Project)
 - [Pinata-csrf-tool](https://code.google.com/archive/p/pinata-csrf-tool/)
 
-## References
+## Referencias
 
 - [Peter W: "Cross-Site Request Forgeries"](https://web.archive.org/web/20160303230910/http://www.tux.org/~peterw/csrf.txt)
 - [Thomas Schreiber: "Session Riding"](https://web.archive.org/web/20160304001446/https://www.securenet.de/papers/Session_Riding.pdf)

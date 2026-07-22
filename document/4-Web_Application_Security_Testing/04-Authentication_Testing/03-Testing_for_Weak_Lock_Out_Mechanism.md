@@ -75,7 +75,7 @@ Para evaluar la resistencia del mecanismo de desbloqueo al desbloqueo no autoriz
 
 Tenga en cuenta que un mecanismo de desbloqueo debería usarse solo para desbloquear cuentas. No es lo mismo que un mecanismo de recuperación de contraseña, aunque podría seguir las mismas prácticas de seguridad.
 
-## Remediation
+## Remediación
 
 Aplique mecanismos de desbloqueo de cuentas dependiendo del nivel de riesgo. En orden de menor a mayor garantía:
 

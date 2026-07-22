@@ -15,7 +15,7 @@ Si usas esta traducción en reports, conferencias o cursos, ¡menciónanos!
 
 # Guía de Pruebas de Seguridad Web de OWASP
 
-[![Contribuciones Bienvenidas](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/OWASP/wstg/issues)
+[![Contribuciones Bienvenidas](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/frangelbarrera/wstg/issues)
 [![Bandera OWASP](https://img.shields.io/badge/owasp-flagship-brightgreen.svg)](https://owasp.org/projects/)
 [![Seguir en Twitter](https://img.shields.io/twitter/follow/owasp_wstg?style=social)](https://x.com/owasp_wstg)
 
@@ -23,9 +23,9 @@ Si usas esta traducción en reports, conferencias o cursos, ¡menciónanos!
 
 Bienvenido al repositorio oficial del Proyecto de Seguridad de Aplicaciones Web Abierto Mundial® (OWASP®) Guía de Pruebas de Seguridad Web (WSTG). La WSTG es una guía completa para probar la seguridad de aplicaciones web y servicios web. Creada por los esfuerzos colaborativos de profesionales de seguridad y voluntarios dedicados, la WSTG proporciona un marco de mejores prácticas utilizado por probadores de penetración y organizaciones en todo el mundo.
 
-Actualmente estamos trabajando en la versión de lanzamiento 5.0. Puedes [leer el documento actual aquí en GitHub](https://github.com/OWASP/wstg/tree/master/document).
+Esta traducción está basada en la versión más reciente (latest) del repositorio oficial [OWASP/wstg](https://github.com/OWASP/wstg), que está trabajando en la versión de lanzamiento 5.0. Puedes [leer el documento original en inglés aquí](https://github.com/OWASP/wstg/tree/master/document).
 
-Para la última versión estable, [consulta la versión 4.2](https://github.com/OWASP/wstg/releases/tag/v4.2). También disponible [en línea](https://owasp.org/www-project-web-security-testing-guide/v42/).
+Para la última versión estable del original, [consulta la versión 4.2](https://github.com/OWASP/wstg/releases/tag/v4.2). También disponible [en línea](https://owasp.org/www-project-web-security-testing-guide/v42/).
 
 - [Cómo Referenciar Escenarios WSTG](#cómo-referenciar-escenarios-wstg)
     - [Enlazado](#enlazado)
@@ -51,7 +51,7 @@ Los enlaces a escenarios de la Guía de Pruebas de Seguridad Web deben hacerse u
 
 ¡Estamos invitando activamente a nuevos contribuyentes! Para comenzar, lee la [guía de contribución](CONTRIBUTING.md).
 
-¿Primera vez aquí? Aquí están las [sugerencias de GitHub para contribuyentes primerizos](https://github.com/OWASP/wstg/contribute) a este repositorio.
+¿Primera vez aquí? Aquí están las [sugerencias de GitHub para contribuyentes primerizos](https://github.com/frangelbarrera/wstg/contribute) a este repositorio.
 
 Este proyecto solo es posible gracias al trabajo de muchos voluntarios dedicados. Todos están alentados a ayudar de maneras grandes y pequeñas. Aquí hay algunas formas en que puedes ayudar:
 
@@ -89,6 +89,7 @@ También puedes unirte a nuestro [Grupo de Google](https://groups.google.com/a/o
 
 ## Traducciones
 
+- **Español** (este repositorio): [frangelbarrera/wstg](https://github.com/frangelbarrera/wstg)
 - [Portugués-BR](https://github.com/doverh/wstg-translations-pt)
 - [Ruso](https://github.com/andrettv/WSTG/tree/master/WSTG-ru)
 - [Persa (Farsi)](https://github.com/whoismh11/owasp-wstg-fa)

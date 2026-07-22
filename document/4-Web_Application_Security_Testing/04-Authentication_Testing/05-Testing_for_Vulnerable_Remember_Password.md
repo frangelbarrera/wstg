@@ -4,7 +4,7 @@
 |------------|
 |WSTG-ATHN-05|
 
-## Summary
+## Resumen
 
 Las credenciales son la tecnología de autenticación más ampliamente utilizada. Debido a tal amplio uso de pares usuario-contraseña, los usuarios ya no pueden manejar correctamente sus credenciales en la multitud de aplicaciones utilizadas.
 
@@ -13,11 +13,11 @@ Para ayudar a los usuarios con sus credenciales, surgieron múltiples tecnologí
 - Las aplicaciones proporcionan una funcionalidad de "recordarme" que permite al usuario permanecer autenticado durante largos períodos de tiempo, sin pedirle nuevamente sus credenciales.
 - Administradores de contraseñas - incluyendo administradores de contraseñas del navegador - que permiten al usuario almacenar sus credenciales de manera segura y posteriormente inyectarlas en formularios de usuario sin intervención del usuario.
 
-## Test Objectives
+## Objetivos de Prueba
 
 - Validar que la sesión generada se gestione de manera segura y no ponga en peligro las credenciales del usuario.
 
-## How to Test
+## Cómo Probar
 
 Como estos métodos proporcionan una mejor experiencia de usuario y permiten al usuario olvidar todo sobre sus credenciales, aumentan el área de superficie de ataque. Algunas aplicaciones:
 
@@ -27,7 +27,7 @@ Como estos métodos proporcionan una mejor experiencia de usuario y permiten al 
     - Ataques de [CSRF](../06-Session_Management_Testing/05-Testing_for_Cross_Site_Request_Forgery.md).
 - Los tokens deberían analizarse en términos de vida útil del token, donde algunos tokens nunca expiran y ponen a los usuarios en peligro si esos tokens alguna vez son robados. Asegúrese de seguir el escenario de pruebas de [tiempo de espera de sesión](../06-Session_Management_Testing/07-Testing_Session_Timeout.md).
 
-## Remediation
+## Remediación
 
 - Seguir las buenas prácticas de [gestión de sesión](https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html).
 - Asegurarse de que ninguna credencial se almacene en texto claro o sea fácilmente recuperable en formas codificadas o encriptadas en mecanismos de almacenamiento del navegador; deberían almacenarse del lado servidor y seguir buenas prácticas de [almacenamiento de contraseñas](https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html).

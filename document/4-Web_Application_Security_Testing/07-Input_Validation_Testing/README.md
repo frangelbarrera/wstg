@@ -46,9 +46,9 @@
 
 4.7.14 [Pruebas de Vulnerabilidad Incubada](14-Testing_for_Incubated_Vulnerability.md)
 
-4.7.15 [Pruebas de División Smuggling HTTP](15-Testing_for_HTTP_Splitting_Smuggling.md)
+4.7.15 [Pruebas de División de Respuesta HTTP](15-Testing_for_HTTP_Response_Splitting.md)
 
-4.7.16 [Pruebas de Solicitudes Entrantes HTTP](16-Testing_for_HTTP_Incoming_Requests.md)
+4.7.16 [Pruebas de Smuggling de Solicitudes HTTP](16-Testing_for_HTTP_Request_Smuggling.md)
 
 4.7.17 [Pruebas de Inyección de Header de Host](17-Testing_for_Host_Header_Injection.md)
 
@@ -57,3 +57,7 @@
 4.7.19 [Pruebas de Falsificación de Solicitud del Lado del Servidor](19-Testing_for_Server-Side_Request_Forgery.md)
 
 4.7.20 [Pruebas de Asignación Masiva](20-Testing_for_Mass_Assignment.md)
+
+4.7.21 [Pruebas de Inyección CSV](21-Testing_for_CSV_Injection.md)
+
+4.7.22 [Pruebas de Prototype Pollution](22-Testing_for_Prototype_Pollution.md)

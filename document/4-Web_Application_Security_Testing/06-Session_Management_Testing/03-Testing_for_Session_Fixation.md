@@ -103,7 +103,7 @@ Aquí están los pasos para ejecutar esta prueba:
 
 Recomendamos usar dos máquinas o navegadores diferentes para la víctima y el atacante. Esto permite disminuir el número de falsos positivos si la aplicación web hace fingerprinting para verificar el acceso habilitado desde una cookie dada. Una variante más corta pero menos precisa de la estrategia de prueba solo requiere una cuenta de prueba. Sigue los mismos pasos, pero se detiene en el paso 6.
 
-## Remediation
+## Remediación
 
 Implementar una renovación del token de sesión después de que un usuario se autentique exitosamente.
 

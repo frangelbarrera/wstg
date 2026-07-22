@@ -41,7 +41,7 @@ En contraste, en el ejemplo de Google abajo los requisitos de identificación in
 ![Página de Registro de Google](images/Google_registration_page.jpg)\
  *Figura 4.3.2-2: Página de Registro de Google*
 
-## Remediation
+## Remediación
 
 Implementar requisitos de identificación y verificación que correspondan a los requisitos de seguridad de la información que las credenciales protegen.
 

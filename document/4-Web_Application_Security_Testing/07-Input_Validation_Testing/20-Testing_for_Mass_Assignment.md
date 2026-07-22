@@ -155,7 +155,7 @@ Identifique los controladores luego verifique si hay controles en su lugar (tant
 - lista de campos enlazables vía atributo `Bind` (ej. `[Bind(Include = "FirstName, LastName")] Student std`), vía `includeProperties` (ej. `includeProperties: new[] { "FirstName, LastName" }`) o a través de `TryUpdateModel`
 - lista de campos no enlazables vía atributo `Bind` (ej. `[Bind(Exclude = "Status")] Student std`) o vía `excludeProperties` (ej. `excludeProperties: new[] { "Status" }`)
 
-## Remediation
+## Remediación
 
 Use características integradas, proporcionadas por marcos de trabajo, para definir campos enlazables y no enlazables. Un enfoque basado en campos permitidos (enlazables), en el que solo las propiedades que deben actualizarse por el usuario se definen explícitamente, es preferible.
 Un enfoque arquitectónico para prevenir el problema es usar el patrón *Data Transfer Object* (DTO) para evitar el enlace directo. El DTO debe incluir solo los campos que se pretenden editar por el usuario.

@@ -92,7 +92,7 @@ A veces la aplicación permite entrada que coincide con una cierta expresión, c
 
 Para payloads adicionales y técnicas de bypass, consulte la [sección de referencias](#references).
 
-## Remediation
+## Remediación
 
 SSRF se conoce como uno de los ataques más difíciles de derrotar sin el uso de listas de permitidos que requieren IPs y URLs específicas para ser permitidas. Para más sobre prevención de SSRF, lea la [Hoja de referencia de prevención de falsificación de solicitudes del lado del servidor](https://cheatsheetseries.owasp.org/cheatsheets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html).
 

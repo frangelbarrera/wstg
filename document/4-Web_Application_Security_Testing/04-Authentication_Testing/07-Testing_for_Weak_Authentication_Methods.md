@@ -27,7 +27,7 @@ Además, las aplicaciones pueden utilizar credenciales alternativas que se trata
 8. ¿Es posible establecer contraseñas comunes como `Password1` o `123456`?
 9. ¿La credencial elegida para el usuario por la aplicación, como un número de seguridad social o una fecha de nacimiento? ¿La credencial que se utiliza en lugar de una contraseña estándar es fácilmente obtenible, predecible o susceptible a ataques de fuerza bruta?
 
-## Remediation
+## Remediación
 
 Para mitigar el riesgo de que contraseñas fácilmente adivinables faciliten el acceso no autorizado, hay dos soluciones: introducir controles de autenticación adicionales (es decir, autenticación de dos factores) o introducir una política de contraseñas fuertes. La más simple y barata de estas es la introducción de una política de contraseñas fuertes que garantice la longitud, complejidad, reutilización y envejecimiento de las contraseñas; aunque idealmente ambas deberían implementarse.
 

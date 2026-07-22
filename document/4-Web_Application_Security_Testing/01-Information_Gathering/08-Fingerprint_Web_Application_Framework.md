@@ -14,7 +14,7 @@ No sería un stretch decir que casi cada idea concebible para una aplicación we
 
 ## Cómo Probar
 
-### Black-Box Testing
+### Pruebas de Caja Negra
 
 There are several common locations to consider in order to identify frameworks or components:
 
@@ -215,7 +215,7 @@ As can be seen in the following screenshot the listed file system path points to
 | Business Catalyst | `<!-- BC_OBNW -->`       |
 | Indexhibit        | `ndxz-studio`                  |
 
-## Remediation
+## Remediación
 
 While efforts can be made to use different cookie names (through changing configs), hiding or changing file/directory paths (through rewriting or source code changes), removing known headers, etc., such efforts boil down to "security through obscurity". System owners/administrators should recognize that such efforts only slow down the most rudimentary adversaries. The time and effort might be better spent on increasing stakeholder awareness and maintaining solutions.
 

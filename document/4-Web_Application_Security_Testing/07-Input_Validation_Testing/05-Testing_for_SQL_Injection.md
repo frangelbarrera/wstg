@@ -1,10 +1,10 @@
-# Testing for SQL Injection
+# Pruebas de Inyección SQL
 
 |ID          |
 |------------|
 |WSTG-INPV-05|
 
-## Summary
+## Resumen
 
 Las pruebas de inyección SQL verifican si es posible inyectar datos en una aplicación/sitio para que ejecute una consulta SQL controlada por el usuario en la base de datos. Los evaluadores encuentran una vulnerabilidad de inyección SQL si la aplicación utiliza la entrada del usuario para crear consultas SQL sin validación de entrada adecuada. La explotación exitosa de esta clase de vulnerabilidad permite a un usuario no autorizado acceder o manipular datos en la base de datos, lo cual, como ya sabrás, es bastante malo.
 
@@ -38,12 +38,12 @@ Sobre las técnicas para explotar fallos de inyección SQL, hay cinco técnicas 
 - Out-of-band: la técnica utilizada para recuperar datos utilizando un canal diferente (por ejemplo, hacer una conexión HTTP para enviar los resultados a un servidor web).
 - Retraso de tiempo: utiliza comandos de base de datos (por ejemplo, sleep) para retrasar respuestas en consultas condicionales. Es útil cuando el atacante no tiene alguna respuesta (resultado, salida o error) de la aplicación.
 
-## Test Objectives
+## Objetivos de Prueba
 
 - Identificar puntos de inyección SQL.
 - Evaluar la gravedad de la inyección y el nivel de acceso que se puede lograr a través de ella.
 
-## How to Test
+## Cómo Probar
 
 ### Detection Techniques
 
@@ -786,21 +786,21 @@ Por ejemplo, si una aplicación web permite a los usuarios ingresar un código d
 
 Esta técnica también se podría usar para determinar códigos de descuento exactos a través de consultas cada vez más específicas (como `a%`, `b%`, `ba%`, etc).
 
-## Remediation
+## Remediación
 
 - Para asegurar la aplicación contra vulnerabilidades de inyección SQL, referirse a la [Hoja de Trucos de Prevención de Inyección SQL](https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html).
 - Para asegurar el servidor SQL, referirse a la [Hoja de Trucos de Seguridad de Base de Datos](https://cheatsheetseries.owasp.org/cheatsheets/Database_Security_Cheat_Sheet.html).
 
 Para validación de entrada genérica de seguridad, referirse a la [Hoja de Trucos de Validación de Entrada](https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html).
 
-## Tools
+## Herramientas
 
 - [Cadenas de Fuzz de Inyección SQL (de la herramienta wfuzz) - Fuzzdb](https://github.com/fuzzdb-project/fuzzdb/tree/master/attack/sql-injection)
 - [Bernardo Damele A. G.: sqlmap, herramienta automática de inyección SQL](https://sqlmap.org/)
 - [Muhaimin Dzulfakar: MySqloit, herramienta de apropiación de inyección MySql](https://github.com/dtrip/mysqloit)
 - [Inyección SQL - PayloadsAllTheThings](https://github.com/swisskyrepo/PayloadsAllTheThings/tree/master/SQL%20Injection)
 
-## References
+## Referencias
 
 - [Top 10 2017-A1-Injection](https://owasp.org/www-project-top-ten/2017/A1_2017-Injection)
 - [Inyección SQL](https://owasp.org/www-community/attacks/SQL_Injection)

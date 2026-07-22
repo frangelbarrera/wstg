@@ -4,18 +4,18 @@
 |------------|
 |WSTG-ATHZ-04|
 
-## Summary
+## Resumen
 
 Las referencias directas a objetos inseguras (IDOR) ocurren cuando una aplicación proporciona acceso directo a objetos basado en la entrada proporcionada por el usuario. Como resultado de esta vulnerabilidad, los atacantes pueden eludir la autorización y acceder directamente a recursos en el sistema, por ejemplo, registros de base de datos o archivos.
 
 Las referencias directas a objetos inseguras permiten a los atacantes eludir la autorización y acceder directamente a recursos modificando el valor de un parámetro utilizado para apuntar directamente a un objeto. Tales recursos pueden ser entradas de base de datos pertenecientes a otros usuarios, archivos en el sistema, y más. Esto se debe a que la aplicación toma la entrada proporcionada por el usuario y la utiliza para recuperar un objeto sin realizar comprobaciones de autorización suficientes.
 
-## Test Objectives
+## Objetivos de Prueba
 
 - Identificar puntos donde pueden ocurrir referencias a objetos.
 - Evaluar las medidas de control de acceso y si son vulnerables a IDOR.
 
-## How to Test
+## Cómo Probar
 
 Para probar esta vulnerabilidad, el evaluador primero necesita mapear todas las ubicaciones en la aplicación donde la entrada del usuario se utiliza para referenciar objetos directamente. Por ejemplo, ubicaciones donde la entrada del usuario se utiliza para acceder a una fila de base de datos, un archivo, páginas de aplicación y más. A continuación, el evaluador debe modificar el valor del parámetro utilizado para referenciar objetos y evaluar si es posible recuperar objetos pertenecientes a otros usuarios o eludir la autorización de otra manera.
 
@@ -71,6 +71,6 @@ En este caso, el valor del parámetro `menuitem` se utiliza para indicar a la ap
 
 En los ejemplos anteriores, la modificación de un solo parámetro es suficiente. Sin embargo, a veces la referencia al objeto puede estar dividida entre más de un parámetro, y las pruebas deben ajustarse en consecuencia.
 
-## References
+## Referencias
 
 [Top 10 2013-A4-Referencias directas a objetos inseguras](https://owasp.org/www-project-top-ten/2017/Release_Notes)
