@@ -253,12 +253,11 @@
           ]
         },
         {
-          "name": "Testing for Account Enumeration and Guessable User Account",
+          "name": "Pruebas de Enumeración de Cuentas y Cuenta de Usuario Adivinable",
           "id": "WSTG-IDNT-04",
           "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/03-Identity_Management_Testing/04-Testing_for_Account_Enumeration_and_Guessable_User_Account",
           "objectives": [
-            "Review processes that pertain to user identification (*e.g.* registration, login, etc.).",
-            "Enumerate users where possible through response analysis."
+            ""
           ]
         },
         {
@@ -751,25 +750,19 @@
           ]
         },
         {
-          "name": "Testing for HTTP Response Splitting",
+          "name": "Pruebas de HTTP Response Splitting",
           "id": "WSTG-INPV-15",
           "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/07-Input_Validation_Testing/15-Testing_for_HTTP_Response_Splitting",
           "objectives": [
-            "Identify user-controlled input that is reflected into HTTP response headers.",
-            "Assess whether CR (`\\r`) and LF (`\\n`) characters can be injected into response headers.",
-            "Determine the potential impact of successful HTTP Response Splitting attacks, such as cache poisoning or client-side exploitation."
+            ""
           ]
         },
         {
-          "name": "Testing for HTTP Request Smuggling",
+          "name": "Pruebas de HTTP Request Smuggling",
           "id": "WSTG-INPV-16",
           "reference": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/07-Input_Validation_Testing/16-Testing_for_HTTP_Request_Smuggling",
           "objectives": [
-            "Identify request boundary inconsistencies between frontend and backend components",
-            "Detect classic CL/TE desynchronization vulnerabilities",
-            "Evaluate protocol translation logic (HTTP/2 → HTTP/1.1)",
-            "Assess H2C upgrade handling and downgrade safety",
-            "Confirm backend request queue poisoning"
+            ""
           ]
         },
         {
