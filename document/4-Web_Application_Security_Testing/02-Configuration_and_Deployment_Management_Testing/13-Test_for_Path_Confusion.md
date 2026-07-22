@@ -1,36 +1,36 @@
-# Test Path Confusion
+# Probar Path Confusion
 
 |ID          |
 |------------|
 |WSTG-CONF-13|
 
-## Summary
+## Resumen
 
-Proper configuration of application paths is important because, if paths are not configured correctly, they allow an attacker to exploit other vulnerabilities at a later stage using this misconfiguration.
+La configuración apropiada de las rutas de aplicación es importante porque, si las rutas no se configuran correctamente, permiten a un atacante explotar otras vulnerabilias en una etapa posterior usando esta mala configuración.
 
-For example, if the routes are not configured correctly and the target also uses a CDN, the attacker can use this misconfiguration to execute web cache deception attacks.
+Por ejemplo, si las rutas no se configuran correctamente y el objetivo también usa un CDN, el atacante puede usar esta mala configuración para ejecutar ataques de engaño de caché web.
 
-As a result, to prevent other attacks, this configuration should be evaluated by the tester.
+Como resultado, para prevenir otros ataques, esta configuración debería ser evaluada por el tester.
 
-## Test Objectives
+## Objetivos de Prueba
 
-- Make sure application paths are configured correctly.
+- Asegurar que las rutas de aplicación estén configuradas correctamente.
 
-## How To Test
+## Cómo Probar
 
-### Black-Box Testing
+### Pruebas de Caja Negra
 
-In a black-box testing scenario, the tester should replace all the existing paths with paths that do not exist, and then examine the behavior and status code of the target.
+En un escenario de pruebas de caja negra, el tester debería reemplazar todas las rutas existentes con rutas que no existen, y luego examinar el comportamiento y código de estado del objetivo.
 
-For example, there is a path in the application that is a dashboard and shows the amount of the user's account balance (money, game credits, etc).
+Por ejemplo, hay una ruta en la aplicación que es un dashboard y muestra la cantidad del saldo de cuenta del usuario (dinero, créditos de juego, etc).
 
-Assume the path is `https://example.com/user/dashboard`, the tester should test the different modes that the developer may have considered for this path. For Web Cache Deception vulnerabilities the analyst should consider a path such as `https:// example.com/user/dashboard/non.js` if dashboard information is visible, and the target uses a CDN (or other web cache), then Web Cache Deception attacks are likely applicable.
+Asumir que la ruta es `https://example.com/user/dashboard`, el tester debería probar los diferentes modos que el desarrollador podría haber considerado para esta ruta. Para vulnerabilidades de Web Cache Deception el analista debería considerar una ruta tal como `https://example.com/user/dashboard/non.js` si la información del dashboard es visible, y el objetivo usa un CDN (u otra caché web), entonces los ataques de Web Cache Deception son probablemente aplicables.
 
-### White-Box Testing
+### Pruebas de Caja Blanca
 
-Examine the application routing configuration, Most of the time, developers use regular expressions in application routing.
+Examinar la configuración de enrutamiento de la aplicación, la mayoría del tiempo, los desarrolladores usan expresiones regulares en el enrutamiento de la aplicación.
 
-In this example, in the `urls.py` file of a Django framework application, we see an example of Path Confusion. The developer did not use the correct regular expression resulting in a vulnerability:
+En este ejemplo, en el archivo `urls.py` de una aplicación del framework Django, vemos un ejemplo de Path Confusion. El desarrollador no usó la expresión regular correcta resultando en una vulnerabilidad:
 
 ```python
     from django.urls import re_path
@@ -43,20 +43,20 @@ In this example, in the `urls.py` file of a Django framework application, we see
     ]
 ```
 
-If the path `https://example.com/dashboard/none.js` is also opened by the user in the browser, the user dashboard information can be displayed, and if the target uses a CDN or web cache, a Web Cache Deception attack can be implemented.
+Si la ruta `https://example.com/dashboard/none.js` también es abierta por el usuario en el navegador, la información del dashboard del usuario puede mostrarse, y si el objetivo usa un CDN o caché web, un ataque de Web Cache Deception puede implementarse.
 
-## Tools
+## Herramientas
 
 - [Zed Attack Proxy](https://www.zaproxy.org)
 - [Burp Suite](https://portswigger.net/burp)
 
-## Remediation
+## Remediación
 
-- Refrain from classify/handling cached based on file extension or path (leverage content-type).
-- Ensure the caching mechanism(s) adhere to cache-control headers specified by your application.
-- Implement RFC compliant File Not Found handling and redirects.
+- Abstenerse de clasificar/manejar caché basado en extensión de archivo o ruta (aprovechar content-type).
+- Asegurar que los mecanismos de caché se adhieran a los encabezados cache-control especificados por la aplicación.
+- Implementar manejo de File Not Found y redirecciones que cumplan con RFC.
 
-## References
+## Referencias
 
 - [Bypassing Web Cache Poisoning Countermeasures](https://portswigger.net/research/bypassing-web-cache-poisoning-countermeasures)
 - [Path confusion: Web cache deception threatens user information online](https://portswigger.net/daily-swig/path-confusion-web-cache-deception-threatens-user-information-online)

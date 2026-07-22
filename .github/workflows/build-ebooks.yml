@@ -12,7 +12,7 @@ on:
         default: '4.x'
 jobs:
   build:
-    if: github.actor == 'kingthorin' || github.actor == 'ThunderSon' || github.actor == 'rejahrehim' || github.actor == 'victoriadrake'
+    if: github.actor == 'frangelbarrera' || github.actor == 'github-actions[bot]'
     name: Build
     runs-on: ubuntu-latest
     permissions:

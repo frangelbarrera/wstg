@@ -1,31 +1,31 @@
-# Testing for Concurrent Sessions
+# Pruebas de Sesiones Concurrentes
 
 |ID          |
 |------------|
 |WSTG-SESS-11|
 
-## Summary
+## Resumen
 
-Concurrent sessions are a common aspect of web applications that enable multiple simultaneous user interactions. This test case aims to evaluate the application's ability to handle multiple active sessions for a single user. This functionality is essential for effectively managing concurrent user sessions, particularly in sensitive areas such as admin panels containing Personally Identifiable Information (PII), personal user accounts, or APIs reliant on third-party services to enrich user-provided data. The primary objective is to ensure that concurrent sessions align with the application's security requirements.
+Las sesiones concurrentes son un aspecto común de las aplicaciones web que habilitan múltiples interacciones simultáneas de usuario. Este caso de prueba tiene como objetivo evaluar la capacidad de la aplicación para manejar múltiples sesiones activas para un solo usuario. Esta funcionalidad es esencial para gestionar efectivamente sesiones de usuario concurrentes, particularmente en áreas sensibles tales como paneles de administración que contienen Información de Identificación Personal (PII), cuentas de usuario personales, o APIs que dependen de servicios de terceros para enriquecer datos proporcionados por el usuario. El objetivo primario es asegurar que las sesiones concurrentes se alineen con los requisitos de seguridad de la aplicación.
 
-Understanding the security needs in an application is key to assessing whether enabling concurrent sessions corresponds with the intended features. Allowing concurrent sessions isn't inherently detrimental and is intentionally permitted in many applications. However, it is crucial to ensure that the application’s functionality is effectively aligned with its security measures concerning concurrent sessions. If concurrent sessions are intended, it is vital to ensure additional security controls, such as managing active sessions, terminating sessions, and potential new session notifications. Conversely, if concurrent sessions are not intended or planned within the application, it is crucial to validate existing checks for session management vulnerabilities.
+Entender las necesidades de seguridad en una aplicación es clave para evaluar si habilitar sesiones concurrentes corresponde con las características previstas. Permitir sesiones concurrentes no es inherentemente perjudicial y está intencionalmente permitido en muchas aplicaciones. Sin embargo, es crucial asegurar que la funcionalidad de la aplicación esté efectivamente alineada con sus medidas de seguridad respecto a sesiones concurrentes. Si las sesiones concurrentes están previstas, es vital asegurar controles de seguridad adicionales, tales como gestionar sesiones activas, terminar sesiones, y notificaciones potenciales de nuevas sesiones. A la inversa, si las sesiones concurrentes no están previstas o planificadas dentro de la aplicación, es crucial validar verificaciones existentes para vulnerabilidades de gestión de sesión.
 
-To recognize that concurrent sessions are essential, you should consider the following factors:
+Para reconocer que las sesiones concurrentes son esenciales, deberías considerar los siguientes factores:
 
-- Understanding the application's nature, particularly situations where users might require simultaneous access from different locations or devices.
-- Identifying critical operations, such as financial transactions that require secure access.
-- Handling sensitive data like Personally Identifiable Information (PII), indicating the necessity for secure interactions.
-- Distinguishing between a management panel and a standard user dashboard for normal user access.
+- Entender la naturaleza de la aplicación, particularmente situaciones donde los usuarios podrían requerir acceso simultáneo desde diferentes ubicaciones o dispositivos.
+- Identificar operaciones críticas, tales como transacciones financieras que requieren acceso seguro.
+- Manejar datos sensibles como Información de Identificación Personal (PII), indicando la necesidad de interacciones seguras.
+- Distinguir entre un panel de gestión y un dashboard de usuario estándar para acceso normal de usuario.
 
-## Test Objectives
+## Objetivos de Prueba
 
-- Evaluate the application's session management by assessing the handling of multiple active sessions for a single user account.
+- Evaluar la gestión de sesión de la aplicación evaluando el manejo de múltiples sesiones activas para una sola cuenta de usuario.
 
-## How to Test
+## Cómo Probar
 
-1. **Generate Valid Session:**
-   - Submit valid credentials (username and password) to create a session.
-   - Example HTTP Request:
+1. **Generar Sesión Válida:**
+   - Enviar credenciales válidas (nombre de usuario y contraseña) para crear una sesión.
+   - Ejemplo de Solicitud HTTP:
 
      ```http
      POST /login HTTP/1.1
@@ -35,42 +35,42 @@ To recognize that concurrent sessions are essential, you should consider the fol
      username=admin&password=admin123
      ```
 
-   - Example Response:
+   - Ejemplo de Respuesta:
 
      ```http
      HTTP/1.1 200 OK
      Set-Cookie: SESSIONID=0add0d8eyYq3HIUy09hhus; Path=/; Secure
      ```
 
-   - Store the generated authentication cookie. In some cases, the generated authentication cookie is replaced by tokens such as JSON Web Tokens (JWT).
+   - Almacenar la cookie de autenticación generada. En algunos casos, la cookie de autenticación generada se reemplaza por tokens tales como JSON Web Tokens (JWT).
 
-2. **Test for Generating Active Sessions:**
-   - Attempt to create multiple authentication cookies by submitting login requests (e.g., one hundred times).
+2. **Probar Generación de Sesiones Activas:**
+   - Intentar crear múltiples cookies de autenticación enviando solicitudes de login (por ejemplo, cien veces).
 
-   Note: Utilizing private browsing mode or multi-account containers might be beneficial for conducting these tests, as they can provide separate environments for testing session management without interference from existing sessions or cookies stored in the browser.
+   Nota: Utilizar modo de navegación privada o contenedores multi-cuenta podría ser beneficioso para conducir estas pruebas, ya que pueden proporcionar entornos separados para probar la gestión de sesión sin interferencia de sesiones existentes o cookies almacenadas en el navegador.
 
-3. **Test for Validating Active Sessions:**
-   - Try accessing the application using the initial session token (e.g., `SESSIONID=0add0d8eyYq3HIUy09hhus`).
-   - If successful authentication occurs with the first generated token, consider it a potential issue indicating inadequate session management.
+3. **Probar Validación de Sesiones Activas:**
+   - Intentar acceder a la aplicación usando el token de sesión inicial (por ejemplo, `SESSIONID=0add0d8eyYq3HIUy09hhus`).
+   - Si ocurre autenticación exitosa con el primer token generado, considerarlo un problema potencial indicando gestión de sesión inadecuada.
 
-Also, there are additional test cases that extend the scope of the testing methodology to include scenarios involving multiple sessions originating from various IPs and locations. These test cases aid in identifying potential vulnerabilities or irregularities in session handling related to geographical or network-based factors:
+Además, hay casos de prueba adicionales que extienden el alcance de la metodología de pruebas para incluir escenarios que involucran múltiples sesiones originadas de varias IPs y ubicaciones. Estos casos de prueba ayudan a identificar vulnerabilidades potenciales o irregularidades en el manejo de sesión relacionadas con factores geográficos o basados en red:
 
-- Test Multiple sessions from the same IP.
-- Test Multiple sessions from different IPs.
-- Test Multiple sessions from locations that are unlikely or impossible to be visited by the same user in a short period of time (e.g., one session created in a specific country, followed by another session generated five minutes later from a different country).
+- Probar múltiples sesiones desde la misma IP.
+- Probar múltiples sesiones desde diferentes IPs.
+- Probar múltiples sesiones desde ubicaciones que es improbable o imposible que sean visitadas por el mismo usuario en un período corto de tiempo (por ejemplo, una sesión creada en un país específico, seguida por otra sesión generada cinco minutos después desde un país diferente).
 
-## Remediation
+## Remediación
 
-The application should monitor and limit the number of active sessions per user account. If the maximum allowed sessions are surpassed, the system must invalidate previous sessions to maintain security. Implementing additional solutions can further mitigate this vulnerability:
+La aplicación debería monitorear y limitar el número de sesiones activas por cuenta de usuario. Si se superan las sesiones máximas permitidas, el sistema debe invalidar sesiones previas para mantener seguridad. Implementar soluciones adicionales puede mitigar aún más esta vulnerabilidad:
 
-   1. **User Notification:** Notify users after each successful login to raise awareness of active sessions.
-   2. **Session Management Page:** Create a dedicated page to display and allow termination of active sessions for enhanced user control.
-   3. **IP Address Tracking:** Track the IP addresses of users who log in to an account and flag any suspicious activity, such as multiple logins from different locations.
-   4. **IP Address Restrictions:** Allow users to specify trusted IP addresses or ranges from which they can access their accounts, enhancing security by restricting sessions to known and approved locations.
+   1. **Notificación al Usuario:** Notificar a los usuarios después de cada login exitoso para aumentar la conciencia de sesiones activas.
+   2. **Página de Gestión de Sesión:** Crear una página dedicada para mostrar y permitir la terminación de sesiones activas para mayor control del usuario.
+   3. **Seguimiento de Dirección IP:** Rastrear las direcciones IP de usuarios que inician sesión en una cuenta y marcar cualquier actividad sospechosa, tal como múltiples logins desde diferentes ubicaciones.
+   4. **Restricciones de Dirección IP:** Permitir a los usuarios especificar direcciones IP o rangos confiables desde los cuales pueden acceder a sus cuentas, mejorando la seguridad restringiendo sesiones a ubicaciones conocidas y aprobadas.
 
-## Recommended Tools
+## Herramientas Recomendadas
 
-### Intercepting Proxy Tools
+### Herramientas de Proxy de Intercepción
 
 - [Zed Attack Proxy](https://www.zaproxy.org)
 - [Burp Suite Web Proxy](https://portswigger.net)
