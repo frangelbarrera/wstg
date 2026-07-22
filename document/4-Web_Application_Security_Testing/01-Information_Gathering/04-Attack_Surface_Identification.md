@@ -1,75 +1,75 @@
-# Attack Surface Identification
+# Identificación de Superficie de Ataque
 
 |ID          |
 |------------|
 |WSTG-INFO-04|
 
-## Summary
+## Resumen
 
-Identifying the attack surface of a web application involves discovering all applications, domains, virtual hosts, and externally exposed services associated with the target infrastructure. This process extends beyond identifying hosted applications and includes DNS enumeration, subdomain discovery, virtual host analysis, non-standard ports, and the review of digital certificates and Certificate Transparency logs.
+Identificar la superficie de ataque de una aplicación web involucra descubrir todas las aplicaciones, dominios, virtual hosts, y servicios expuestos externamente asociados con la infraestructura objetivo. Este proceso se extiende más allá de identificar aplicaciones hospedadas e incluye enumeración DNS, descubrimiento de subdominios, análisis de virtual hosts, puertos no estándar, y la revisión de certificados digitales y logs de Certificate Transparency.
 
-With the proliferation of virtual hosting and shared infrastructure, the traditional 1:1 relationship between an IP address and a web server has largely disappeared. A single IP address may host multiple applications across different domains, environments, or administrative interfaces. Failing to identify these assets can result in incomplete assessments and overlooked vulnerabilities.
+Con la proliferación de virtual hosting e infraestructura compartida, la relación tradicional 1:1 entre una dirección IP y un servidor web ha desaparecido en gran medida. Una sola dirección IP podría hospedar múltiples aplicaciones a través de diferentes dominios, entornos, o interfaces administrativas. Fallar en identificar estos activos puede resultar en evaluaciones incompletas y vulnerabilidades pasadas por alto.
 
-Security professionals are sometimes given a set of IP addresses as a target to test. It is arguable that this scenario is more akin to a penetration test-type engagement, but in any case it is expected that such an assignment would test all web applications accessible through this target. The problem is that the given IP address hosts an HTTP service on port 80, but if a tester should access it by specifying the IP address (which is all they know) it reports "No web server configured at this address" or a similar message. But that system could "hide" a number of web applications, associated to unrelated symbolic (DNS) names. Obviously, the extent of the analysis is deeply affected depending on whether the tester tests all the applications or only tests the applications that they are aware of.
+A los profesionales de seguridad a veces se les da un conjunto de direcciones IP como objetivo para probar. Es discutible que este escenario sea más parecido a un engagement de tipo prueba de penetración, pero en cualquier caso se espera que tal asignación pruebe todas las aplicaciones web accesibles a través de este objetivo. El problema es que la dirección IP dada hospeda un servicio HTTP en el puerto 80, pero si un tester debería acceder especificando la dirección IP (que es todo lo que conocen) reporta "No web server configured at this address" o un mensaje similar. Pero ese sistema podría "esconder" un número de aplicaciones web, asociadas a nombres simbólicos (DNS) no relacionados. Obviamente, el alcance del análisis está profundamente afectado dependiendo de si el tester prueba todas las aplicaciones o solo prueba las aplicaciones de las que está al tanto.
 
-Sometimes, the target specification is richer. The tester may be given a list of IP addresses and their corresponding symbolic names. Nevertheless, this list might convey partial information, i.e., it could omit some symbolic names and the client may not even be aware of that (this is more likely to happen in large organizations).
+A veces, la especificación del objetivo es más rica. Al tester se le podría dar una lista de direcciones IP y sus correspondientes nombres simbólicos. Sin embargo, esta lista podría transmitir información parcial, i.e., podría omitir algunos nombres simbólicos y el cliente podría ni siquiera estar al tanto de eso (esto es más probable que ocurra en grandes organizaciones).
 
-Other issues affecting the scope of the assessment are represented by web applications published at non-obvious URLs (e.g., `https://www.example.com/some-strange-URL`), which are not referenced elsewhere. This may happen either by error (due to misconfigurations), or intentionally (for example, unadvertised administrative interfaces).
+Otros problemas que afectan el alcance de la evaluación están representados por aplicaciones web publicadas en URLs no obvias (por ejemplo, `https://www.example.com/some-strange-URL`), que no están referenciadas en otro lugar. Esto podría ocurrir por error (debido a malas configuraciones), o intencionalmente (por ejemplo, interfaces administrativas no anunciadas).
 
-To address these issues, a comprehensive attack surface identification process must be performed.
+Para abordar estos problemas, debe realizarse un proceso integral de identificación de superficie de ataque.
 
-## Test Objectives
+## Objetivos de Prueba
 
-- Enumerate all web applications within scope.
-- Identify DNS names, domains, and virtual hosts associated with the target.
-- Discover additional domains and subdomains using passive and active DNS techniques.
-- Analyze digital certificates and Certificate Transparency logs for additional hostnames.
+- Enumerar todas las aplicaciones web dentro del alcance.
+- Identificar nombres DNS, dominios, y virtual hosts asociados con el objetivo.
+- Descubrir dominios y subdominios adicionales usando técnicas DNS pasivas y activas.
+- Analizar certificados digitales y logs de Certificate Transparency para hostnames adicionales.
 
-## How to Test
+## Cómo Probar
 
-Web application discovery is a process that aims to identify web applications on a given infrastructure. The latter is usually specified as a set of IP addresses (maybe a net block), but may consist of a set of DNS symbolic names or a mix of the two. This information is handed out prior to the execution of an assessment, be it a classic-style penetration test or an application-focused assessment. In both cases, unless the rules of engagement specify otherwise (e.g., test only the application located at the URL `https://www.example.com/`), the assessment should strive to be the most comprehensive in scope, i.e. it should identify all the applications accessible through the given target. The following examples examine a few techniques that can be employed to achieve this goal.
+El descubrimiento de aplicaciones web es un proceso que apunta a identificar aplicaciones web en una infraestructura dada. Esta última usualmente se especifica como un conjunto de direcciones IP (quizás un bloque de red), pero podría consistir en un conjunto de nombres simbólicos DNS o una mezcla de ambos. Esta información se entrega antes de la ejecución de una evaluación, sea una prueba de penetración de estilo clásico o una evaluación enfocada en aplicación. En ambos casos, a menos que las reglas de engagement especifiquen lo contrario (por ejemplo, probar solo la aplicación ubicada en la URL `https://www.example.com/`), la evaluación debería esforzarse por ser la más completa en alcance, i.e. debería identificar todas las aplicaciones accesibles a través del objetivo dado. Los siguientes ejemplos examinan algunas técnicas que pueden emplearse para lograr este objetivo.
 
-> Some of the following techniques apply to Internet-facing web servers, namely DNS and reverse-IP web-based search services and the use of search engines. Examples make use of private IP addresses (such as `192.168.1.100`), which, unless indicated otherwise, represent *generic* IP addresses and are used only for anonymity purposes.
+> Algunas de las siguientes técnicas aplican a servidores web expuestos a Internet, a saber DNS y servicios de búsqueda web reverse-IP y el uso de motores de búsqueda. Los ejemplos hacen uso de direcciones IP privadas (tales como `192.168.1.100`), las cuales, a menos que se indique lo contrario, representan direcciones IP *genéricas* y se usan solo para propósitos de anonimato.
 
-There are three factors influencing how many applications are related to a given DNS name (or an IP address):
+Hay tres factores que influyen en cuántas aplicaciones están relacionadas con un nombre DNS dado (o una dirección IP):
 
-1. **Different Base URL**
+1. **URL Base Diferente**
 
-    The obvious entry point for a web application is `www.example.com`, i.e., with this shorthand notation we think of the web application originating at `https://www.example.com/` (the same applies for HTTPS). However, even though this is the most common situation, there is nothing forcing the application to start at `/`.
+    El punto de entrada obvio para una aplicación web es `www.example.com`, i.e., con esta notación abreviada pensamos en la aplicación web originándose en `https://www.example.com/` (lo mismo aplica para HTTPS). Sin embargo, aunque esta es la situación más común, no hay nada forzando a la aplicación a comenzar en `/`.
 
-    For example, the same symbolic name may be associated to three web applications such as: `https://www.example.com/app1` `https://www.example.com/app2` `https://www.example.com/app3`
+    Por ejemplo, el mismo nombre simbólico podría estar asociado a tres aplicaciones web tales como: `https://www.example.com/app1` `https://www.example.com/app2` `https://www.example.com/app3`
 
-    In this case, the URL `https://www.example.com/` would not be associated with a meaningful page. The three applications would remain **hidden** unless the tester explicitly knows how to access them, i.e., the tester knows *app1*, *app2* or *app3*. There is usually no need to publish web applications in this way, unless the owner doesn’t want them to be accessible in a standard way, and is prepared to inform the users about their exact location. This doesn’t mean that these applications are secret, just that their existence and location is not explicitly advertised.
+    En este caso, la URL `https://www.example.com/` no estaría asociada con una página significativa. Las tres aplicaciones permanecerían **ocultas** a menos que el tester sepa explícitamente cómo accederlas, i.e., el tester conoce *app1*, *app2* o *app3*. Usualmente no hay necesidad de publicar aplicaciones web de esta manera, a menos que el propietario no quiera que sean accesibles de manera estándar, y esté preparado para informar a los usuarios sobre su ubicación exacta. Esto no significa que estas aplicaciones sean secretas, solo que su existencia y ubicación no están explícitamente anunciadas.
 
-2. **Non-standard Ports**
+2. **Puertos No Estándar**
 
-    While web applications usually live on port 80 (HTTP) and 443 (HTTPS), there is nothing fixed or mandatory about these port numbers. In fact, web applications may be associated with arbitrary TCP ports, and can be referenced by specifying the port number as follows: `http[s]://www.example.com:port/`. For example, `https://www.example.com:20000/`.
+    Mientras que las aplicaciones web usualmente viven en el puerto 80 (HTTP) y 443 (HTTPS), no hay nada fijo o mandatorio sobre estos números de puerto. De hecho, las aplicaciones web podrían estar asociadas con puertos TCP arbitrarios, y pueden ser referenciadas especificando el número de puerto de la siguiente manera: `http[s]://www.example.com:port/`. Por ejemplo, `https://www.example.com:20000/`.
 
 3. **Virtual Hosts**
 
-    DNS allows a single IP address to be associated with one or more symbolic names. For example, the IP address `192.168.1.100` might be associated to DNS names `www.example.com`, `helpdesk.example.com`, `webmail.example.com`. It is not necessary that all the names belong to the same DNS domain. This 1-to-N relationship may be reflected to serve different content by using so called virtual hosts. The information specifying the virtual host we are referring to is embedded in the HTTP 1.1 [Host header](https://datatracker.ietf.org/doc/html/rfc7230#section-5.4).
+    DNS permite que una sola dirección IP se asocie con uno o más nombres simbólicos. Por ejemplo, la dirección IP `192.168.1.100` podría estar asociada a nombres DNS `www.example.com`, `helpdesk.example.com`, `webmail.example.com`. No es necesario que todos los nombres pertenezcan al mismo dominio DNS. Esta relación 1-a-N podría reflejarse para servir contenido diferente usando los llamados virtual hosts. La información que especifica el virtual host al que nos referimos está embebida en el [encabezado Host](https://datatracker.ietf.org/doc/html/rfc7230#section-5.4) HTTP 1.1.
 
-    One would not suspect the existence of other web applications in addition to the obvious `www.example.com`, unless they know of `helpdesk.example.com` and `webmail.example.com`.
+    Uno no sospecharía la existencia de otras aplicaciones web además del obvio `www.example.com`, a menos que conozca `helpdesk.example.com` y `webmail.example.com`.
 
-### Approaches to Address Issue 1 - Non-standard URLs
+### Enfoques para Abordar el Problema 1 - URLs No Estándar
 
-There is no way to fully ascertain the existence of non-standard-named web applications. Being non-standard, there are no fixed criteria governing the naming convention, however there are a number of techniques that the tester can use to gain some additional insight.
+No hay manera de ascertainar completamente la existencia de aplicaciones web con nombres no estándar. Siendo no estándar, no hay criterios fijos gobernando la convención de nomenclatura, sin embargo hay varias técnicas que el tester puede usar para ganar algo de entendimiento adicional.
 
-First, if the web server is mis-configured and allows directory browsing, it may be possible to spot these applications. Vulnerability scanners may help in this respect.
+Primero, si el servidor web está mal configurado y permite directory browsing, podría ser posible detectar estas aplicaciones. Los escáneres de vulnerabilidades podrían ayudar en este respecto.
 
-Second, these applications may be referenced by other web pages and there is a chance that they have been spidered and indexed by web search engines. If testers suspect the existence of such **hidden** applications on `www.example.com` they could search using the *site* operator and examining the result of a query for `site: www.example.com`. Among the returned URLs there could be one pointing to such a non-obvious application.
+Segundo, estas aplicaciones podrían estar referenciadas por otras páginas web y hay una posibilidad de que hayan sido rastreadas e indexadas por motores de búsqueda web. Si los testers sospechan la existencia de tales aplicaciones **ocultas** en `www.example.com` podrían buscar usando el operador *site* y examinar el resultado de una consulta por `site: www.example.com`. Entre las URLs devueltas podría haber una apuntando a tal aplicación no obvia.
 
-Another option is to probe for URLs which might be likely candidates for non-published applications. For example, a web mail frontend might be accessible from URLs such as `https://www.example.com/webmail`, `https://webmail.example.com/`, or `https://mail.example.com/`. The same holds for administrative interfaces, which may be published at hidden URLs (for example, a Tomcat administrative interface), and yet not referenced anywhere. So doing a bit of dictionary-style searching (or "intelligent guessing") could yield some results. Vulnerability scanners may help in this respect.
+Otra opción es probar URLs que podrían ser candidatos probables para aplicaciones no publicadas. Por ejemplo, un frontend de web mail podría ser accesible desde URLs tales como `https://www.example.com/webmail`, `https://webmail.example.com/`, o `https://mail.example.com/`. Lo mismo aplica para interfaces administrativas, que podrían estar publicadas en URLs ocultas (por ejemplo, una interfaz administrativa de Tomcat), y sin embargo no referenciadas en ningún lugar. Así que hacer un poco de búsqueda estilo diccionario (o "adivinación inteligente") podría producir algunos resultados. Los escáneres de vulnerabilidades podrían ayudar en este respecto.
 
-### Approaches to Address Issue 2 - Non-standard Ports
+### Enfoques para Abordar el Problema 2 - Puertos No Estándar
 
-It is easy to check for the existence of web applications on non-standard ports. A port scanner such as Nmap is capable of performing service recognition by means of the `-sV` option, and will identify http[s] services on arbitrary ports. What is required is a full scan of the whole 64k TCP port address space.
+Es fácil verificar la existencia de aplicaciones web en puertos no estándar. Un escáner de puertos tal como Nmap es capaz de realizar reconocimiento de servicios por medio de la opción `-sV`, e identificará servicios http[s] en puertos arbitrarios. Lo que se requiere es un escaneo completo de todo el espacio de direcciones de puertos TCP de 64k.
 
-For example, the following command will look up, with a TCP connect scan, all the open ports on IP `192.168.1.100` and will try to determine what services are bound to them (only *essential* switches are shown – Nmap features a broad set of options, whose discussion is out of scope):
+Por ejemplo, el siguiente comando buscará, con un escaneo TCP connect, todos los puertos abiertos en la IP `192.168.1.100` e intentará determinar qué servicios están vinculados a ellos (solo se muestran los switches *esenciales* – Nmap presenta un amplio conjunto de opciones, cuya discusión está fuera del alcance):
 
 `nmap –Pn –sT –sV –p0-65535 192.168.1.100`
 
-It is sufficient to examine the output and look for HTTP or the indication of TLS-wrapped services (which should be probed to confirm that they are HTTPS). For example, the output of the previous command could look like:
+Es suficiente examinar la salida y buscar HTTP o la indicación de servicios envueltos en TLS (que deberían probarse para confirmar que son HTTPS). Por ejemplo, la salida del comando anterior podría verse como:
 
 ```bash
 Interesting ports on 192.168.1.100:
@@ -85,14 +85,14 @@ PORT      STATE SERVICE     VERSION
 8080/tcp  open  http        Apache Tomcat/Coyote JSP engine 1.1
 ```
 
-From this example, one can see that:
+De este ejemplo, se puede ver que:
 
-- There is an Apache HTTP server running on port 80.
-- It looks like there is an HTTPS server on port 443 (but this needs to be confirmed, for example, by visiting `https://192.168.1.100` with a browser).
-- On port 901 there is a Samba SWAT web interface.
-- The service on port 1241 is not HTTPS, but is the TLS-wrapped Nessus daemon.
-- Port 3690 features an unspecified service (Nmap gives back its *fingerprint* - here omitted for clarity - together with instructions to submit it for incorporation in the Nmap fingerprint database, provided you know which service it represents).
-- Another unspecified service on port 8000; this might possibly be HTTP, since it is not uncommon to find HTTP servers on this port. Let's examine this issue:
+- Hay un servidor Apache HTTP ejecutándose en el puerto 80.
+- Parece que hay un servidor HTTPS en el puerto 443 (pero esto necesita confirmarse, por ejemplo, visitando `https://192.168.1.100` con un navegador).
+- En el puerto 901 hay una interfaz web de Samba SWAT.
+- El servicio en el puerto 1241 no es HTTPS, sino el daemon Nessus envuelto en TLS.
+- El puerto 3690 presenta un servicio no especificado (Nmap devuelve su *fingerprint* - aquí omitido por claridad - junto con instrucciones para enviarlo para incorporación en la base de datos de fingerprints de Nmap, siempre que se sepa qué servicio representa).
+- Otro servicio no especificado en el puerto 8000; esto podría posiblemente ser HTTP, ya que no es raro encontrar servidores HTTP en este puerto. Examinemos este problema:
 
 ```bash
 $ telnet 192.168.10.100 8000
@@ -112,43 +112,43 @@ Cache-Control: no-cache
 ...
 ```
 
-This confirms that in fact it is an HTTP server. Alternatively, testers could have visited the URL with a web browser; or used the GET or HEAD Perl commands, which mimic HTTP interactions such as the one given above (however HEAD requests may not be honored by all servers).
+Esto confirma que de hecho es un servidor HTTP. Alternativamente, los testers podrían haber visitado la URL con un navegador web; o usado los comandos Perl GET o HEAD, que imitan interacciones HTTP tales como la dada arriba (sin embargo las solicitudes HEAD podrían no ser honradas por todos los servidores).
 
-- Apache Tomcat running on port 8080.
+- Apache Tomcat ejecutándose en el puerto 8080.
 
-The same task may be performed by vulnerability scanners, but first check that the scanner of choice is able to identify HTTP[S] services running on non-standard ports. For example, Nessus is capable of identifying them on arbitrary ports (provided it is instructed to scan all the ports), and will provide, with respect to Nmap, a number of tests on known web server vulnerabilities, as well as on the TLS/SSL configuration of HTTPS services. As hinted before, Nessus is also able to spot popular applications or web interfaces which could otherwise go unnoticed (for example, a Tomcat administrative interface).
+La misma tarea podría ser realizada por escáneres de vulnerabilidades, pero primero verificar que el escáner de elección sea capaz de identificar servicios HTTP[S] ejecutándose en puertos no estándar. Por ejemplo, Nessus es capaz de identificarlos en puertos arbitrarios (siempre que se le instruya escanear todos los puertos), y proporcionará, con respecto a Nmap, varias pruebas en vulnerabilidades conocidas de servidor web, así como en la configuración TLS/SSL de servicios HTTPS. Como se insinuó antes, Nessus también es capaz de detectar aplicaciones populares o interfaces web que de otra manera podrían pasar desapercibidas (por ejemplo, una interfaz administrativa de Tomcat).
 
-### Approaches to Address Issue 3 - Virtual Hosts
+### Enfoques para Abordar el Problema 3 - Virtual Hosts
 
-There are a number of techniques which may be used to identify DNS names associated to a given IP address `x.y.z.t`.
+Hay varias técnicas que pueden usarse para identificar nombres DNS asociados a una dirección IP dada `x.y.z.t`.
 
-#### DNS Enumeration
+#### Enumeración DNS
 
-DNS enumeration aims to identify domains, subdomains, and related DNS records associated with the target organization to expand the assessment scope. DNS enumeration plays a key role in identifying additional virtual hosts mapped to the same IP address. This may reveal development systems, staging environments, legacy services, or administrative interfaces.
+La enumeración DNS apunta a identificar dominios, subdominios, y registros DNS relacionados asociados con la organización objetivo para expandir el alcance de la evaluación. La enumeración DNS juega un rol clave en identificar virtual hosts adicionales mapeados a la misma dirección IP. Esto podría revelar sistemas de desarrollo, entornos de staging, servicios heredados, o interfaces administrativas.
 
-Both passive and active techniques can be used.
+Tanto técnicas pasivas como activas pueden usarse.
 
-#### Passive DNS Enumeration
+#### Enumeración DNS Pasiva
 
-Passive techniques do not directly interact with the target infrastructure and instead rely on publicly available data sources. Examples include:
+Las técnicas pasivas no interactúan directamente con la infraestructura objetivo y en su lugar dependen de fuentes de datos públicamente disponibles. Los ejemplos incluyen:
 
-- Public DNS records (A, AAAA, MX, TXT, NS)
-- Reverse DNS lookups (PTR records)
-- Search engines
-- Passive DNS databases
-- Certificate Transparency logs
+- Registros DNS públicos (A, AAAA, MX, TXT, NS)
+- Lookups DNS inversos (registros PTR)
+- Motores de búsqueda
+- Bases de datos DNS pasivas
+- Logs de Certificate Transparency
 
-Passive techniques are preferred during early reconnaissance phases to avoid detection.
+Las técnicas pasivas se prefieren durante fases tempranas de reconocimiento para evitar detección.
 
-#### Active DNS Enumeration
+#### Enumeración DNS Activa
 
-Active techniques directly query the target's DNS infrastructure and may generate logs on the target systems. These include:
+Las técnicas activas consultan directamente la infraestructura DNS del objetivo y podrían generar logs en los sistemas objetivo. Estas incluyen:
 
-- Subdomain brute forcing
-- DNS zone transfer attempts
-- DNS record enumeration using tools
+- Fuerza bruta de subdominios
+- Intentos de transferencia de zona DNS
+- Enumeración de registros DNS usando herramientas
 
-Common tools used for DNS enumeration include:
+Herramientas comunes usadas para enumeración DNS incluyen:
 
 - `amass`
 - `subfinder`
@@ -157,15 +157,15 @@ Common tools used for DNS enumeration include:
 - `dig`
 - `nslookup`
 
-Example using `dig`: `dig example.com ANY`
+Ejemplo usando `dig`: `dig example.com ANY`
 
-#### DNS Zone Transfers
+#### Transferencias de Zona DNS
 
-This technique has limited use nowadays, given the fact that zone transfers are largely not honored by DNS servers. However, it could still be worth attempting. First of all, testers must determine the name servers serving `x.y.z.t`. If a symbolic name is known for `x.y.z.t` (let it be `www.example.com`), its name servers can be determined by means of tools such as `nslookup`, `host`, or `dig`, by requesting DNS NS records.
+Esta técnica tiene uso limitado hoy en día, dado el hecho de que las transferencias de zona no son honradas en gran medida por los servidores DNS. Sin embargo, todavía podría valer la pena intentarlo. Primero que todo, los testers deben determinar los servidores de nombres que sirven `x.y.z.t`. Si se conoce un nombre simbólico para `x.y.z.t` (que sea `www.example.com`), sus servidores de nombres pueden determinarse por medio de herramientas tales como `nslookup`, `host`, o `dig`, solicitando registros NS de DNS.
 
-If no symbolic names are known for `x.y.z.t`, but the target definition contains at least a symbolic name, testers may try to apply the same process and query the name server of that name (hoping that `x.y.z.t` will be served as well by that name server). For example, if the target consists of the IP address `x.y.z.t` and the name `mail.example.com`, determine the name servers for domain `example.com`.
+Si no se conocen nombres simbólicos para `x.y.z.t`, pero la definición del objetivo contiene al menos un nombre simbólico, los testers podrían intentar aplicar el mismo proceso y consultar el servidor de nombres de ese nombre (esperando que `x.y.z.t` también sea servido por ese servidor de nombres). Por ejemplo, si el objetivo consiste en la dirección IP `x.y.z.t` y el nombre `mail.example.com`, determinar los servidores de nombres para el dominio `example.com`.
 
-The following example shows how to identify the name servers for `www.owasp.org` by using the `host` command:
+El siguiente ejemplo muestra cómo identificar los servidores de nombres para `www.owasp.org` usando el comando `host`:
 
 ```bash
 $ host -t ns www.owasp.org
@@ -174,9 +174,9 @@ owasp.org name server ns1.secure.net.
 owasp.org name server ns2.secure.net.
 ```
 
-A zone transfer can now be requested to the name servers for the domain `example.com`. If the tester is fortunate, they may receive a list of the DNS entries for this domain in response. This will include the obvious `www.example.com` and the not-so-obvious `helpdesk.example.com` and `webmail.example.com` (and possibly others). Check all the names returned by the zone transfer and consider all of those which are related to the target being evaluated.
+Una transferencia de zona puede ahora solicitarse a los servidores de nombres para el dominio `example.com`. Si el tester es afortunado, podría recibir una lista de las entradas DNS para este dominio en respuesta. Esto incluirá el obvio `www.example.com` y el no tan obvio `helpdesk.example.com` y `webmail.example.com` (y posiblemente otros). Verificar todos los nombres devueltos por la transferencia de zona y considerar todos aquellos que estén relacionados con el objetivo siendo evaluado.
 
-Trying to request a zone transfer for `owasp.org` from one of its name servers:
+Intentando solicitar una transferencia de zona para `owasp.org` desde uno de sus servidores de nombres:
 
 ```bash
 $ host -l www.owasp.org ns1.secure.net
@@ -189,35 +189,35 @@ Host www.owasp.org not found: 5(REFUSED)
 ; Transfer failed.
 ```
 
-#### DNS Inverse Queries
+#### Consultas DNS Inversas
 
-This process is similar to the previous one, but relies on inverse (PTR) DNS records. Rather than requesting a zone transfer, try setting the record type to PTR and issue a query on the given IP address. If the testers are fortunate, they may receive a DNS name entry in response. This technique relies on the existence of IP-to-symbolic name maps, which is not guaranteed.
+Este proceso es similar al anterior, pero depende de registros DNS inversos (PTR). En lugar de solicitar una transferencia de zona, intentar establecer el tipo de registro a PTR y emitir una consulta en la dirección IP dada. Si los testers son afortunados, podrían recibir una entrada de nombre DNS en respuesta. Esta técnica depende de la existencia de mapas de IP a nombre simbólico, lo cual no está garantizado.
 
-#### Web-based DNS Searches
+#### Búsquedas DNS Basadas en Web
 
-This kind of search is akin to DNS zone transfer, but relies on web-based services that enable name-based searches on DNS. One such service is the [Netcraft Search DNS](https://searchdns.netcraft.com/?host) service. The tester may query for a list of names belonging to your domain of choice, such as `example.com`. They will then check whether the names they obtained are pertinent to the target they are examining.
+Este tipo de búsqueda es similar a la transferencia de zona DNS, pero depende de servicios basados en web que habilitan búsquedas basadas en nombre en DNS. Uno de tales servicios es el servicio [Netcraft Search DNS](https://searchdns.netcraft.com/?host). El tester podría consultar por una lista de nombres pertenecientes a su dominio de elección, tal como `example.com`. Luego verificarán si los nombres que obtuvieron son pertinentes al objetivo que están examinando.
 
-#### Reverse-IP Services
+#### Servicios Reverse-IP
 
-Reverse-IP services are similar to DNS inverse queries, with the difference that the testers query a web-based application instead of a name server. There are a number of such services available. Since they tend to return partial (and often different) results, it is better to use multiple services to obtain a more comprehensive analysis.
+Los servicios Reverse-IP son similares a las consultas DNS inversas, con la diferencia de que los testers consultan una aplicación basada en web en lugar de un servidor de nombres. Hay varios de tales servicios disponibles. Ya que tienden a devolver resultados parciales (y a menudo diferentes), es mejor usar múltiples servicios para obtener un análisis más completo.
 
 - [MxToolbox Reverse IP](https://mxtoolbox.com/ReverseLookup.aspx)
-- [DNSstuff](https://www.dnsstuff.com/) (multiple services available)
-- [Net Square](https://web.archive.org/web/20190515092354/https://www.net-square.com/mspawn.html) (multiple queries on domains and IP addresses, requires installation)
+- [DNSstuff](https://www.dnsstuff.com/) (múltiples servicios disponibles)
+- [Net Square](https://web.archive.org/web/20190515092354/https://www.net-square.com/mspawn.html) (múltiples consultas en dominios y direcciones IP, requiere instalación)
 
 #### Googling
 
-Following information gathering from the previous techniques, testers can rely on search engines to possibly refine and increment their analysis. This may yield evidence of additional symbolic names belonging to the target, or applications accessible via non-obvious URLs.
+Siguiendo la recolección de información de las técnicas anteriores, los testers pueden confiar en motores de búsqueda para posiblemente refinar e incrementar su análisis. Esto podría producir evidencia de nombres simbólicos adicionales pertenecientes al objetivo, o aplicaciones accesibles vía URLs no obvias.
 
-For instance, considering the previous example regarding `www.owasp.org`, the tester could query Google and other search engines looking for information (hence, DNS names) related to the newly discovered domains of `webgoat.org`, `webscarab.com`, and `webscarab.net`.
+Por ejemplo, considerando el ejemplo anterior respecto a `www.owasp.org`, el tester podría consultar Google y otros motores de búsqueda buscando información (por lo tanto, nombres DNS) relacionada con los dominios recién descubiertos de `webgoat.org`, `webscarab.com`, y `webscarab.net`.
 
-Googling techniques are explained in [Testing: Spiders, Robots, and Crawlers](01-Conduct_Search_Engine_Discovery_Reconnaissance_for_Information_Leakage.md).
+Las técnicas de Googling se explican en [Pruebas: Spiders, Robots, y Crawlers](01-Conduct_Search_Engine_Discovery_Reconnaissance_for_Information_Leakage.md).
 
-#### Digital Certificates
+#### Certificados Digitales
 
-If the server accepts connections over HTTPS, then the Common Name (CN) and Subject Alternate Name (SAN) on the certificate may contain one or more hostnames. However, if the webserver does not have a trusted certificate, or wildcards are in use, this may not return any valid information.
+Si el servidor acepta conexiones sobre HTTPS, entonces el Common Name (CN) y Subject Alternate Name (SAN) en el certificado podrían contener uno o más hostnames. Sin embargo, si el servidor web no tiene un certificado confiable, o se usan wildcards, esto podría no devolver ninguna información válida.
 
-The CN and SAN can be obtained by manually inspecting the certificate, or through other tools such as OpenSSL:
+El CN y SAN pueden obtenerse inspeccionando manualmente el certificado, o a través de otras herramientas tales como OpenSSL:
 
 ```sh
 openssl s_client -connect 93.184.216.34:443 </dev/null 2>/dev/null | openssl x509 -noout -text | grep -E 'DNS:|Subject:'
@@ -226,41 +226,41 @@ Subject: C = US, ST = California, L = Los Angeles, O = Internet Corporation for 
 DNS:www.example.org, DNS:example.com, DNS:example.edu, DNS:example.net, DNS:example.org, DNS:www.example.com, DNS:www.example.edu, DNS:www.example.net
 ```
 
-#### Certificate Transparency Logs
+#### Logs de Certificate Transparency
 
-Certificate Transparency (CT) logs are publicly accessible records of issued TLS certificates. These logs can be searched to identify hostnames and subdomains associated with a target organization, including staging systems, administrative interfaces, legacy systems, or other externally reachable services.
+Los logs de Certificate Transparency (CT) son registros públicamente accesibles de certificados TLS emitidos. Estos logs pueden buscarse para identificar hostnames y subdominios asociados con una organización objetivo, incluyendo sistemas de staging, interfaces administrativas, sistemas heredados, u otros servicios externamente alcanzables.
 
-Reviewing CT logs may reveal hostnames that are not directly discoverable through DNS zone transfers, reverse lookups, or search engine queries alone. Testers should extract discovered hostnames and validate them through DNS resolution to determine whether they are active and within the defined scope of the assessment.
+Revisar los logs de CT podría revelar hostnames que no son directamente descubribles a través de transferencias de zona DNS, lookups inversos, o consultas de motores de búsqueda solos. Los testers deberían extraer los hostnames descubiertos y validarlos a través de resolución DNS para determinar si están activos y dentro del alcance definido de la evaluación.
 
-When reviewing CT log data, consider:
+Al revisar datos de logs de CT, considerar:
 
-- Hostnames indicating development, staging, or testing environments.
-- Administrative or management interfaces.
-- Deprecated or legacy systems that may still be accessible.
-- Wildcard certificates that may imply additional undiscovered subdomains.
+- Hostnames que indican entornos de desarrollo, staging, o pruebas.
+- Interfaces administrativas o de gestión.
+- Sistemas obsoletos o heredados que podrían aún ser accesibles.
+- Certificados wildcard que podrían implicar subdominios adicionales no descubiertos.
 
-Information gathered from CT logs should be validated to confirm ownership and relevance before further testing.
+La información recolectada de logs de CT debería validarse para confirmar propiedad y relevancia antes de pruebas adicionales.
 
-Care must be taken to respect scope limitations defined in the engagement.
+Se debe tener cuidado de respetar las limitaciones de alcance definidas en el engagement.
 
-Discovered assets should be validated and documented before further testing activities.
+Los activos descubiertos deberían validarse y documentarse antes de actividades de prueba adicionales.
 
-One common approach to querying CT logs is to use publicly available search portals that aggregate certificate data. For example, a tester may search for certificates issued to `example.com` and review the listed subdomains.
+Un enfoque común para consultar logs de CT es usar portales de búsqueda públicamente disponibles que agregan datos de certificados. Por ejemplo, un tester podría buscar certificados emitidos a `example.com` y revisar los subdominios listados.
 
-For instance: `https://crt.sh/?q=%25.example.com`
+Por ejemplo: `https://crt.sh/?q=%25.example.com`
 
-![CT Log Search Example](images/Figure-4.1.4-CT-logs-example.png)  
+![Ejemplo de Búsqueda en Log de CT](images/Figure-4.1.4-CT-logs-example.png)
 
-*Figure 4.1.4-1: Example of Certificate Transparency log search results.*
+*Figura 4.1.4-1: Ejemplo de resultados de búsqueda en log de Certificate Transparency.*
 
-The results may list subdomains such as `dev.example.com`, `staging.example.com`, or other hostnames that are not directly referenced from the primary site. Discovered hostnames should be validated through DNS resolution before further testing.
+Los resultados podrían listar subdominios tales como `dev.example.com`, `staging.example.com`, u otros hostnames que no están directamente referenciados desde el sitio primario. Los hostnames descubiertos deberían validarse a través de resolución DNS antes de pruebas adicionales.
 
-## Tools
+## Herramientas
 
-- DNS lookup tools such as `nslookup`, `dig`, and `host`
-- Subdomain enumeration tools such as `amass`, `subfinder`, `dnsrecon`, and `fierce`
-- Search engines (Google, Bing, and other major search engines)
-- Reverse IP lookup services
+- Herramientas de lookup DNS tales como `nslookup`, `dig`, y `host`
+- Herramientas de enumeración de subdominios tales como `amass`, `subfinder`, `dnsrecon`, y `fierce`
+- Motores de búsqueda (Google, Bing, y otros motores de búsqueda principales)
+- Servicios de lookup Reverse IP
 - [Nmap](https://nmap.org/)
 - [Nessus Vulnerability Scanner](https://www.tenable.com/products/nessus)
 - [Nikto](https://github.com/sullo/nikto)
