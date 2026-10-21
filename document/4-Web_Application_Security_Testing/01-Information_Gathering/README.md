@@ -1,6 +1,7 @@
 # 4.1 Recopilación de Información
 
-4.1.1 [Realizar Reconocimiento de Descubrimiento de Motores de Búsqueda para Fugas de Información](01-Conduct_Search_Engine_Discovery_Reconnaissance_for_Information_Leakage.md)
+4.1.0 [Descripción General de Recopilación de Información](00-Information_Gathering_Overview.md)
+4.1.1 [Realizar Reconocimiento de Motores de Búsqueda para Fugas de Información](01-Conduct_Search_Engine_Reconnaissance_for_Information_Leakage.md)
 
 4.1.2 [Huella Digital del Servidor Web](02-Fingerprint_Web_Server.md)
 

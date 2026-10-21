@@ -1,132 +1,132 @@
-# El Marco de Pruebas de Seguridad Web
+# El marco de pruebas de seguridad web
 
 ## Resumen
 
-Esta sección describe un marco de pruebas típico que puede desarrollarse dentro de una organización. Puede verse como un marco de referencia compuesto por técnicas y tareas apropiadas en varias fases del ciclo de vida de desarrollo de software (SDLC). Las compañías y equipos de proyecto pueden usar este modelo para desarrollar su propio marco de pruebas y para definir el alcance de servicios de pruebas de proveedores. Este marco no debe verse como prescriptivo, sino como un enfoque flexible que puede extenderse y moldearse para adaptarse al proceso de desarrollo y cultura de una organización.
+Esta sección describe un marco de pruebas típico que puede desarrollarse en una organización. Puede considerarse un marco de referencia compuesto por técnicas y tareas adecuadas para varias fases del ciclo de vida de desarrollo de software (SDLC). Las empresas y los equipos de proyecto pueden usar este modelo para desarrollar su propio marco de pruebas y definir el alcance de los servicios de pruebas que ofrecen los proveedores. Este marco no debe considerarse prescriptivo, sino un enfoque flexible que puede ampliarse y adaptarse al proceso y la cultura de desarrollo de una organización.
 
-Esta sección tiene como objetivo ayudar a las organizaciones a construir un proceso de pruebas estratégico completo, y no está dirigida a consultores o contratistas que tienden a involucrarse en áreas más tácticas y específicas de pruebas.
+Esta sección busca ayudar a las organizaciones a crear un proceso estratégico de pruebas completo; no está dirigida a consultores o contratistas que suelen participar en áreas de pruebas más tácticas y específicas.
 
-Es crítico entender por qué construir un marco de pruebas de extremo a extremo es crucial para evaluar y mejorar la seguridad del software. En *Writing Secure Code*, Howard y LeBlanc notan que emitir un boletín de seguridad cuesta a Microsoft al menos $100,000, y cuesta a sus clientes colectivamente mucho más que eso implementar los parches de seguridad. También notan que el sitio web de CyberCrime del gobierno de EE.UU. detalla casos criminales recientes y la pérdida a las organizaciones. Las pérdidas típicas exceden los USD $100,000.
+Es fundamental entender por qué crear un marco de pruebas de extremo a extremo es crucial para evaluar y mejorar la seguridad del software. En *Writing Secure Code*, Howard y LeBlanc señalan que emitir un boletín de seguridad le cuesta a Microsoft al menos $100,000, y que implementar los parches de seguridad les cuesta a sus clientes, en conjunto, mucho más que eso. También señalan que el sitio web [CyberCrime](https://www.justice.gov/criminal-ccips) del gobierno de EE. UU. detalla casos criminales recientes y las pérdidas para las organizaciones. Las pérdidas típicas superan los USD $100,000.
 
-Con economías como esta, no es de extrañar que los proveedores de software se muevan de realizar únicamente pruebas de seguridad de caja negra, que solo pueden realizarse en aplicaciones que ya han sido desarrolladas, a concentrarse en pruebas en los ciclos tempranos de desarrollo de aplicaciones, como durante definición, diseño y desarrollo.
+Con esta clase de costos, no es de extrañar que los proveedores de software pasen de realizar únicamente pruebas de seguridad de caja negra, que solo pueden llevarse a cabo en aplicaciones ya desarrolladas, a centrarse en las pruebas durante las primeras etapas del desarrollo de aplicaciones, como la definición, el diseño y el desarrollo.
 
-Muchos practicantes de seguridad aún ven las pruebas de seguridad en el ámbito de las pruebas de penetración. Como se discutió en el capítulo anterior, mientras las pruebas de penetración tienen un rol que desempeñar, generalmente son ineficientes para encontrar bugs y dependen excesivamente de la habilidad del probador. Debería considerarse solo como una técnica de implementación, o para aumentar la conciencia de problemas de producción. Para mejorar la seguridad de las aplicaciones, la calidad de seguridad del software debe mejorarse. Eso significa probar la seguridad durante las etapas de definición, diseño, desarrollo, despliegue y mantenimiento, y no depender de la costosa estrategia de esperar hasta que el código esté completamente construido.
+Muchos profesionales de la seguridad todavía consideran que las pruebas de seguridad pertenecen al ámbito de las pruebas de penetración. Como se analizó en el capítulo anterior, aunque las pruebas de penetración cumplen una función, por lo general son ineficientes para encontrar errores y dependen demasiado de la habilidad del evaluador. Solo deberían considerarse una técnica de implementación o una forma de generar conciencia sobre los problemas en producción. Para mejorar la seguridad de las aplicaciones, es necesario mejorar la calidad de seguridad del software. Esto significa probar la seguridad durante las etapas de definición, diseño, desarrollo, despliegue y mantenimiento, en lugar de depender de la costosa estrategia de esperar hasta que el código esté completamente desarrollado.
 
-Como se discutió en la introducción de este documento, hay muchas metodologías de desarrollo, como el Proceso Unificado Racional, desarrollo eXtreme y Agile, y metodologías tradicionales de cascada. La intención de esta guía es no sugerir una metodología de desarrollo particular, ni proporcionar orientación específica que se adhiera a cualquier metodología particular. En cambio, estamos presentando un modelo de desarrollo genérico, y el lector debería seguirlo de acuerdo con el proceso de su compañía.
+Como se indicó en la introducción de este documento, existen muchas metodologías de desarrollo, como el Proceso Unificado de Rational, el desarrollo eXtreme y Agile, y las metodologías tradicionales en cascada. El propósito de esta guía no es sugerir una metodología de desarrollo en particular ni proporcionar orientación específica que se ajuste a una metodología determinada. En cambio, presentamos un modelo de desarrollo genérico, que el lector debe seguir de acuerdo con el proceso de su empresa.
 
-Este marco de pruebas consiste en actividades que deberían tener lugar:
+Este marco de pruebas consta de actividades que deberían llevarse a cabo:
 
 - Antes de que comience el desarrollo,
-- Durante definición y diseño,
-- Durante desarrollo,
-- Durante despliegue, y
-- Durante mantenimiento y operaciones.
+- Durante la definición y el diseño,
+- Durante el desarrollo,
+- Durante el despliegue, y
+- Durante el mantenimiento y las operaciones.
 
-## Fase 1 Antes de que Comience el Desarrollo
+## Fase 1 Antes de que comience el desarrollo
 
 ### Fase 1.1 Definir un SDLC
 
-Antes de que comience el desarrollo de la aplicación, debe definirse un SDLC adecuado donde la seguridad sea inherente en cada etapa.
+Antes de que comience el desarrollo de la aplicación, debe definirse un SDLC adecuado que incorpore la seguridad en cada etapa.
 
-### Fase 1.2 Revisar Políticas y Estándares
+### Fase 1.2 Revisar las políticas y los estándares
 
-Asegurar que haya políticas, estándares y documentación apropiados en su lugar. La documentación es extremadamente importante ya que da a los equipos de desarrollo directrices y políticas que pueden seguir. La gente solo puede hacer lo correcto si sabe cuál es lo correcto.
+Asegurarse de que existan las políticas, los estándares y la documentación adecuados. La documentación es sumamente importante, ya que proporciona a los equipos de desarrollo directrices y políticas que pueden seguir. Las personas solo pueden hacer lo correcto si saben qué es lo correcto.
 
-Si la aplicación va a desarrollarse en Java, es esencial que haya un estándar de codificación segura en Java. Si la aplicación va a usar criptografía, es esencial que haya un estándar de criptografía. Ninguna política o estándar puede cubrir cada situación que enfrentará el equipo de desarrollo. Al documentar los problemas comunes y predecibles, habrá menos decisiones que necesiten tomarse durante el proceso de desarrollo.
+Si la aplicación se desarrollará en Java, es esencial contar con un estándar de codificación segura para Java. Si la aplicación usará criptografía, es esencial contar con un estándar de criptografía. Ninguna política ni estándar puede abarcar todas las situaciones a las que se enfrentará el equipo de desarrollo. Al documentar los problemas comunes y previsibles, habrá menos decisiones que tomar durante el proceso de desarrollo.
 
-### Fase 1.3 Desarrollar Criterios de Medición y Métricas y Asegurar Trazabilidad
+### Fase 1.3 Desarrollar criterios de medición y métricas, y garantizar la trazabilidad
 
-Antes de que comience el desarrollo, planificar el programa de medición. Al definir criterios que necesitan medirse, proporciona visibilidad en defectos tanto en el proceso como en el producto. Es esencial definir las métricas antes de que comience el desarrollo, ya que puede haber necesidad de modificar el proceso para capturar los datos.
+Antes de que comience el desarrollo, se debe planificar el programa de medición. Definir los criterios que deben medirse permite conocer los defectos tanto del proceso como del producto. Es esencial definir las métricas antes de que comience el desarrollo, ya que quizá sea necesario modificar el proceso para recopilar los datos.
 
-## Fase 2 Durante Definición y Diseño
+## Fase 2 Durante la definición y el diseño
 
-### Fase 2.1 Revisar Requisitos de Seguridad
+### Fase 2.1 Revisar los requisitos de seguridad
 
-Los requisitos de seguridad definen cómo funciona una aplicación desde una perspectiva de seguridad. Es esencial que los requisitos de seguridad sean probados. Probar en este caso significa probar las suposiciones que se hacen en los requisitos y probar para ver si hay brechas en las definiciones de requisitos.
+Los requisitos de seguridad definen cómo funciona una aplicación desde el punto de vista de la seguridad. Es esencial probar los requisitos de seguridad. En este caso, probar significa comprobar las suposiciones incluidas en los requisitos y determinar si hay lagunas en sus definiciones.
 
-Por ejemplo, si hay un requisito de seguridad que establece que los usuarios deben estar registrados antes de que puedan acceder a la sección de documentos técnicos de un sitio web, ¿significa esto que el usuario debe estar registrado con el sistema o debería el usuario estar autenticado? Asegurar que los requisitos sean lo más inequívocos posible.
+Por ejemplo, si un requisito de seguridad establece que los usuarios deben registrarse antes de acceder a la sección de documentos técnicos de un sitio web, ¿significa que el usuario debe estar registrado en el sistema o que debe autenticarse? Asegurarse de que los requisitos sean lo más inequívocos posible.
 
-Al buscar brechas en requisitos, considerar mecanismos de seguridad como:
+Al buscar lagunas en los requisitos, conviene considerar mecanismos de seguridad como:
 
 - Gestión de usuarios
 - Autenticación
 - Autorización
-- Confidencialidad de datos
+- Confidencialidad de los datos
 - Integridad
-- Responsabilidad
+- Rendición de cuentas
 - Gestión de sesiones
-- Seguridad de transporte
-- Segregación de sistema en capas
-- Cumplimiento legislativo y de estándares (incluyendo privacidad, gobierno y estándares de la industria)
+- Seguridad del transporte
+- Segregación por niveles del sistema
+- Cumplimiento de leyes y estándares (incluidos los de privacidad, gobierno e industria)
 
-### Fase 2.2 Revisar Diseño y Arquitectura
+### Fase 2.2 Revisar el diseño y la arquitectura
 
-Las aplicaciones deberían tener un diseño y arquitectura documentados. Esta documentación puede incluir modelos, documentos textuales y otros artefactos similares. Es esencial probar estos artefactos para asegurar que el diseño y arquitectura apliquen el nivel apropiado de seguridad como definido en los requisitos.
+Las aplicaciones deberían contar con documentación sobre su diseño y arquitectura. Esta documentación puede incluir modelos, documentos textuales y otros artefactos similares. Es esencial probar estos artefactos para garantizar que el diseño y la arquitectura implementen el nivel de seguridad adecuado, tal como se define en los requisitos.
 
-Identificar fallas de seguridad en la fase de diseño no solo es uno de los lugares más costo-eficientes para identificar fallas, sino que puede ser uno de los lugares más efectivos para hacer cambios. Por ejemplo, si se identifica que el diseño llama a decisiones de autorización a hacerse en múltiples lugares, puede ser apropiado considerar un componente de autorización central. Si la aplicación está realizando validación de datos en múltiples lugares, puede ser apropiado desarrollar un marco de validación central (es decir, arreglar validación de entrada en un lugar, en lugar de en cientos de lugares, es mucho más barato).
+Identificar fallas de seguridad durante la fase de diseño no solo es una de las formas más rentables de detectarlas, sino que también puede ser una de las oportunidades más eficaces para realizar cambios. Por ejemplo, si se determina que el diseño requiere tomar decisiones de autorización en varios lugares, podría ser conveniente considerar un componente de autorización centralizado. Si la aplicación valida datos en varios lugares, podría ser conveniente desarrollar un marco de validación centralizado (es decir, corregir la validación de entradas en un solo lugar, en vez de en cientos de lugares, es mucho menos costoso).
 
-Si se descubren debilidades, deberían darse al arquitecto del sistema para enfoques alternativos.
+Si se descubren debilidades, deben comunicarse al arquitecto del sistema para que considere enfoques alternativos.
 
-### Fase 2.3 Crear y Revisar Modelos UML
+### Fase 2.3 Crear y revisar modelos UML
 
-Una vez que el diseño y arquitectura esté completo, construir modelos de Lenguaje de Modelado Unificado (UML) que describan cómo funciona la aplicación. En algunos casos, estos pueden ya estar disponibles. Usar estos modelos para confirmar con los diseñadores de sistemas una comprensión exacta de cómo funciona la aplicación. Si se descubren debilidades, deberían darse al arquitecto del sistema para enfoques alternativos.
+Una vez completados el diseño y la arquitectura, se deben crear modelos del Lenguaje Unificado de Modelado (UML) que describan cómo funciona la aplicación. En algunos casos, estos modelos ya estarán disponibles. Usar estos modelos para confirmar con los diseñadores de sistemas que se comprende exactamente cómo funciona la aplicación. Si se descubren debilidades, deben comunicarse al arquitecto del sistema para que considere enfoques alternativos.
 
-### Fase 2.4 Crear y Revisar Modelos de Amenazas
+### Fase 2.4 Crear y revisar modelos de amenazas
 
-Armados con revisiones de diseño y arquitectura y los modelos UML explicando exactamente cómo funciona el sistema, emprender un ejercicio de modelado de amenazas. Desarrollar escenarios de amenazas realistas. Analizar el diseño y arquitectura para asegurar que estas amenazas han sido mitigadas, aceptadas por el negocio, o asignadas a un tercero, como una firma de seguros. Cuando las amenazas identificadas no tienen estrategias de mitigación, revisar el diseño y arquitectura con el arquitecto del sistema para modificar el diseño.
+Con las revisiones del diseño y la arquitectura, y los modelos UML que explican exactamente cómo funciona el sistema, se debe realizar un ejercicio de modelado de amenazas. Desarrollar escenarios de amenazas realistas. Analizar el diseño y la arquitectura para garantizar que estas amenazas se hayan mitigado, que la empresa las haya aceptado o que se hayan asignado a un tercero, como una compañía de seguros. Si las amenazas identificadas no tienen estrategias de mitigación, se debe revisar el diseño y la arquitectura junto con el arquitecto del sistema para modificar el diseño.
 
-## Fase 3 Durante Desarrollo
+## Fase 3 Durante el desarrollo
 
-Teóricamente, el desarrollo es la implementación de un diseño. Sin embargo, en el mundo real, muchas decisiones de diseño se hacen durante el desarrollo de código. Estas son a menudo decisiones más pequeñas que fueron demasiado detalladas para describirse en el diseño, o problemas donde no se ofreció orientación de política o estándar. Si el diseño y arquitectura no fueron adecuados, el desarrollador se enfrentará con muchas decisiones. Si hubo políticas y estándares insuficientes, el desarrollador se enfrentará con aún más decisiones.
+En teoría, el desarrollo consiste en implementar un diseño. Sin embargo, en el mundo real se toman muchas decisiones de diseño durante la programación. A menudo, se trata de decisiones menores que eran demasiado detalladas para incluirse en el diseño, o de cuestiones para las que no se proporcionó orientación en una política o un estándar. Si el diseño y la arquitectura no eran adecuados, el desarrollador deberá tomar muchas decisiones. Si las políticas y los estándares eran insuficientes, tendrá que tomar aún más decisiones.
 
-### Fase 3.1 Revisión de Código
+### Fase 3.1 Recorrido por el código
 
-El equipo de seguridad debería realizar una revisión de código con los desarrolladores, y en algunos casos, los arquitectos del sistema. Una revisión de código es una mirada de alto nivel al código durante la cual los desarrolladores pueden explicar la lógica y flujo del código implementado. Permite al equipo de revisión de código obtener una comprensión general del código, y permite a los desarrolladores explicar por qué ciertas cosas fueron desarrolladas de la manera en que fueron.
+El equipo de seguridad debería realizar un recorrido por el código junto con los desarrolladores y, en algunos casos, los arquitectos del sistema. Un recorrido por el código consiste en una revisión de alto nivel durante la cual los desarrolladores pueden explicar la lógica y el flujo del código implementado. Permite que el equipo de revisión de código obtenga una comprensión general del código y que los desarrolladores expliquen por qué ciertas partes se desarrollaron de determinada manera.
 
-El propósito no es realizar una revisión de código, sino entender a un alto nivel el flujo, el diseño y la estructura del código que compone la aplicación.
+El propósito no es realizar una revisión de código, sino comprender, a alto nivel, el flujo, la disposición y la estructura del código que compone la aplicación.
 
-### Fase 3.2 Revisiones de Código
+### Fase 3.2 Revisiones de código
 
-Armados con una buena comprensión de cómo está estructurado el código y por qué ciertas cosas fueron codificadas de la manera en que fueron, el probador puede ahora examinar el código real en busca de defectos de seguridad.
+Con una buena comprensión de la estructura del código y de por qué ciertas partes se codificaron de determinada manera, el evaluador puede examinar el código real en busca de defectos de seguridad.
 
-Las revisiones de código estático validan el código contra un conjunto de listas de verificación, incluyendo:
+Las revisiones estáticas de código validan el código comparándolo con una serie de listas de verificación, entre ellas:
 
-- Requisitos de negocio para disponibilidad, confidencialidad e integridad;
-- Guía OWASP o listas de verificación Top 10 para exposiciones técnicas (dependiendo de la profundidad de la revisión);
-- Problemas específicos relacionados con el lenguaje o marco en uso, como el papel Scarlet para PHP o [listas de verificación de codificación segura de Microsoft para ASP.NET](https://msdn.microsoft.com/en-us/library/ff648269.aspx); y
-- Cualquier requisito específico de la industria, como Sarbanes-Oxley 404, COPPA, ISO/IEC 27002, APRA, HIPAA, directrices de Visa Merchant, u otros regímenes regulatorios.
+- Los requisitos de negocio relativos a la disponibilidad, la confidencialidad y la integridad;
+- Las listas de verificación de la Guía OWASP o del Top 10 para detectar exposiciones técnicas (según el nivel de profundidad de la revisión);
+- Las cuestiones específicas relacionadas con el lenguaje o el marco en uso, como la [hoja de referencia de configuración de PHP](https://cheatsheetseries.owasp.org/cheatsheets/PHP_Configuration_Cheat_Sheet.html) o las [directrices de codificación segura para .NET](https://learn.microsoft.com/en-us/dotnet/standard/security/secure-coding-guidelines); y
+- Cualquier requisito específico de la industria, como Sarbanes-Oxley 404, COPPA, ISO/IEC 27002, APRA, HIPAA, las directrices de Visa Merchant u otros regímenes regulatorios.
 
-En términos de retorno sobre recursos invertidos (mayormente tiempo), las revisiones de código estático producen retornos de calidad mucho más altos que cualquier otro método de revisión de seguridad y dependen menos de la habilidad del revisor. Sin embargo, no son una bala de plata y necesitan considerarse cuidadosamente dentro de un régimen de pruebas de espectro completo.
+En términos del rendimiento de los recursos invertidos (principalmente tiempo), las revisiones estáticas de código producen resultados de mucha más calidad que cualquier otro método de revisión de seguridad y dependen menos de la habilidad del revisor. Sin embargo, no son una solución mágica y deben considerarse cuidadosamente dentro de un régimen de pruebas integral.
 
-Para más detalles sobre listas de verificación OWASP, por favor referirse a la última edición del [OWASP Top 10](https://owasp.org/www-project-top-ten/).
+Para obtener más detalles sobre las listas de verificación de OWASP, consulte la edición más reciente del [OWASP Top 10](https://owasp.org/www-project-top-ten/).
 
-## Fase 4 Durante Despliegue
+## Fase 4 Durante el despliegue
 
-### Fase 4.1 Pruebas de Penetración de Aplicación
+### Fase 4.1 Pruebas de penetración de aplicaciones
 
-Habiendo probado los requisitos, analizado el diseño y realizado revisión de código, podría asumirse que todos los problemas han sido capturados. Esperemos que este sea el caso, pero probar la penetración de la aplicación después de que ha sido desplegada proporciona una verificación adicional para asegurar que nada ha sido perdido.
+Tras probar los requisitos, analizar el diseño y revisar el código, podría suponerse que se han detectado todos los problemas. Ojalá sea así, pero probar la aplicación mediante pruebas de penetración después de su despliegue proporciona una comprobación adicional para garantizar que no se haya pasado nada por alto.
 
-### Fase 4.2 Pruebas de Gestión de Configuración
+### Fase 4.2 Pruebas de gestión de la configuración
 
-La prueba de penetración de la aplicación debería incluir un examen de cómo la infraestructura fue desplegada y asegurada. Es importante revisar aspectos de configuración, no importa cuán pequeños, para asegurar que ninguno se deja en una configuración predeterminada que puede ser vulnerable a explotación.
+Las pruebas de penetración de la aplicación deberían incluir un examen de cómo se desplegó y protegió la infraestructura. Es importante revisar todos los aspectos de la configuración, por pequeños que sean, para garantizar que ninguno permanezca en una configuración predeterminada que pueda ser vulnerable a la explotación.
 
-## Fase 5 Durante Mantenimiento y Operaciones
+## Fase 5 Durante el mantenimiento y las operaciones
 
-### Fase 5.1 Realizar Revisiones de Gestión Operacional
+### Fase 5.1 Realizar revisiones de la gestión operativa
 
-Necesita haber un proceso en lugar que detalle cómo se gestiona el lado operacional tanto de la aplicación como de la infraestructura.
+Debe existir un proceso que detalle cómo se gestionan los aspectos operativos tanto de la aplicación como de la infraestructura.
 
-### Fase 5.2 Realizar Verificaciones de Salud Periódicas
+### Fase 5.2 Realizar comprobaciones periódicas del estado
 
-Deberían realizarse verificaciones de salud mensuales o trimestrales tanto en la aplicación como en la infraestructura para asegurar que no se han introducido nuevos riesgos de seguridad y que el nivel de seguridad sigue intacto.
+Se deberían realizar comprobaciones mensuales o trimestrales del estado de la aplicación y la infraestructura para garantizar que no se hayan introducido nuevos riesgos de seguridad y que el nivel de seguridad siga intacto.
 
-### Fase 5.3 Asegurar Verificación de Cambios
+### Fase 5.3 Garantizar la verificación de los cambios
 
-Después de que cada cambio ha sido aprobado y probado en el entorno QA y desplegado en el entorno de producción, es vital que el cambio sea verificado para asegurar que el nivel de seguridad no ha sido afectado por el cambio. Esto debería integrarse en el proceso de gestión de cambios.
+Después de aprobar y probar cada cambio en el entorno de QA y desplegarlo en el entorno de producción, es fundamental comprobar que el cambio no haya afectado el nivel de seguridad. Esto debería integrarse en el proceso de gestión de cambios.
 
-## Un Flujo de Trabajo Típico de Pruebas SDLC
+## Flujo de trabajo típico de pruebas de SDLC
 
-La siguiente figura muestra un Flujo de Trabajo Típico de Pruebas SDLC.
+La siguiente figura muestra un flujo de trabajo típico de pruebas de SDLC.
 
-![Flujo de Trabajo Típico de Pruebas SDLC](images/Typical_SDLC_Testing_Workflow.gif)\
-*Figura 3-1: Flujo de trabajo típico de pruebas SDLC*
+![Flujo de trabajo típico de pruebas de SDLC](images/typical_sdlc_testing_workflow.gif)\
+ *Figura 3-1: Flujo de trabajo típico de pruebas de SDLC*

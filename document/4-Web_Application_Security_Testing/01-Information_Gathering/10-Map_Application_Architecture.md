@@ -1,4 +1,4 @@
-# Mapear Arquitectura de la Aplicación
+# Mapear la arquitectura de la aplicación
 
 |ID          |
 |------------|
@@ -6,40 +6,40 @@
 
 ## Resumen
 
-Para probar efectivamente una aplicación, y poder proporcionar recomendaciones significativas sobre cómo abordar cualquiera de los problemas identificados, es importante entender qué se está probando realmente. Adicionalmente, podría ser helpful determinar si componentes específicos deberían considerarse fuera de alcance para pruebas.
+Para probar una aplicación de manera eficaz y poder proporcionar recomendaciones útiles sobre cómo abordar los problemas identificados, es importante entender qué se está probando realmente. Además, puede ser útil determinar si algunos componentes específicos deben considerarse fuera del alcance de las pruebas.
 
-Las aplicaciones web modernas pueden variar significativamente en complejidad, desde un script simple ejecutándose en un solo servidor hasta una aplicación altamente compleja distribuida a través de docenas de diferentes sistemas, lenguajes y componentes. También puede haber componentes adicionales a nivel de red como firewalls o sistemas de protección de intrusiones que pueden tener un impacto significativo en las pruebas.
+Las aplicaciones web modernas pueden variar significativamente en complejidad: desde un script sencillo que se ejecuta en un único servidor hasta una aplicación muy compleja distribuida en decenas de sistemas, lenguajes y componentes diferentes. También puede haber componentes adicionales a nivel de red, como firewalls o sistemas de protección contra intrusiones, que pueden tener un impacto significativo en las pruebas.
 
-## Objetivos de Prueba
+## Objetivos de las pruebas
 
-- Entender la arquitectura de la aplicación y las tecnologías en uso.
+- Entender la arquitectura de la aplicación y las tecnologías que utiliza.
 
-## Cómo Probar
+## Cómo probar
 
-Cuando se prueba desde una perspectiva black box, es importante intentar construir una imagen clara de cómo funciona la aplicación, y cuáles tecnologías y componentes están en lugar. En algunos casos, es posible probar componentes específicos como un firewall de aplicación web, mientras otros componentes pueden identificarse inspeccionando el comportamiento de la aplicación.
+Al probar desde una perspectiva de caja negra, es importante intentar construir una imagen clara de cómo funciona la aplicación y qué tecnologías y componentes utiliza. En algunos casos, es posible probar componentes específicos, como un firewall de aplicaciones web, mientras que otros pueden identificarse inspeccionando el comportamiento de la aplicación.
 
-Las secciones abajo proporcionan una visión general de alto nivel de componentes arquitectónicos comunes, junto con detalles sobre cómo pueden identificarse.
+Las secciones siguientes proporcionan una descripción general de alto nivel de los componentes arquitectónicos comunes, junto con detalles sobre cómo identificarlos.
 
-### Componentes de Aplicación
+### Componentes de la aplicación
 
-#### Servidor Web
+#### Servidor web
 
-Aplicaciones simples pueden ejecutarse en un solo servidor, que puede identificarse usando los pasos discutidos en la sección [Huella Digital del Servidor Web](02-Fingerprint_Web_Server.md) de la guía.
+Las aplicaciones sencillas pueden ejecutarse en un único servidor, que puede identificarse siguiendo los pasos descritos en la sección [Obtener la huella digital del servidor web](02-Fingerprint_Web_Server.md) de la guía.
 
-#### Platform-as-a-Service (PaaS)
+#### Plataforma como servicio (PaaS)
 
-En un modelo Platform-as-a-Service (PaaS), el servidor web y la infraestructura subyacente son manejados por el proveedor de servicio, y el cliente solo es responsable de la aplicación que se despliega en ellos. Desde una perspectiva de pruebas, hay dos diferencias principales:
+En un modelo de plataforma como servicio (PaaS), el proveedor del servicio administra el servidor web y la infraestructura subyacente, y el cliente solo es responsable de la aplicación que se despliega en dicha infraestructura. Desde la perspectiva de las pruebas, hay dos diferencias principales:
 
-- El propietario de la aplicación no tiene acceso a la infraestructura subyacente, lo que significa que no podrán remediate directamente cualquier problema
-- Las pruebas de infraestructura son likely a estar fuera de alcance para cualquier compromiso
+- El propietario de la aplicación no tiene acceso a la infraestructura subyacente, lo que significa que no podrá corregir directamente ningún problema.
+- Es probable que las pruebas de infraestructura estén fuera del alcance de cualquier encargo.
 
-En algunos casos, es posible identificar el uso de PaaS, ya que la aplicación puede usar un nombre de dominio específico (por ejemplo, aplicaciones desplegadas en Azure App Services tendrán un dominio `*.azurewebsites.net` - aunque también pueden usar dominios custom). En otros casos, es difícil determinar si PaaS está en uso.
+En algunos casos, es posible identificar el uso de PaaS, ya que la aplicación puede utilizar un nombre de dominio específico (por ejemplo, las aplicaciones desplegadas en Azure App Services tendrán un dominio `*.azurewebsites.net`, aunque también pueden utilizar dominios personalizados). En otros casos, es difícil determinar si se utiliza PaaS.
 
-#### Serverless
+#### Sin servidor
 
-En un modelo Serverless, los desarrolladores proporcionan código que se ejecuta directamente en una plataforma de hosting como funciones individuales, en lugar de ejecutar una aplicación web tradicional más grande desplegada en un webroot. Esto lo hace bien suited para arquitectura basada en microservicios. Como con un entorno PaaS, las pruebas de infraestructura son likely a estar fuera de alcance.
+En un modelo sin servidor, los desarrolladores proporcionan código que se ejecuta directamente en una plataforma de alojamiento como funciones individuales, en lugar de ejecutar una aplicación web tradicional de mayor tamaño desplegada en un directorio raíz web. Esto lo hace adecuado para una arquitectura basada en microservicios. Al igual que en un entorno PaaS, es probable que las pruebas de infraestructura estén fuera del alcance.
 
-En algunos casos, el uso de código Serverless puede indicarse por la presencia de headers HTTP específicos. Por ejemplo, funciones AWS Lambda típicamente retornan los siguientes headers:
+En algunos casos, la presencia de encabezados HTTP específicos puede indicar el uso de código sin servidor. Por ejemplo, las funciones de AWS Lambda suelen devolver los siguientes encabezados:
 
 ```http
 X-Amz-Invocation-Type
@@ -47,145 +47,145 @@ X-Amz-Log-Type
 X-Amz-Client-Context
 ```
 
-Azure Functions son menos obvias. Típicamente retornan el header `Server: Kestrel` - pero esto por sí solo no es suficiente para determinar que es una función Azure App, ya que podría ser algún otro código ejecutándose en Kestrel.
+Azure Functions son menos fáciles de identificar. Suelen devolver el encabezado `Server: Kestrel`, pero esto por sí solo no basta para determinar que se trata de una función de Azure App, ya que podría ser otro código que se ejecuta en Kestrel.
 
 #### Microservicios
 
-En una arquitectura basada en microservicios, la API de la aplicación está hecha de múltiples servicios discretos, en lugar de ejecutarse como una aplicación monolítica. Los servicios en sí a menudo ejecutan dentro de contenedores (usualmente con Kubernetes), y pueden usar una variedad de diferentes sistemas operativos y lenguajes. Aunque típicamente están detrás de una sola puerta de enlace API y dominio, el uso de múltiples lenguajes (a menudo indicado en mensajes de error detallados) puede sugerir que microservicios están en uso.
+En una arquitectura basada en microservicios, la API de la aplicación está compuesta por varios servicios independientes, en lugar de ejecutarse como una aplicación monolítica. Los servicios suelen ejecutarse en contenedores (normalmente con Kubernetes) y pueden utilizar distintos sistemas operativos y lenguajes. Aunque suelen estar detrás de una única puerta de enlace de API y un único dominio, el uso de varios lenguajes (a menudo indicado en mensajes de error detallados) puede sugerir que se utilizan microservicios.
 
-#### Almacenamiento Estático
+#### Almacenamiento estático
 
-Muchas aplicaciones almacenan contenido estático en plataformas de almacenamiento dedicadas, en lugar de alojarlo directamente en el servidor web principal. Las dos plataformas más comunes son Amazon's S3 Buckets, y Azure's Storage Accounts, y pueden identificarse fácilmente por los nombres de dominio:
+Muchas aplicaciones almacenan contenido estático en plataformas de almacenamiento dedicadas, en lugar de alojarlo directamente en el servidor web principal. Las dos plataformas más comunes son los buckets S3 de Amazon y las cuentas de almacenamiento de Azure, que pueden identificarse fácilmente por sus nombres de dominio:
 
-- `BUCKET.s3.amazonaws.com` o `s3.REGION.amazonaws.com/BUCKET` para Amazon S3 Buckets
-- `ACCOUNT.blob.core.windows.net` para Azure Storage Accounts
+- `BUCKET.s3.amazonaws.com` o `s3.REGION.amazonaws.com/BUCKET` para los buckets S3 de Amazon
+- `ACCOUNT.blob.core.windows.net` para las cuentas de almacenamiento de Azure
 
-Estas cuentas de almacenamiento a menudo pueden exponer archivos sensibles, como discutido en la sección [Testing Cloud Storage Guide](../02-Configuration_and_Deployment_Management_Testing/11-Test_Cloud_Storage.md).
+Estas cuentas de almacenamiento pueden exponer archivos sensibles, como se explica en la sección [Guía de pruebas de almacenamiento en la nube](../02-Configuration_and_Deployment_Management/11-Cloud_Storage.md).
 
-#### Base de Datos
+#### Base de datos
 
-La mayoría de aplicaciones web no triviales usan algún tipo de base de datos para almacenar contenido dinámico. En algunos casos, es posible determinar la base de datos. Esto a menudo puede hacerse por:
+La mayoría de las aplicaciones web no triviales utilizan algún tipo de base de datos para almacenar contenido dinámico. En algunos casos, es posible determinar qué base de datos se utiliza. A menudo puede hacerse de las siguientes maneras:
 
-- Escaneando puertos del servidor y buscando cualquier puerto abierto asociado con bases de datos específicas
-- Triggering mensajes de error relacionados con SQL (o NoSQL) (o encontrando errores existentes de un [motor de búsqueda](../01-Information_Gathering/01-Conduct_Search_Engine_Discovery_Reconnaissance_for_Information_Leakage.md)
+- Escanear los puertos del servidor y buscar puertos abiertos asociados a bases de datos específicas.
+- Provocar mensajes de error relacionados con SQL (o NoSQL) o encontrar errores existentes mediante un [motor de búsqueda](../01-Information_Gathering/01-Conduct_Search_Engine_Reconnaissance_for_Information_Leakage.md)
 
-Cuando no es posible determinar concluyentemente la base de datos, el probador a menudo puede hacer una suposición educada basada en otros aspectos de la aplicación:
+Cuando no es posible determinar la base de datos de forma concluyente, el evaluador a menudo puede hacer una conjetura fundamentada a partir de otros aspectos de la aplicación:
 
-- Windows, IIS y ASP.NET a menudo usan Microsoft SQL server
-- Sistemas embebidos a menudo usan SQLite
-- PHP a menudo usa MySQL o PostgreSQL
-- APEX a menudo usa Oracle
+- Windows, IIS y ASP.NET suelen utilizar Microsoft SQL Server.
+- Los sistemas integrados suelen utilizar SQLite.
+- PHP suele utilizar MySQL o PostgreSQL.
+- APEX suele utilizar Oracle.
 
-Estas no son reglas duras, pero ciertamente pueden darte un punto de partida razonable si no hay mejor información disponible.
+Estas no son reglas estrictas, pero pueden proporcionar un punto de partida razonable si no se dispone de mejor información.
 
 #### Autenticación
 
-La mayoría de aplicaciones tienen autenticación de usuario. Hay múltiples backends de autenticación que pueden usarse, como:
+La mayoría de las aplicaciones cuentan con autenticación de usuarios. Pueden utilizar varios sistemas de autenticación, como los siguientes:
 
-- Configuración de servidor web (incluyendo archivos `.htaccess`) o hard-coding passwords en scripts
-    - Usualmente se muestra como autenticación HTTP Basic, indicada por un pop-up en el navegador y un header HTTP `WWW-Authenticate: Basic`
-- Cuentas de usuario locales en una base de datos
-    - Usualmente integrado en un formulario o endpoint API en la aplicación
-- Una fuente de autenticación central existente como Active Directory o un servidor LDAP
-    - Puede usar autenticación NTLM, indicada por un header HTTP `WWW-Authenticate: NTLM`
-    - Puede estar integrado en la aplicación web en un formulario
-    - Puede requerir que el username se ingrese en el formato "DOMAIN\username", o puede dar un dropdown de dominios disponibles
-- Single Sign-On (SSO) con ya sea un proveedor interno o externo
-    - Típicamente usa OAuth, OpenID Connect, o SAML
+- Configuración del servidor web (incluidos los archivos `.htaccess`) o contraseñas codificadas directamente en scripts.
+    - Suele presentarse como autenticación HTTP Basic, indicada por una ventana emergente en el navegador y un encabezado HTTP `WWW-Authenticate: Basic`.
+- Cuentas de usuario locales en una base de datos.
+    - Suelen integrarse en un formulario o punto de conexión de la API de la aplicación.
+- Una fuente de autenticación central existente, como Active Directory o un servidor LDAP.
+    - Puede utilizar autenticación NTLM, indicada por un encabezado HTTP `WWW-Authenticate: NTLM`.
+    - Puede integrarse en la aplicación web mediante un formulario.
+    - Puede requerir que el nombre de usuario se introduzca con el formato "DOMAIN\username" o proporcionar un menú desplegable con los dominios disponibles.
+- Inicio de sesión único (SSO) con un proveedor interno o externo.
+    - Suele utilizar OAuth, OpenID Connect o SAML.
 
-Las aplicaciones pueden proporcionar múltiples opciones para que el usuario se autentique (como registrando una cuenta local, o usando su cuenta existente de Facebook), y pueden usar diferentes mecanismos para usuarios normales y administradores.
+Las aplicaciones pueden ofrecer varias opciones para que los usuarios se autentiquen (como registrar una cuenta local o utilizar su cuenta existente de Facebook) y pueden utilizar distintos mecanismos para los usuarios habituales y los administradores.
 
-#### Servicios y APIs de Terceros
+#### Servicios y API de terceros
 
-Casi todas las aplicaciones web incluyen recursos de terceros que se cargan o con los que el cliente interactúa. Estos pueden incluir:
+Casi todas las aplicaciones web incluyen recursos de terceros que se cargan o con los que interactúa el cliente. Estos pueden incluir:
 
-- [Contenido activo](https://developer.mozilla.org/en-US/docs/Web/Security/Mixed_content#mixed_active_content) (como scripts, hojas de estilo, fonts, e iframes)
-- [Contenido pasivo](https://developer.mozilla.org/en-US/docs/Web/Security/Mixed_content#mixed_passivedisplay_content) (como imágenes y videos)
-- APIs externas
+- [Contenido activo](https://developer.mozilla.org/en-US/docs/Web/Security/Defenses/Mixed_content#mixed_active_content) (como scripts, hojas de estilo, fuentes e iframes)
+- [Contenido pasivo](https://developer.mozilla.org/en-US/docs/Web/Security/Defenses/Mixed_content#mixed_passivedisplay_content) (como imágenes y videos)
+- API externas
 - Botones de redes sociales
-- Redes de publicidad
-- Puertas de pago
+- Redes publicitarias
+- Pasarelas de pago
 
-Estos recursos son solicitados directamente por el navegador del usuario, haciéndolos más fáciles de identificar usando las herramientas de desarrollador, o un proxy interceptante. Mientras es importante identificarlos (ya que pueden impactar la seguridad de la aplicación), recuerda que *usualmente están fuera de alcance para pruebas*, ya que pertenecen a terceros.
+El navegador del usuario solicita estos recursos directamente, por lo que son más fáciles de identificar mediante las herramientas para desarrolladores o un proxy de interceptación. Aunque es importante identificarlos (ya que pueden afectar la seguridad de la aplicación), hay que tener en cuenta que *suelen estar fuera del alcance de las pruebas*, pues pertenecen a terceros.
 
-### Componentes de Red
+### Componentes de red
 
-#### Proxy Inverso
+#### Proxy inverso
 
-Un proxy inverso se sienta enfrente de uno o más servidores backend y redirige solicitudes al destino apropiado. Pueden usarse para implementar varias funcionalidades, como:
+Un proxy inverso se sitúa delante de uno o varios servidores de backend y redirige las solicitudes al destino adecuado. Puede utilizarse para implementar varias funciones, como las siguientes:
 
-- Actuando como un [load balancer](#load-balancer) o [web application firewall](#web-application-firewall-waf)
-- Permitiendo múltiples aplicaciones ser alojadas en una sola dirección IP o dominio (en subcarpetas)
-- Implementando filtrado IP u otras restricciones
-- Caching contenido del backend para mejorar rendimiento
+- Actuar como un [balanceador de carga](#load-balancer) o un [firewall de aplicaciones web](#web-application-firewall-waf)
+- Permitir que varias aplicaciones se alojen en una única dirección IP o dominio (en subdirectorios)
+- Implementar el filtrado de IP u otras restricciones
+- Almacenar en caché contenido del backend para mejorar el rendimiento
 
-No siempre es posible detectar un proxy inverso (especialmente si solo hay una sola aplicación detrás de él), pero a veces puedes identificarlo por:
+No siempre es posible detectar un proxy inverso (especialmente si solo hay una aplicación detrás de él), pero a veces puede identificarse por lo siguiente:
 
-- Un mismatch entre el servidor frontend y la aplicación backend (como un header `Server: nginx` con una aplicación ASP.NET)
-    - Esto a veces puede llevar a [vulnerabilidades de request smuggling](https://portswigger.net/web-security/request-smuggling)
-- Headers duplicados (especialmente el header `Server`)
-- Múltiples aplicaciones alojadas en la misma dirección IP o dominio (especialmente si usan diferentes lenguajes)
+- Una discrepancia entre el servidor de frontend y la aplicación de backend (por ejemplo, un encabezado `Server: nginx` con una aplicación ASP.NET).
+    - Esto a veces puede dar lugar a [vulnerabilidades de contrabando de solicitudes](https://portswigger.net/web-security/request-smuggling).
+- Encabezados duplicados (especialmente el encabezado `Server`).
+- Varias aplicaciones alojadas en la misma dirección IP o dominio (especialmente si utilizan lenguajes diferentes).
 
-#### Load Balancer
+#### Balanceador de carga
 
-Un load balancer se sienta enfrente de múltiples servidores backend y asigna solicitudes entre ellos para proporcionar mayor redundancia y capacidad de procesamiento para la aplicación.
+Un balanceador de carga se sitúa delante de varios servidores de backend y distribuye las solicitudes entre ellos para proporcionar mayor redundancia y capacidad de procesamiento a la aplicación.
 
-Los load balancers pueden ser difíciles de detectar, pero a veces pueden identificarse haciendo múltiples solicitudes y examinando las respuestas por diferencias, como:
+Los balanceadores de carga pueden ser difíciles de detectar, pero a veces es posible identificarlos enviando varias solicitudes y examinando las respuestas en busca de diferencias, como las siguientes:
 
-- Tiempos de sistema inconsistentes
-- Diferentes direcciones IP internas o hostnames en mensajes de error detallados
-- Diferentes direcciones retornadas de [Server-Side Request Forgery (SSRF)](../07-Input_Validation_Testing/19-Testing_for_Server-Side_Request_Forgery.md)
+- Horas del sistema incoherentes.
+- Direcciones IP internas o nombres de host diferentes en mensajes de error detallados.
+- Direcciones diferentes devueltas mediante [falsificación de solicitudes del lado del servidor (SSRF)](../07-Injection/19-Server-Side_Request_Forgery.md).
 
-También pueden indicarse por la presencia de cookies específicas (por ejemplo, load balancers F5 BIG-IP crearán una cookie llamada `BIGipServer`.
+La presencia de cookies específicas también puede ser un indicio (por ejemplo, los balanceadores de carga F5 BIG-IP crearán una cookie llamada `BIGipServer`.
 
-#### Content Delivery Network (CDN)
+#### Red de distribución de contenido (CDN)
 
-Una Content Delivery Network (CDN) es un conjunto geográficamente distribuido de servidores proxy de caching diseñados para mejorar el rendimiento del sitio.
+Una red de distribución de contenido (CDN) es un conjunto de servidores proxy de caché distribuidos geográficamente, diseñado para mejorar el rendimiento del sitio.
 
-Típicamente se configura apuntando el dominio público-facing a los servidores de la CDN, y luego configurando la CDN para conectarse a los servidores backend correctos (a veces conocidos como el "origin").
+Normalmente se configura apuntando el dominio de acceso público a los servidores de la CDN y, después, configurando la CDN para que se conecte a los servidores de backend correctos (a veces llamados «origen»).
 
-La manera más fácil de detectar una CDN es realizar una búsqueda WHOIS para las direcciones IP que el dominio resuelve. Si pertenecen a una compañía CDN (como Akamai, Cloudflare o Fastly - ver [Wikipedia](https://en.wikipedia.org/wiki/Content_delivery_network#Notable_content_delivery_service_providers) para una lista más completa), entonces es likely que una CDN esté en uso.
+La forma más sencilla de detectar una CDN es realizar una consulta WHOIS para las direcciones IP a las que resuelve el dominio. Si pertenecen a una empresa de CDN (como Akamai, Cloudflare o Fastly; consulta [Wikipedia](https://en.wikipedia.org/wiki/Content_delivery_network#Notable_content_delivery_service_providers) para ver una lista más completa), es probable que se esté utilizando una CDN.
 
-Cuando pruebas un sitio detrás de una CDN, deberías tener en mente los siguientes puntos:
+Al probar un sitio detrás de una CDN, hay que tener en cuenta lo siguiente:
 
-- Las direcciones IP y servidores pertenecen al proveedor CDN, y son likely a estar fuera de alcance para pruebas de infraestructura
-- Muchas CDNs también incluyen features como detección de bots, rate limiting, y web application firewalls
-- Las CDNs usualmente cachean contenido. Por lo tanto, cambios hechos en el backend pueden no aparecer inmediatamente en el sitio.
+- Las direcciones IP y los servidores pertenecen al proveedor de la CDN y es probable que estén fuera del alcance de las pruebas de infraestructura.
+- Muchas CDN también incluyen funciones como la detección de bots, la limitación de la tasa de solicitudes y los firewalls de aplicaciones web.
+- Las CDN suelen almacenar contenido en caché. Por lo tanto, es posible que los cambios realizados en el backend no aparezcan inmediatamente en el sitio.
 
-Si el sitio está detrás de una CDN, podría ser útil identificar los servidores backend. Si el control de acceso apropiado no se enforce, el probador puede ser capaz de bypass la CDN (y cualquier protección que ofrezca) accediendo directamente a los servidores backend. Hay una variedad de diferentes métodos que pueden permitir identificar el sistema backend:
+Si el sitio está detrás de una CDN, puede ser útil identificar los servidores de backend. Si no se aplica un control de acceso adecuado, el evaluador podría eludir la CDN (y las protecciones que ofrece) accediendo directamente a los servidores de backend. Existen varios métodos que pueden permitir identificar el sistema de backend:
 
-- Emails enviados por la aplicación pueden venir direct del servidor backend, que podría revelar su dirección IP
-- DNS grinding, zone transfers o listas de transparencia de certificados para un dominio pueden revelarlo en un subdomain
-- Escaneando los rangos IP conocidos por ser usados por la compañía puede ayudar a identificar el servidor backend
-- Exploiting [Server-Side Request Forgery (SSRF)](../07-Input_Validation_Testing/19-Testing_for_Server-Side_Request_Forgery.md) puede revelar la dirección IP
-- Mensajes de error detallados de la aplicación pueden exponer direcciones IP o hostnames
+- Los correos electrónicos enviados por la aplicación pueden provenir directamente del servidor de backend, lo que podría revelar su dirección IP.
+- El análisis exhaustivo de DNS, las transferencias de zona o las listas de transparencia de certificados de un dominio pueden revelarlo en un subdominio.
+- Escanear los rangos de IP que se sabe que utiliza la empresa puede ayudar a identificar el servidor de backend.
+- Explotar la [falsificación de solicitudes del lado del servidor (SSRF)](../07-Injection/19-Server-Side_Request_Forgery.md) puede revelar la dirección IP.
+- Los mensajes de error detallados de la aplicación pueden exponer direcciones IP o nombres de host.
 
-### Componentes de Seguridad
+### Componentes de seguridad
 
-#### Firewall de Red
+#### Firewall de red
 
-La mayoría de servidores web estarán protegidos por un firewall de filtrado de paquetes o inspección stateful, que bloquea cualquier tráfico de red que no sea requerido. Para detectarlo, realiza un port scan del servidor y examina los resultados.
+La mayoría de los servidores web están protegidos por un firewall de filtrado de paquetes o de inspección con estado, que bloquea el tráfico de red que no es necesario. Para detectarlo, hay que escanear los puertos del servidor y examinar los resultados.
 
-Si la mayoría de los puertos se muestran como "closed" (i.e, retornan un paquete `RST` en respuesta al paquete inicial `SYN`), esto sugiere que el servidor puede no estar protegido por un firewall. Si los puertos se muestran como "filtered" (i.e, no se recibe respuesta cuando enviando un paquete `SYN` a un puerto no usado), entonces un firewall es most likely a estar en lugar.
+Si la mayoría de los puertos aparecen como "closed" (es decir, devuelven un paquete `RST` en respuesta al paquete inicial `SYN`), esto sugiere que el servidor podría no estar protegido por un firewall. Si los puertos aparecen como "filtered" (es decir, no se recibe respuesta al enviar un paquete `SYN` a un puerto sin uso), lo más probable es que haya un firewall.
 
-Adicionalmente, si servicios inapropiados están expuestos al mundo (como SMTP, IMAP, MySQL, etc), esto sugiere que ya sea no hay firewall en lugar, o que el firewall está mal configurado.
+Además, si hay servicios inadecuados expuestos al exterior (como SMTP, IMAP o MySQL), esto sugiere que no hay un firewall o que está mal configurado.
 
-#### Sistema de Detección y Prevención de Intrusiones de Red
+#### Sistema de detección y prevención de intrusiones de red
 
-Un Sistema de Detección de Intrusiones de Red (IDS) está diseñado para detectar actividad sospechosa o maliciosa a nivel de red, como scanning de puertos o vulnerabilidades, y levantar alertas. Un Sistema de Prevención de Intrusiones (IPS) funciona similarmente, pero también toma acción para prevenir la actividad, usualmente bloqueando la dirección IP fuente.
+Un sistema de detección de intrusiones de red (IDS) está diseñado para detectar actividad sospechosa o maliciosa a nivel de red, como el escaneo de puertos o de vulnerabilidades, y generar alertas. Un sistema de prevención de intrusiones (IPS) funciona de forma similar, pero también toma medidas para impedir la actividad, normalmente bloqueando la dirección IP de origen.
 
-Un IPS usualmente puede detectarse ejecutando herramientas de scanning automatizadas (como un port scanner) contra el target, y viendo si la IP fuente es bloqueada. Sin embargo, muchas herramientas a nivel de aplicación pueden no ser detectadas por un IPS (especialmente si no desencripta TLS).
+Por lo general, un IPS puede detectarse ejecutando herramientas automatizadas de escaneo (como un escáner de puertos) contra el objetivo y comprobando si se bloquea la IP de origen. Sin embargo, es posible que un IPS no detecte muchas herramientas a nivel de aplicación (especialmente si no descifra TLS).
 
-#### Web Application Firewall (WAF)
+#### Firewall de aplicaciones web (WAF)
 
-Un Web Application Firewall (WAF) inspecciona el contenido de solicitudes HTTP y bloquea aquellas que aparecen sospechosas o maliciosas. También pueden usarse para aplicar dinámicamente otros controles como CAPTCHA o rate limiting. Usualmente utilizan un conjunto de firmas conocidas malas y expresiones regulares, como el [OWASP Core Rule Set](https://owasp.org/www-project-modsecurity-core-rule-set/), para identificar tráfico malicioso. Los WAFs pueden ser efectivos protegiendo contra ciertos tipos de ataques como SQL injection o cross-site scripting, pero son menos efectivos contra otros tipos como control de acceso o problemas relacionados con lógica de negocio.
+Un firewall de aplicaciones web (WAF) inspecciona el contenido de las solicitudes HTTP y bloquea aquellas que parecen sospechosas o maliciosas. También puede utilizarse para aplicar dinámicamente otros controles, como CAPTCHA o la limitación de la tasa de solicitudes. Por lo general, utiliza un conjunto de firmas conocidas como maliciosas y expresiones regulares, como el [OWASP Core Rule Set](https://owasp.org/www-project-modsecurity-core-rule-set/), para identificar el tráfico malicioso. Los WAF pueden proteger eficazmente contra ciertos tipos de ataques, como la inyección SQL o el cross-site scripting, pero son menos eficaces contra otros, como los problemas relacionados con el control de acceso o la lógica de negocio.
 
-Un WAF puede desplegarse en múltiples locaciones, incluyendo:
+Un WAF puede desplegarse en varios lugares, entre ellos:
 
-- En el servidor web en sí
-- En una máquina virtual separada o appliance de hardware
-- En la cloud, enfrente del servidor backend
+- En el propio servidor web
+- En una máquina virtual independiente o un dispositivo de hardware
+- En la nube, delante del servidor de backend
 
-Porque un WAF bloquea solicitudes maliciosas, puede detectarse agregando strings de ataque comunes a parámetros y observando si son bloqueados o no. Por ejemplo, intenta agregar un parámetro llamado `foo` con un valor como `' UNION SELECT 1` o `><script>alert(1)</script>`. Si estas solicitudes son bloqueadas, es likely que haya un WAF en lugar. Adicionalmente, el contenido de las páginas de bloqueo puede proporcionar información sobre la tecnología específica que está en uso. Finalmente, algunos WAFs pueden agregar cookies o headers HTTP a respuestas que pueden revelar su presencia.
+Como un WAF bloquea las solicitudes maliciosas, es posible detectarlo añadiendo cadenas de ataque habituales a los parámetros y observando si se bloquean. Por ejemplo, intenta añadir un parámetro llamado `foo` con un valor como `' UNION SELECT 1` o `><script>alert(1)</script>`. Si se bloquean estas solicitudes, es probable que haya un WAF. Además, el contenido de las páginas de bloqueo puede proporcionar información sobre la tecnología específica utilizada. Por último, algunos WAF pueden añadir cookies o encabezados HTTP a las respuestas que revelen su presencia.
 
-Si un WAF basado en cloud está en uso, entonces puede ser posible bypassarlo accediendo directamente al servidor backend, usando los mismos métodos discutidos en la sección [Content Delivery Network](#content-delivery-network-cdn).
+Si se utiliza un WAF basado en la nube, puede ser posible eludirlo accediendo directamente al servidor de backend mediante los mismos métodos descritos en la sección [Red de distribución de contenido](#content-delivery-network-cdn).

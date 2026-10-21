@@ -1,349 +1,353 @@
-# Tabla de Contenidos
+# Contenido
 
 ## 0. [Prefacio](0-Foreword/README.md)
 
-## 1. [Frontispicio](1-Frontispiece/)
+## 1. [Acerca de](1-About/)
 
 ## 2. [Introducción](2-Introduction/)
 
-### 2.1 [El Proyecto de Pruebas de OWASP](2-Introduction/README.md#The-OWASP-Testing-Project)
+### 2.1 [Propósito y alcance](2-Introduction/README.md#Purpose-and-Scope)
 
-### 2.2 [Principios de Pruebas](2-Introduction/README.md#Principles-of-Testing)
+### 2.2 [Por qué son importantes las pruebas de seguridad de aplicaciones web](2-Introduction/README.md#Why-Web-Application-Security-Testing-Matters)
 
-### 2.3 [Técnicas de Pruebas Explicadas](2-Introduction/README.md#Testing-Techniques-Explained)
+### 2.3 [Quién debería usar esta guía](2-Introduction/README.md#Who-Should-Use-This-Guide)
 
-### 2.4 [Inspecciones y Revisiones Manuales](2-Introduction/README.md#Manual-Inspections-and-Reviews)
+### 2.4 [Principios fundamentales de las pruebas de seguridad eficaces](2-Introduction/README.md#Core-Principles-of-Effective-Security-Testing)
 
-### 2.5 [Modelado de Amenazas](2-Introduction/README.md#Threat-Modeling)
+### 2.5 [Organización de la guía](2-Introduction/README.md#How-the-Guide-Is-Organized)
 
-### 2.6 [Revisión de Código Fuente](2-Introduction/README.md#Source-Code-Review)
+### 2.6 [Cómo hacer referencia a los escenarios del WSTG](2-Introduction/README.md#How-to-Reference-WSTG-Scenarios)
 
-### 2.7 [Pruebas de Penetración](2-Introduction/README.md#Penetration-Testing)
+### 2.7 [Comentarios y sugerencias](2-Introduction/README.md#Feedback-and-Comments)
 
-### 2.8 [La Necesidad de un Enfoque Equilibrado](2-Introduction/README.md#The-Need-for-a-Balanced-Approach)
+### 2.8 [Proyectos relacionados de OWASP](2-Introduction/README.md#Related-OWASP-Projects)
 
-### 2.9 [Derivación de Requisitos de Pruebas de Seguridad](2-Introduction/README.md#Deriving-Security-Test-Requirements)
+## 3. [El marco de pruebas de OWASP](3-The_OWASP_Testing_Framework/)
 
-### 2.10 [Pruebas de Seguridad Integradas en Flujos de Trabajo de Desarrollo y Pruebas](2-Introduction/README.md#Security-Tests-Integrated-in-Development-and-Testing-Workflows)
+### 3.1 [El marco de pruebas de seguridad web](3-The_OWASP_Testing_Framework/0-The_Web_Security_Testing_Framework.md)
 
-### 2.11 [Análisis y Reportes de Datos de Pruebas de Seguridad](2-Introduction/README.md#Security-Test-Data-Analysis-and-Reporting)
+### 3.2 [Fase 1: antes de que comience el desarrollo](3-The_OWASP_Testing_Framework/0-The_Web_Security_Testing_Framework.md#Phase-1-Before-Development-Begins)
 
-## 3. [El Marco de Pruebas de OWASP](3-The_OWASP_Testing_Framework/)
+### 3.3 [Fase 2: durante la definición y el diseño](3-The_OWASP_Testing_Framework/0-The_Web_Security_Testing_Framework.md#Phase-2-During-Definition-and-Design)
 
-### 3.1 [El Marco de Pruebas de Seguridad Web](3-The_OWASP_Testing_Framework/0-The_Web_Security_Testing_Framework.md)
+### 3.4 [Fase 3: durante el desarrollo](3-The_OWASP_Testing_Framework/0-The_Web_Security_Testing_Framework.md#Phase-3-During-Development)
 
-### 3.2 [Fase 1 Antes de que Comience el Desarrollo](3-The_OWASP_Testing_Framework/0-The_Web_Security_Testing_Framework.md#Phase-1-Before-Development-Begins)
+### 3.5 [Fase 4: durante el despliegue](3-The_OWASP_Testing_Framework/0-The_Web_Security_Testing_Framework.md#Phase-4-During-Deployment)
 
-### 3.3 [Fase 2 Durante la Definición y Diseño](3-The_OWASP_Testing_Framework/0-The_Web_Security_Testing_Framework.md#Phase-2-During-Definition-and-Design)
+### 3.6 [Fase 5: durante el mantenimiento y las operaciones](3-The_OWASP_Testing_Framework/0-The_Web_Security_Testing_Framework.md#Phase-5-During-Maintenance-and-Operations)
 
-### 3.4 [Fase 3 Durante el Desarrollo](3-The_OWASP_Testing_Framework/0-The_Web_Security_Testing_Framework.md#Phase-3-During-Development)
+### 3.7 [Flujo de trabajo típico de pruebas del SDLC](3-The_OWASP_Testing_Framework/0-The_Web_Security_Testing_Framework.md#A-Typical-SDLC-Testing-Workflow)
 
-### 3.5 [Fase 4 Durante el Despliegue](3-The_OWASP_Testing_Framework/0-The_Web_Security_Testing_Framework.md#Phase-4-During-Deployment)
+### 3.8 [Metodologías de pruebas de penetración](3-The_OWASP_Testing_Framework/1-Penetration_Testing_Methodologies.md)
 
-### 3.6 [Fase 5 Durante el Mantenimiento y Operaciones](3-The_OWASP_Testing_Framework/0-The_Web_Security_Testing_Framework.md#Phase-5-During-Maintenance-and-Operations)
+## 4. [Pruebas de seguridad de aplicaciones web](4-Web_Application_Security_Testing/)
 
-### 3.7 [Un Flujo de Trabajo Típico de Pruebas SDLC](3-The_OWASP_Testing_Framework/0-The_Web_Security_Testing_Framework.md#A-Typical-SDLC-Testing-Workflow)
+### 4.0 [Introducción y objetivos](4-Web_Application_Security_Testing/00-Introduction_and_Objectives/README.md)
 
-### 3.8 [Metodologías de Pruebas de Penetración](3-The_OWASP_Testing_Framework/1-Penetration_Testing_Methodologies.md)
+### 4.1 [Recopilación de información](4-Web_Application_Security_Testing/01-Information_Gathering/README.md)
 
-## 4. [Pruebas de Seguridad de Aplicaciones Web](4-Web_Application_Security_Testing/)
+#### 4.1.1 [Realizar reconocimiento con motores de búsqueda para detectar fugas de información](4-Web_Application_Security_Testing/01-Information_Gathering/01-Conduct_Search_Engine_Reconnaissance_for_Information_Leakage.md)
 
-### 4.0 [Introduction and Objectives](4-Web_Application_Security_Testing/00-Introduction_and_Objectives/README.md)
+#### 4.1.2 [Identificar el servidor web](4-Web_Application_Security_Testing/01-Information_Gathering/02-Fingerprint_Web_Server.md)
 
-### 4.1 [Information Gathering](4-Web_Application_Security_Testing/01-Information_Gathering/README.md)
+#### 4.1.3 [Revisar los metarchivos del servidor web para detectar fugas de información](4-Web_Application_Security_Testing/01-Information_Gathering/03-Review_Webserver_Metafiles_for_Information_Leakage.md)
 
-#### 4.1.1 [Conduct Search Engine Discovery Reconnaissance for Information Leakage](4-Web_Application_Security_Testing/01-Information_Gathering/01-Conduct_Search_Engine_Discovery_Reconnaissance_for_Information_Leakage.md)
+#### 4.1.4 [Identificar la superficie de ataque](4-Web_Application_Security_Testing/01-Information_Gathering/04-Attack_Surface_Identification.md)
 
-#### 4.1.2 [Fingerprint Web Server](4-Web_Application_Security_Testing/01-Information_Gathering/02-Fingerprint_Web_Server.md)
+#### 4.1.5 [Revisar el contenido de las páginas web para detectar fugas de información](4-Web_Application_Security_Testing/01-Information_Gathering/05-Review_Web_Page_Content_for_Information_Leakage.md)
 
-#### 4.1.3 [Review Webserver Metafiles for Information Leakage](4-Web_Application_Security_Testing/01-Information_Gathering/03-Review_Webserver_Metafiles_for_Information_Leakage.md)
+#### 4.1.6 [Identificar los puntos de entrada de la aplicación](4-Web_Application_Security_Testing/01-Information_Gathering/06-Identify_Application_Entry_Points.md)
 
-#### 4.1.4 [Attack Surface Identification](4-Web_Application_Security_Testing/01-Information_Gathering/04-Attack_Surface_Identification.md)
+#### 4.1.7 [Trazar las rutas de ejecución de la aplicación](4-Web_Application_Security_Testing/01-Information_Gathering/07-Map_Execution_Paths_Through_Application.md)
 
-#### 4.1.5 [Review Web Page Content for Information Leakage](4-Web_Application_Security_Testing/01-Information_Gathering/05-Review_Web_Page_Content_for_Information_Leakage.md)
+#### 4.1.8 [Identificar el framework de la aplicación web](4-Web_Application_Security_Testing/01-Information_Gathering/08-Fingerprint_Web_Application_Framework.md)
 
-#### 4.1.6 [Identify Application Entry Points](4-Web_Application_Security_Testing/01-Information_Gathering/06-Identify_Application_Entry_Points.md)
+#### 4.1.9 [Identificar la aplicación web](4-Web_Application_Security_Testing/01-Information_Gathering/09-Fingerprint_Web_Application.md)
 
-#### 4.1.7 [Map Execution Paths Through Application](4-Web_Application_Security_Testing/01-Information_Gathering/07-Map_Execution_Paths_Through_Application.md)
+#### 4.1.10 [Trazar la arquitectura de la aplicación](4-Web_Application_Security_Testing/01-Information_Gathering/10-Map_Application_Architecture.md)
 
-#### 4.1.8 [Fingerprint Web Application Framework](4-Web_Application_Security_Testing/01-Information_Gathering/08-Fingerprint_Web_Application_Framework.md)
+### 4.2 [Gestión de la configuración y el despliegue](4-Web_Application_Security_Testing/02-Configuration_and_Deployment_Management/README.md)
 
-#### 4.1.9 [Fingerprint Web Application](4-Web_Application_Security_Testing/01-Information_Gathering/09-Fingerprint_Web_Application.md)
+#### 4.2.1 [Configuración de la infraestructura de red](4-Web_Application_Security_Testing/02-Configuration_and_Deployment_Management/01-Network_Infrastructure_Configuration.md)
 
-#### 4.1.10 [Map Application Architecture](4-Web_Application_Security_Testing/01-Information_Gathering/10-Map_Application_Architecture.md)
+#### 4.2.2 [Configuración de la plataforma de aplicaciones](4-Web_Application_Security_Testing/02-Configuration_and_Deployment_Management/02-Application_Platform_Configuration.md)
 
-### 4.2 [Configuration and Deployment Management Testing](4-Web_Application_Security_Testing/02-Configuration_and_Deployment_Management_Testing/README.md)
+#### 4.2.3 [Gestión de extensiones de archivo con información sensible](4-Web_Application_Security_Testing/02-Configuration_and_Deployment_Management/03-File_Extensions_Handling_for_Sensitive_Information.md)
 
-#### 4.2.1 [Test Network Infrastructure Configuration](4-Web_Application_Security_Testing/02-Configuration_and_Deployment_Management_Testing/01-Test_Network_Infrastructure_Configuration.md)
+#### 4.2.4 [Revisar copias de seguridad antiguas y archivos sin referencias para detectar información sensible](4-Web_Application_Security_Testing/02-Configuration_and_Deployment_Management/04-Review_Old_Backup_and_Unreferenced_Files_for_Sensitive_Information.md)
 
-#### 4.2.2 [Test Application Platform Configuration](4-Web_Application_Security_Testing/02-Configuration_and_Deployment_Management_Testing/02-Test_Application_Platform_Configuration.md)
+#### 4.2.5 [Enumerar las interfaces de administración de la infraestructura y de las aplicaciones](4-Web_Application_Security_Testing/02-Configuration_and_Deployment_Management/05-Enumerate_Infrastructure_and_Application_Admin_Interfaces.md)
 
-#### 4.2.3 [Test File Extensions Handling for Sensitive Information](4-Web_Application_Security_Testing/02-Configuration_and_Deployment_Management_Testing/03-Test_File_Extensions_Handling_for_Sensitive_Information.md)
+#### 4.2.6 [Métodos HTTP](4-Web_Application_Security_Testing/02-Configuration_and_Deployment_Management/06-HTTP_Methods.md)
 
-#### 4.2.4 [Review Old Backup and Unreferenced Files for Sensitive Information](4-Web_Application_Security_Testing/02-Configuration_and_Deployment_Management_Testing/04-Review_Old_Backup_and_Unreferenced_Files_for_Sensitive_Information.md)
+#### 4.2.7 [HTTP Strict Transport Security](4-Web_Application_Security_Testing/02-Configuration_and_Deployment_Management/07-HTTP_Strict_Transport_Security.md)
 
-#### 4.2.5 [Enumerate Infrastructure and Application Admin Interfaces](4-Web_Application_Security_Testing/02-Configuration_and_Deployment_Management_Testing/05-Enumerate_Infrastructure_and_Application_Admin_Interfaces.md)
+#### 4.2.8 [Política entre dominios de RIA](4-Web_Application_Security_Testing/02-Configuration_and_Deployment_Management/08-RIA_Cross_Domain_Policy.md)
 
-#### 4.2.6 [Test HTTP Methods](4-Web_Application_Security_Testing/02-Configuration_and_Deployment_Management_Testing/06-Test_HTTP_Methods.md)
+#### 4.2.9 [Permisos de archivos](4-Web_Application_Security_Testing/02-Configuration_and_Deployment_Management/09-File_Permissions.md)
 
-#### 4.2.7 [Test HTTP Strict Transport Security](4-Web_Application_Security_Testing/02-Configuration_and_Deployment_Management_Testing/07-Test_HTTP_Strict_Transport_Security.md)
+#### 4.2.10 [Secuestro de subdominios](4-Web_Application_Security_Testing/02-Configuration_and_Deployment_Management/10-Subdomain_Takeover.md)
 
-#### 4.2.8 [Test RIA Cross Domain Policy](4-Web_Application_Security_Testing/02-Configuration_and_Deployment_Management_Testing/08-Test_RIA_Cross_Domain_Policy.md)
+#### 4.2.11 [Almacenamiento en la nube](4-Web_Application_Security_Testing/02-Configuration_and_Deployment_Management/11-Cloud_Storage.md)
 
-#### 4.2.9 [Test File Permission](4-Web_Application_Security_Testing/02-Configuration_and_Deployment_Management_Testing/09-Test_File_Permission.md)
+#### 4.2.12 [Content Security Policy](4-Web_Application_Security_Testing/02-Configuration_and_Deployment_Management/12-Content_Security_Policy.md)
 
-#### 4.2.10 [Test for Subdomain Takeover](4-Web_Application_Security_Testing/02-Configuration_and_Deployment_Management_Testing/10-Test_for_Subdomain_Takeover.md)
+#### 4.2.13 [Confusión de rutas](4-Web_Application_Security_Testing/02-Configuration_and_Deployment_Management/13-Path_Confusion.md)
 
-#### 4.2.11 [Test Cloud Storage](4-Web_Application_Security_Testing/02-Configuration_and_Deployment_Management_Testing/11-Test_Cloud_Storage.md)
+#### 4.2.14 [Otras configuraciones incorrectas de encabezados de seguridad HTTP](4-Web_Application_Security_Testing/02-Configuration_and_Deployment_Management/14-Other_HTTP_Security_Header_Misconfigurations.md)
 
-#### 4.2.12 [Test for Content Security Policy](4-Web_Application_Security_Testing/02-Configuration_and_Deployment_Management_Testing/12-Test_for_Content_Security_Policy.md)
+#### 4.2.15 [Elusión de seguridad mediante indicadores de funcionalidades](4-Web_Application_Security_Testing/02-Configuration_and_Deployment_Management/15-Feature_Flag_Security_Bypass.md)
 
-#### 4.2.13 [Test for Path Confusion](4-Web_Application_Security_Testing/02-Configuration_and_Deployment_Management_Testing/13-Test_for_Path_Confusion.md)
+### 4.3 [Gestión de identidades](4-Web_Application_Security_Testing/03-Identity_Management/README.md)
 
-#### 4.2.14 [Test Other HTTP Security Header Misconfigurations](4-Web_Application_Security_Testing/02-Configuration_and_Deployment_Management_Testing/14-Test_Other_HTTP_Security_Header_Misconfigurations.md)
+#### 4.3.1 [Definiciones de roles](4-Web_Application_Security_Testing/03-Identity_Management/01-Role_Definitions.md)
 
-### 4.3 [Identity Management Testing](4-Web_Application_Security_Testing/03-Identity_Management_Testing/README.md)
+#### 4.3.2 [Proceso de registro de usuarios](4-Web_Application_Security_Testing/03-Identity_Management/02-User_Registration_Process.md)
 
-#### 4.3.1 [Test Role Definitions](4-Web_Application_Security_Testing/03-Identity_Management_Testing/01-Test_Role_Definitions.md)
+#### 4.3.3 [Proceso de aprovisionamiento de cuentas](4-Web_Application_Security_Testing/03-Identity_Management/03-Account_Provisioning_Process.md)
 
-#### 4.3.2 [Test User Registration Process](4-Web_Application_Security_Testing/03-Identity_Management_Testing/02-Test_User_Registration_Process.md)
+#### 4.3.4 [Enumeración de cuentas y cuentas de usuario fáciles de adivinar](4-Web_Application_Security_Testing/03-Identity_Management/04-Account_Enumeration_and_Guessable_User_Account.md)
 
-#### 4.3.3 [Test Account Provisioning Process](4-Web_Application_Security_Testing/03-Identity_Management_Testing/03-Test_Account_Provisioning_Process.md)
+#### 4.3.5 [Política de nombres de usuario débil o no aplicada](4-Web_Application_Security_Testing/03-Identity_Management/05-Weak_or_Unenforced_Username_Policy.md)
 
-#### 4.3.4 [Testing for Account Enumeration and Guessable User Account](4-Web_Application_Security_Testing/03-Identity_Management_Testing/04-Testing_for_Account_Enumeration_and_Guessable_User_Account.md)
+### 4.4 [Autenticación](4-Web_Application_Security_Testing/04-Authentication/README.md)
 
-#### 4.3.5 [Testing for Weak or Unenforced Username Policy](4-Web_Application_Security_Testing/03-Identity_Management_Testing/05-Testing_for_Weak_or_Unenforced_Username_Policy.md)
+#### 4.4.1 [Transmisión de credenciales por un canal cifrado](4-Web_Application_Security_Testing/04-Authentication/01-Credentials_Transported_over_an_Encrypted_Channel.md)
 
-### 4.4 [Authentication Testing](4-Web_Application_Security_Testing/04-Authentication_Testing/README.md)
+#### 4.4.2 [Credenciales predeterminadas](4-Web_Application_Security_Testing/04-Authentication/02-Default_Credentials.md)
 
-#### 4.4.1 [Testing for Credentials Transported over an Encrypted Channel](4-Web_Application_Security_Testing/04-Authentication_Testing/01-Testing_for_Credentials_Transported_over_an_Encrypted_Channel.md)
+#### 4.4.3 [Mecanismo de bloqueo débil](4-Web_Application_Security_Testing/04-Authentication/03-Weak_Lock_Out_Mechanism.md)
 
-#### 4.4.2 [Testing for Default Credentials](4-Web_Application_Security_Testing/04-Authentication_Testing/02-Testing_for_Default_Credentials.md)
+#### 4.4.4 [Elusión del esquema de autenticación](4-Web_Application_Security_Testing/04-Authentication/04-Bypassing_Authentication_Schema.md)
 
-#### 4.4.3 [Testing for Weak Lock Out Mechanism](4-Web_Application_Security_Testing/04-Authentication_Testing/03-Testing_for_Weak_Lock_Out_Mechanism.md)
+#### 4.4.5 [Funcionalidad vulnerable para recordar contraseñas](4-Web_Application_Security_Testing/04-Authentication/05-Vulnerable_Remember_Password.md)
 
-#### 4.4.4 [Testing for Bypassing Authentication Schema](4-Web_Application_Security_Testing/04-Authentication_Testing/04-Testing_for_Bypassing_Authentication_Schema.md)
+#### 4.4.6 [Debilidades de la caché del navegador](4-Web_Application_Security_Testing/04-Authentication/06-Browser_Cache_Weaknesses.md)
 
-#### 4.4.5 [Testing for Vulnerable Remember Password](4-Web_Application_Security_Testing/04-Authentication_Testing/05-Testing_for_Vulnerable_Remember_Password.md)
+#### 4.4.7 [Métodos de autenticación débiles](4-Web_Application_Security_Testing/04-Authentication/07-Weak_Authentication_Methods.md)
 
-#### 4.4.6 [Testing for Browser Cache Weaknesses](4-Web_Application_Security_Testing/04-Authentication_Testing/06-Testing_for_Browser_Cache_Weaknesses.md)
+#### 4.4.8 [Respuesta débil a la pregunta de seguridad](4-Web_Application_Security_Testing/04-Authentication/08-Weak_Security_Question_Answer.md)
 
-#### 4.4.7 [Testing for Weak Authentication Methods](4-Web_Application_Security_Testing/04-Authentication_Testing/07-Testing_for_Weak_Authentication_Methods.md)
+#### 4.4.9 [Funciones débiles para cambiar o restablecer contraseñas](4-Web_Application_Security_Testing/04-Authentication/09-Weak_Password_Change_or_Reset_Functionalities.md)
 
-#### 4.4.8 [Testing for Weak Security Question Answer](4-Web_Application_Security_Testing/04-Authentication_Testing/08-Testing_for_Weak_Security_Question_Answer.md)
+#### 4.4.10 [Autenticación más débil en un canal alternativo](4-Web_Application_Security_Testing/04-Authentication/10-Weaker_Authentication_in_Alternative_Channel.md)
 
-#### 4.4.9 [Testing for Weak Password Change or Reset Functionalities](4-Web_Application_Security_Testing/04-Authentication_Testing/09-Testing_for_Weak_Password_Change_or_Reset_Functionalities.md)
+#### 4.4.11 [Autenticación multifactor](4-Web_Application_Security_Testing/04-Authentication/11-Multi-Factor_Authentication.md)
 
-#### 4.4.10 [Testing for Weaker Authentication in Alternative Channel](4-Web_Application_Security_Testing/04-Authentication_Testing/10-Testing_for_Weaker_Authentication_in_Alternative_Channel.md)
+### 4.5 [Autorización](4-Web_Application_Security_Testing/05-Authorization/README.md)
 
-#### 4.4.11 [Testing Multi-Factor Authentication](4-Web_Application_Security_Testing/04-Authentication_Testing/11-Testing_Multi-Factor_Authentication.md)
+#### 4.5.1 [Inclusión de archivos y recorrido de directorios](4-Web_Application_Security_Testing/05-Authorization/01-Directory_Traversal_File_Include.md)
 
-### 4.5 [Authorization Testing](4-Web_Application_Security_Testing/05-Authorization_Testing/README.md)
+#### 4.5.2 [Elusión del esquema de autorización](4-Web_Application_Security_Testing/05-Authorization/02-Bypassing_Authorization_Schema.md)
 
-#### 4.5.1 [Testing Directory Traversal File Include](4-Web_Application_Security_Testing/05-Authorization_Testing/01-Testing_Directory_Traversal_File_Include.md)
+#### 4.5.3 [Escalamiento de privilegios](4-Web_Application_Security_Testing/05-Authorization/03-Privilege_Escalation.md)
 
-#### 4.5.2 [Testing for Bypassing Authorization Schema](4-Web_Application_Security_Testing/05-Authorization_Testing/02-Testing_for_Bypassing_Authorization_Schema.md)
+#### 4.5.4 [Referencias directas inseguras a objetos](4-Web_Application_Security_Testing/05-Authorization/04-Insecure_Direct_Object_References.md)
 
-#### 4.5.3 [Testing for Privilege Escalation](4-Web_Application_Security_Testing/05-Authorization_Testing/03-Testing_for_Privilege_Escalation.md)
+#### 4.5.5 [Debilidades de OAuth](4-Web_Application_Security_Testing/05-Authorization/05-OAuth_Weaknesses.md)
 
-#### 4.5.4 [Testing for Insecure Direct Object References](4-Web_Application_Security_Testing/05-Authorization_Testing/04-Testing_for_Insecure_Direct_Object_References.md)
+##### 4.5.5.1 [Debilidades del servidor de autorización de OAuth](4-Web_Application_Security_Testing/05-Authorization/05.1-OAuth_Authorization_Server_Weaknesses.md)
 
-#### 4.5.5 [Testing for OAuth Weaknesses](4-Web_Application_Security_Testing/05-Authorization_Testing/05-Testing_for_OAuth_Weaknesses.md)
+##### 4.5.5.2 [Debilidades del cliente de OAuth](4-Web_Application_Security_Testing/05-Authorization/05.2-OAuth_Client_Weaknesses.md)
 
-##### 4.5.5.1 [Testing for OAuth Authorization Server Weaknesses](4-Web_Application_Security_Testing/05-Authorization_Testing/05.1-Testing_for_OAuth_Authorization_Server_Weaknesses.md)
+### 4.6 [Gestión de sesiones](4-Web_Application_Security_Testing/06-Session_Management/README.md)
 
-##### 4.5.5.2 [Testing for OAuth Client Weaknesses](4-Web_Application_Security_Testing/05-Authorization_Testing/05.2-Testing_for_OAuth_Client_Weaknesses.md)
+#### 4.6.1 [Esquema de gestión de sesiones](4-Web_Application_Security_Testing/06-Session_Management/01-Session_Management_Schema.md)
 
-### 4.6 [Session Management Testing](4-Web_Application_Security_Testing/06-Session_Management_Testing/README.md)
+#### 4.6.2 [Atributos de las cookies](4-Web_Application_Security_Testing/06-Session_Management/02-Cookies_Attributes.md)
 
-#### 4.6.1 [Testing for Session Management Schema](4-Web_Application_Security_Testing/06-Session_Management_Testing/01-Testing_for_Session_Management_Schema.md)
+#### 4.6.3 [Fijación de sesión](4-Web_Application_Security_Testing/06-Session_Management/03-Session_Fixation.md)
 
-#### 4.6.2 [Testing for Cookies Attributes](4-Web_Application_Security_Testing/06-Session_Management_Testing/02-Testing_for_Cookies_Attributes.md)
+#### 4.6.4 [Variables de sesión expuestas](4-Web_Application_Security_Testing/06-Session_Management/04-Exposed_Session_Variables.md)
 
-#### 4.6.3 [Testing for Session Fixation](4-Web_Application_Security_Testing/06-Session_Management_Testing/03-Testing_for_Session_Fixation.md)
+#### 4.6.5 [Falsificación de solicitudes entre sitios](4-Web_Application_Security_Testing/06-Session_Management/05-Cross_Site_Request_Forgery.md)
 
-#### 4.6.4 [Testing for Exposed Session Variables](4-Web_Application_Security_Testing/06-Session_Management_Testing/04-Testing_for_Exposed_Session_Variables.md)
+#### 4.6.6 [Funcionalidad de cierre de sesión](4-Web_Application_Security_Testing/06-Session_Management/06-Logout_Functionality.md)
 
-#### 4.6.5 [Testing for Cross Site Request Forgery](4-Web_Application_Security_Testing/06-Session_Management_Testing/05-Testing_for_Cross_Site_Request_Forgery.md)
+#### 4.6.7 [Tiempo de espera de la sesión](4-Web_Application_Security_Testing/06-Session_Management/07-Session_Timeout.md)
 
-#### 4.6.6 [Testing for Logout Functionality](4-Web_Application_Security_Testing/06-Session_Management_Testing/06-Testing_for_Logout_Functionality.md)
+#### 4.6.8 [Confusión de sesiones](4-Web_Application_Security_Testing/06-Session_Management/08-Session_Puzzling.md)
 
-#### 4.6.7 [Testing Session Timeout](4-Web_Application_Security_Testing/06-Session_Management_Testing/07-Testing_Session_Timeout.md)
+#### 4.6.9 [Secuestro de sesión](4-Web_Application_Security_Testing/06-Session_Management/09-Session_Hijacking.md)
 
-#### 4.6.8 [Testing for Session Puzzling](4-Web_Application_Security_Testing/06-Session_Management_Testing/08-Testing_for_Session_Puzzling.md)
+#### 4.6.10 [JSON Web Tokens](4-Web_Application_Security_Testing/06-Session_Management/10-JSON_Web_Tokens.md)
 
-#### 4.6.9 [Testing for Session Hijacking](4-Web_Application_Security_Testing/06-Session_Management_Testing/09-Testing_for_Session_Hijacking.md)
+#### 4.6.11 [Sesiones concurrentes](4-Web_Application_Security_Testing/06-Session_Management/11-Concurrent_Sessions.md)
 
-#### 4.6.10 [Testing JSON Web Tokens](4-Web_Application_Security_Testing/06-Session_Management_Testing/10-Testing_JSON_Web_Tokens.md)
+### 4.7 [Inyección](4-Web_Application_Security_Testing/07-Injection/README.md)
 
-#### 4.6.11 [Testing for Concurrent Sessions](4-Web_Application_Security_Testing/06-Session_Management_Testing/11-Testing_for_Concurrent_Sessions.md)
+#### 4.7.1 [Cross-Site Scripting reflejado](4-Web_Application_Security_Testing/07-Injection/01-Reflected_Cross_Site_Scripting.md)
 
-### 4.7 [Input Validation Testing](4-Web_Application_Security_Testing/07-Input_Validation_Testing/README.md)
+#### 4.7.2 [Cross-Site Scripting almacenado](4-Web_Application_Security_Testing/07-Injection/02-Stored_Cross_Site_Scripting.md)
 
-#### 4.7.1 [Testing for Reflected Cross Site Scripting](4-Web_Application_Security_Testing/07-Input_Validation_Testing/01-Testing_for_Reflected_Cross_Site_Scripting.md)
+#### 4.7.3 [Manipulación de verbos HTTP](4-Web_Application_Security_Testing/07-Injection/03-HTTP_Verb_Tampering.md)
 
-#### 4.7.2 [Testing for Stored Cross Site Scripting](4-Web_Application_Security_Testing/07-Input_Validation_Testing/02-Testing_for_Stored_Cross_Site_Scripting.md)
+#### 4.7.4 [Contaminación de parámetros HTTP](4-Web_Application_Security_Testing/07-Injection/04-HTTP_Parameter_Pollution.md)
 
-#### 4.7.3 [Testing for HTTP Verb Tampering](4-Web_Application_Security_Testing/07-Input_Validation_Testing/03-Testing_for_HTTP_Verb_Tampering.md)
+#### 4.7.5 [Inyección SQL](4-Web_Application_Security_Testing/07-Injection/05-SQL_Injection.md)
 
-#### 4.7.4 [Testing for HTTP Parameter Pollution](4-Web_Application_Security_Testing/07-Input_Validation_Testing/04-Testing_for_HTTP_Parameter_Pollution.md)
+##### 4.7.5.1 [Oracle](4-Web_Application_Security_Testing/07-Injection/05.1-Oracle.md)
 
-#### 4.7.5 [Testing for SQL Injection](4-Web_Application_Security_Testing/07-Input_Validation_Testing/05-Testing_for_SQL_Injection.md)
+##### 4.7.5.2 [MySQL](4-Web_Application_Security_Testing/07-Injection/05.2-MySQL.md)
 
-##### 4.7.5.1 [Testing for Oracle](4-Web_Application_Security_Testing/07-Input_Validation_Testing/05.1-Testing_for_Oracle.md)
+##### 4.7.5.3 [SQL Server](4-Web_Application_Security_Testing/07-Injection/05.3-SQL_Server.md)
 
-##### 4.7.5.2 [Testing for MySQL](4-Web_Application_Security_Testing/07-Input_Validation_Testing/05.2-Testing_for_MySQL.md)
+##### 4.7.5.4 [PostgreSQL](4-Web_Application_Security_Testing/07-Injection/05.4-PostgreSQL.md)
 
-##### 4.7.5.3 [Testing for SQL Server](4-Web_Application_Security_Testing/07-Input_Validation_Testing/05.3-Testing_for_SQL_Server.md)
+##### 4.7.5.5 [MS Access](4-Web_Application_Security_Testing/07-Injection/05.5-MS_Access.md)
 
-##### 4.7.5.4 [Testing PostgreSQL](4-Web_Application_Security_Testing/07-Input_Validation_Testing/05.4-Testing_PostgreSQL.md)
+##### 4.7.5.6 [Inyección NoSQL](4-Web_Application_Security_Testing/07-Injection/05.6-NoSQL_Injection.md)
 
-##### 4.7.5.5 [Testing for MS Access](4-Web_Application_Security_Testing/07-Input_Validation_Testing/05.5-Testing_for_MS_Access.md)
+##### 4.7.5.7 [Inyección ORM](4-Web_Application_Security_Testing/07-Injection/05.7-ORM_Injection.md)
 
-##### 4.7.5.6 [Testing for NoSQL Injection](4-Web_Application_Security_Testing/07-Input_Validation_Testing/05.6-Testing_for_NoSQL_Injection.md)
+##### 4.7.5.8 [Lado del cliente](4-Web_Application_Security_Testing/07-Injection/05.8-Client-side.md)
 
-##### 4.7.5.7 [Testing for ORM Injection](4-Web_Application_Security_Testing/07-Input_Validation_Testing/05.7-Testing_for_ORM_Injection.md)
+#### 4.7.6 [Inyección LDAP](4-Web_Application_Security_Testing/07-Injection/06-LDAP_Injection.md)
 
-##### 4.7.5.8 [Testing for Client-side](4-Web_Application_Security_Testing/07-Input_Validation_Testing/05.8-Testing_for_Client-side.md)
+#### 4.7.7 [Inyección XML](4-Web_Application_Security_Testing/07-Injection/07-XML_Injection.md)
 
-#### 4.7.6 [Testing for LDAP Injection](4-Web_Application_Security_Testing/07-Input_Validation_Testing/06-Testing_for_LDAP_Injection.md)
+#### 4.7.8 [Inyección SSI](4-Web_Application_Security_Testing/07-Injection/08-SSI_Injection.md)
 
-#### 4.7.7 [Testing for XML Injection](4-Web_Application_Security_Testing/07-Input_Validation_Testing/07-Testing_for_XML_Injection.md)
+#### 4.7.9 [Inyección XPath](4-Web_Application_Security_Testing/07-Injection/09-XPath_Injection.md)
 
-#### 4.7.8 [Testing for SSI Injection](4-Web_Application_Security_Testing/07-Input_Validation_Testing/08-Testing_for_SSI_Injection.md)
+#### 4.7.10 [Inyección IMAP y SMTP](4-Web_Application_Security_Testing/07-Injection/10-IMAP_SMTP_Injection.md)
 
-#### 4.7.9 [Testing for XPath Injection](4-Web_Application_Security_Testing/07-Input_Validation_Testing/09-Testing_for_XPath_Injection.md)
+#### 4.7.11 [Inyección de código](4-Web_Application_Security_Testing/07-Injection/11-Code_Injection.md)
 
-#### 4.7.10 [Testing for IMAP SMTP Injection](4-Web_Application_Security_Testing/07-Input_Validation_Testing/10-Testing_for_IMAP_SMTP_Injection.md)
+##### 4.7.11.1 [Inclusión de archivos](4-Web_Application_Security_Testing/07-Injection/11.1-File_Inclusion.md)
 
-#### 4.7.11 [Testing for Code Injection](4-Web_Application_Security_Testing/07-Input_Validation_Testing/11-Testing_for_Code_Injection.md)
+#### 4.7.12 [Inyección de comandos](4-Web_Application_Security_Testing/07-Injection/12-Command_Injection.md)
 
-##### 4.7.11.1 [Testing for File Inclusion](4-Web_Application_Security_Testing/07-Input_Validation_Testing/11.1-Testing_for_File_Inclusion.md)
+#### 4.7.13 [Inyección de cadenas de formato](4-Web_Application_Security_Testing/07-Injection/13-Format_String_Injection.md)
 
-#### 4.7.12 [Testing for Command Injection](4-Web_Application_Security_Testing/07-Input_Validation_Testing/12-Testing_for_Command_Injection.md)
+#### 4.7.14 [Vulnerabilidad incubada](4-Web_Application_Security_Testing/07-Injection/14-Incubated_Vulnerability.md)
 
-#### 4.7.13 [Testing for Format String Injection](4-Web_Application_Security_Testing/07-Input_Validation_Testing/13-Testing_for_Format_String_Injection.md)
+#### 4.7.15 [División de respuestas HTTP](4-Web_Application_Security_Testing/07-Injection/15-HTTP_Response_Splitting.md)
 
-#### 4.7.14 [Testing for Incubated Vulnerability](4-Web_Application_Security_Testing/07-Input_Validation_Testing/14-Testing_for_Incubated_Vulnerability.md)
+#### 4.7.16 [Contrabando de solicitudes HTTP](4-Web_Application_Security_Testing/07-Injection/16-HTTP_Request_Smuggling.md)
 
-#### 4.7.15 [Testing for HTTP Response Splitting](4-Web_Application_Security_Testing/07-Input_Validation_Testing/15-Testing_for_HTTP_Response_Splitting.md)
+#### 4.7.17 [Inyección en el encabezado Host](4-Web_Application_Security_Testing/07-Injection/17-Host_Header_Injection.md)
 
-#### 4.7.16 [Testing for HTTP Request Smuggling](4-Web_Application_Security_Testing/07-Input_Validation_Testing/16-Testing_for_HTTP_Request_Smuggling.md)
+#### 4.7.18 [Inyección de plantillas del lado del servidor](4-Web_Application_Security_Testing/07-Injection/18-Server-side_Template_Injection.md)
 
-#### 4.7.17 [Testing for Host Header Injection](4-Web_Application_Security_Testing/07-Input_Validation_Testing/17-Testing_for_Host_Header_Injection.md)
+#### 4.7.19 [Falsificación de solicitudes del lado del servidor](4-Web_Application_Security_Testing/07-Injection/19-Server-Side_Request_Forgery.md)
 
-#### 4.7.18 [Testing for Server-side Template Injection](4-Web_Application_Security_Testing/07-Input_Validation_Testing/18-Testing_for_Server-side_Template_Injection.md)
+#### 4.7.20 [Asignación masiva](4-Web_Application_Security_Testing/07-Injection/20-Mass_Assignment.md)
 
-#### 4.7.19 [Testing for Server-Side Request Forgery](4-Web_Application_Security_Testing/07-Input_Validation_Testing/19-Testing_for_Server-Side_Request_Forgery.md)
+#### 4.7.21 [Inyección CSV](4-Web_Application_Security_Testing/07-Injection/21-CSV_Injection.md)
 
-#### 4.7.20 [Testing for Mass Assignment](4-Web_Application_Security_Testing/07-Input_Validation_Testing/20-Testing_for_Mass_Assignment.md)
+#### 4.7.22 [Contaminación de prototipos](4-Web_Application_Security_Testing/07-Injection/22-Prototype_Pollution.md)
 
-#### 4.7.21 [Testing for CSV Injection](4-Web_Application_Security_Testing/07-Input_Validation_Testing/21-Testing_for_CSV_Injection.md)
+#### 4.7.23 [Deserialización insegura](4-Web_Application_Security_Testing/07-Injection/23-Insecure_Deserialization.md)
 
-#### 4.7.22 [Testing for Prototype Pollution](4-Web_Application_Security_Testing/07-Input_Validation_Testing/22-Testing_for_Prototype_Pollution.md)
+### 4.8 [Gestión de errores](4-Web_Application_Security_Testing/08-Error_Handling/README.md)
 
-### 4.8 [Testing for Error Handling](4-Web_Application_Security_Testing/08-Testing_for_Error_Handling/README.md)
+#### 4.8.1 [Gestión inadecuada de errores](4-Web_Application_Security_Testing/08-Error_Handling/01-Improper_Error_Handling.md)
 
-#### 4.8.1 [Testing for Improper Error Handling](4-Web_Application_Security_Testing/08-Testing_for_Error_Handling/01-Testing_For_Improper_Error_Handling.md)
+#### 4.8.2 [Trazas de pila](4-Web_Application_Security_Testing/08-Error_Handling/02-Stack_Traces.md)
 
-#### 4.8.2 [Testing for Stack Traces](4-Web_Application_Security_Testing/08-Testing_for_Error_Handling/02-Testing_for_Stack_Traces.md)
+### 4.9 [Criptografía débil](4-Web_Application_Security_Testing/09-Weak_Cryptography/README.md)
 
-### 4.9 [Testing for Weak Cryptography](4-Web_Application_Security_Testing/09-Testing_for_Weak_Cryptography/README.md)
+#### 4.9.1 [Seguridad débil de la capa de transporte](4-Web_Application_Security_Testing/09-Weak_Cryptography/01-Weak_Transport_Layer_Security.md)
 
-#### 4.9.1 [Testing for Weak Transport Layer Security](4-Web_Application_Security_Testing/09-Testing_for_Weak_Cryptography/01-Testing_for_Weak_Transport_Layer_Security.md)
+#### 4.9.2 [Oráculo de relleno](4-Web_Application_Security_Testing/09-Weak_Cryptography/02-Padding_Oracle.md)
 
-#### 4.9.2 [Testing for Padding Oracle](4-Web_Application_Security_Testing/09-Testing_for_Weak_Cryptography/02-Testing_for_Padding_Oracle.md)
+#### 4.9.3 [Información sensible enviada por canales no cifrados](4-Web_Application_Security_Testing/09-Weak_Cryptography/03-Sensitive_Information_Sent_via_Unencrypted_Channels.md)
 
-#### 4.9.3 [Testing for Sensitive Information Sent via Unencrypted Channels](4-Web_Application_Security_Testing/09-Testing_for_Weak_Cryptography/03-Testing_for_Sensitive_Information_Sent_via_Unencrypted_Channels.md)
+#### 4.9.4 [Primitivas criptográficas débiles](4-Web_Application_Security_Testing/09-Weak_Cryptography/04-Weak_Cryptographic_Primitives.md)
 
-#### 4.9.4 [Testing for Weak Cryptographic Primitives](4-Web_Application_Security_Testing/09-Testing_for_Weak_Cryptography/04-Testing_for_Weak_Cryptographic_Primitives.md)
+### 4.10 [Lógica de negocio](4-Web_Application_Security_Testing/10-Business_Logic/README.md)
 
-### 4.10 [Business Logic Testing](4-Web_Application_Security_Testing/10-Business_Logic_Testing/README.md)
+#### 4.10.0 [Introducción a la lógica de negocio](4-Web_Application_Security_Testing/10-Business_Logic/00-Introduction_to_Business_Logic.md)
 
-#### 4.10.0 [Introduction to Business Logic](4-Web_Application_Security_Testing/10-Business_Logic_Testing/00-Introduction_to_Business_Logic.md)
+#### 4.10.1 [Validación de datos de la lógica de negocio](4-Web_Application_Security_Testing/10-Business_Logic/01-Business_Logic_Data_Validation.md)
 
-#### 4.10.1 [Test Business Logic Data Validation](4-Web_Application_Security_Testing/10-Business_Logic_Testing/01-Test_Business_Logic_Data_Validation.md)
+#### 4.10.2 [Capacidad para falsificar solicitudes](4-Web_Application_Security_Testing/10-Business_Logic/02-Ability_to_Forge_Requests.md)
 
-#### 4.10.2 [Test Ability to Forge Requests](4-Web_Application_Security_Testing/10-Business_Logic_Testing/02-Test_Ability_to_Forge_Requests.md)
+#### 4.10.3 [Comprobaciones de integridad](4-Web_Application_Security_Testing/10-Business_Logic/03-Integrity_Checks.md)
 
-#### 4.10.3 [Test Integrity Checks](4-Web_Application_Security_Testing/10-Business_Logic_Testing/03-Test_Integrity_Checks.md)
+#### 4.10.4 [Temporización de procesos](4-Web_Application_Security_Testing/10-Business_Logic/04-Process_Timing.md)
 
-#### 4.10.4 [Test for Process Timing](4-Web_Application_Security_Testing/10-Business_Logic_Testing/04-Test_for_Process_Timing.md)
+#### 4.10.5 [Límites al número de veces que se puede usar una función](4-Web_Application_Security_Testing/10-Business_Logic/05-Number_of_Times_a_Function_Can_Be_Used_Limits.md)
 
-#### 4.10.5 [Test Number of Times a Function Can Be Used Limits](4-Web_Application_Security_Testing/10-Business_Logic_Testing/05-Test_Number_of_Times_a_Function_Can_Be_Used_Limits.md)
+#### 4.10.6 [Elusión de flujos de trabajo](4-Web_Application_Security_Testing/10-Business_Logic/06-Circumvention_of_Work_Flows.md)
 
-#### 4.10.6 [Testing for the Circumvention of Work Flows](4-Web_Application_Security_Testing/10-Business_Logic_Testing/06-Testing_for_the_Circumvention_of_Work_Flows.md)
+#### 4.10.7 [Defensas contra el uso indebido de la aplicación](4-Web_Application_Security_Testing/10-Business_Logic/07-Defenses_Against_Application_Misuse.md)
 
-#### 4.10.7 [Test Defenses Against Application Misuse](4-Web_Application_Security_Testing/10-Business_Logic_Testing/07-Test_Defenses_Against_Application_Misuse.md)
+#### 4.10.8 [Carga de tipos de archivo inesperados](4-Web_Application_Security_Testing/10-Business_Logic/08-Upload_of_Unexpected_File_Types.md)
 
-#### 4.10.8 [Test Upload of Unexpected File Types](4-Web_Application_Security_Testing/10-Business_Logic_Testing/08-Test_Upload_of_Unexpected_File_Types.md)
+#### 4.10.9 [Carga de archivos maliciosos](4-Web_Application_Security_Testing/10-Business_Logic/09-Upload_of_Malicious_Files.md)
 
-#### 4.10.9 [Test Upload of Malicious Files](4-Web_Application_Security_Testing/10-Business_Logic_Testing/09-Test_Upload_of_Malicious_Files.md)
+#### 4.10.10 [Funcionalidad de pago](4-Web_Application_Security_Testing/10-Business_Logic/10-Payment_Functionality.md)
 
-#### 4.10.10 [Test Payment Functionality](4-Web_Application_Security_Testing/10-Business_Logic_Testing/10-Test-Payment-Functionality.md)
+### 4.11 [Lado del cliente](4-Web_Application_Security_Testing/11-Client-side/README.md)
 
-### 4.11 [Client-side Testing](4-Web_Application_Security_Testing/11-Client-side_Testing/README.md)
+#### 4.11.1 [Cross-Site Scripting basado en DOM](4-Web_Application_Security_Testing/11-Client-side/01-DOM-based_Cross_Site_Scripting.md)
 
-#### 4.11.1 [Testing for DOM-Based Cross Site Scripting](4-Web_Application_Security_Testing/11-Client-side_Testing/01-Testing_for_DOM-based_Cross_Site_Scripting.md)
+##### 4.11.1.1 [Cross-Site Scripting basado en DOM propio](4-Web_Application_Security_Testing/11-Client-side/01.1-Self_DOM_Based_Cross_Site_Scripting.md)
 
-##### 4.11.1.1 [Testing for Self DOM Based Cross-Site Scripting](4-Web_Application_Security_Testing/11-Client-side_Testing/01.1-Testing_for_Self_DOM_Based_Cross_Site_Scripting.md)
+#### 4.11.2 [Ejecución de JavaScript](4-Web_Application_Security_Testing/11-Client-side/02-JavaScript_Execution.md)
 
-#### 4.11.2 [Testing for JavaScript Execution](4-Web_Application_Security_Testing/11-Client-side_Testing/02-Testing_for_JavaScript_Execution.md)
+#### 4.11.3 [Inyección HTML](4-Web_Application_Security_Testing/11-Client-side/03-HTML_Injection.md)
 
-#### 4.11.3 [Testing for HTML Injection](4-Web_Application_Security_Testing/11-Client-side_Testing/03-Testing_for_HTML_Injection.md)
+#### 4.11.4 [Redirección de URL del lado del cliente](4-Web_Application_Security_Testing/11-Client-side/04-Client-side_URL_Redirect.md)
 
-#### 4.11.4 [Testing for Client-side URL Redirect](4-Web_Application_Security_Testing/11-Client-side_Testing/04-Testing_for_Client-side_URL_Redirect.md)
+#### 4.11.5 [Inyección CSS](4-Web_Application_Security_Testing/11-Client-side/05-CSS_Injection.md)
 
-#### 4.11.5 [Testing for CSS Injection](4-Web_Application_Security_Testing/11-Client-side_Testing/05-Testing_for_CSS_Injection.md)
+#### 4.11.6 [Manipulación de recursos del lado del cliente](4-Web_Application_Security_Testing/11-Client-side/06-Client-side_Resource_Manipulation.md)
 
-#### 4.11.6 [Testing for Client-side Resource Manipulation](4-Web_Application_Security_Testing/11-Client-side_Testing/06-Testing_for_Client-side_Resource_Manipulation.md)
+#### 4.11.7 [Intercambio de recursos entre orígenes](4-Web_Application_Security_Testing/11-Client-side/07-Cross_Origin_Resource_Sharing.md)
 
-#### 4.11.7 [Testing Cross Origin Resource Sharing](4-Web_Application_Security_Testing/11-Client-side_Testing/07-Testing_Cross_Origin_Resource_Sharing.md)
+#### 4.11.8 [Cross-Site Flashing](4-Web_Application_Security_Testing/11-Client-side/08-Cross_Site_Flashing.md)
 
-#### 4.11.8 [Testing for Cross Site Flashing](4-Web_Application_Security_Testing/11-Client-side_Testing/08-Testing_for_Cross_Site_Flashing.md)
+#### 4.11.9 [Clickjacking](4-Web_Application_Security_Testing/11-Client-side/09-Clickjacking.md)
 
-#### 4.11.9 [Testing for Clickjacking](4-Web_Application_Security_Testing/11-Client-side_Testing/09-Testing_for_Clickjacking.md)
+#### 4.11.10 [WebSockets](4-Web_Application_Security_Testing/11-Client-side/10-WebSockets.md)
 
-#### 4.11.10 [Testing WebSockets](4-Web_Application_Security_Testing/11-Client-side_Testing/10-Testing_WebSockets.md)
+#### 4.11.11 [Mensajería web](4-Web_Application_Security_Testing/11-Client-side/11-Web_Messaging.md)
 
-#### 4.11.11 [Testing Web Messaging](4-Web_Application_Security_Testing/11-Client-side_Testing/11-Testing_Web_Messaging.md)
+#### 4.11.12 [Almacenamiento del navegador](4-Web_Application_Security_Testing/11-Client-side/12-Browser_Storage.md)
 
-#### 4.11.12 [Testing Browser Storage](4-Web_Application_Security_Testing/11-Client-side_Testing/12-Testing_Browser_Storage.md)
+#### 4.11.13 [Inclusión de scripts entre sitios](4-Web_Application_Security_Testing/11-Client-side/13-Cross_Site_Script_Inclusion.md)
 
-#### 4.11.13 [Testing for Cross Site Script Inclusion](4-Web_Application_Security_Testing/11-Client-side_Testing/13-Testing_for_Cross_Site_Script_Inclusion.md)
+#### 4.11.14 [Reverse Tabnabbing](4-Web_Application_Security_Testing/11-Client-side/14-Reverse_Tabnabbing.md)
 
-#### 4.11.14 [Testing for Reverse Tabnabbing](4-Web_Application_Security_Testing/11-Client-side_Testing/14-Testing_for_Reverse_Tabnabbing.md)
+#### 4.11.15 [Inyección de plantillas del lado del cliente](4-Web_Application_Security_Testing/11-Client-side/15-Client-Side_Template_Injection.md)
 
-#### 4.11.15 [Testing for Client-side Template Injection](4-Web_Application_Security_Testing/11-Client-side_Testing/15-Testing_for_Client-Side_Template_Injection.md)
+### 4.12 [Pruebas de API](4-Web_Application_Security_Testing/12-API_Testing/README.md)
 
-### 4.12 [API Testing](4-Web_Application_Security_Testing/12-API_Testing/README.md)
+#### 4.12.0 [Descripción general de las pruebas de API](4-Web_Application_Security_Testing/12-API_Testing/00-API_Testing_Overview.md)
 
-#### 4.12.0 [API Testing Overview](4-Web_Application_Security_Testing/12-API_Testing/00-API_Testing_Overview.md)
+#### 4.12.1 [Reconocimiento de API](4-Web_Application_Security_Testing/12-API_Testing/01-API_Reconnaissance.md)
 
-#### 4.12.1 [API Reconnaissance](4-Web_Application_Security_Testing/12-API_Testing/01-API_Reconnaissance.md)
+#### 4.12.2 [Autorización deficiente a nivel de objeto en API](4-Web_Application_Security_Testing/12-API_Testing/02-API_Broken_Object_Level_Authorization.md)
 
-#### 4.12.2 [API Broken Object Level Authorization](4-Web_Application_Security_Testing/12-API_Testing/02-API_Broken_Object_Level_Authorization.md)
+#### 4.12.3 [Exposición excesiva de datos](4-Web_Application_Security_Testing/12-API_Testing/03-Excessive_Data_Exposure.md)
 
-#### 4.12.3 [Testing for Excessive Data Exposure](4-Web_Application_Security_Testing/12-API_Testing/03-Testing_for_Excessive_Data_Exposure.md)
+#### 4.12.4 [Autorización deficiente a nivel de función en API](4-Web_Application_Security_Testing/12-API_Testing/04-API_Broken_Function_Level_Authorization.md)
 
-#### 4.12.4 [API Broken Function Level Authorization](4-Web_Application_Security_Testing/12-API_Testing/04-API_Broken_Function_Level_Authorization.md)
+#### 4.12.99 [GraphQL](4-Web_Application_Security_Testing/12-API_Testing/99-GraphQL.md)
 
-#### 4.12.99 [Testing GraphQL](4-Web_Application_Security_Testing/12-API_Testing/99-Testing_GraphQL.md)
+### 4.13 [Pruebas de WebAssembly](4-Web_Application_Security_Testing/13-WebAssembly_Testing/README.md)
 
-## 5. [Reportes](5-Reporting/README.md)
+#### 4.13.0 [Descripción general de las pruebas de WebAssembly](4-Web_Application_Security_Testing/13-WebAssembly_Testing/00-WebAssembly_Testing_Overview.md)
 
-### 5.1 [Reporting Structure](5-Reporting/01-Reporting_Structure.md)
+#### 4.13.1 [Reconocimiento de WebAssembly](4-Web_Application_Security_Testing/13-WebAssembly_Testing/01-WebAssembly_Reconnaissance.md)
 
-### 5.2 [Naming Schemes](5-Reporting/02-Naming_Schemes.md)
+## 5. [Informes](5-Reporting/README.md)
 
-## Appendix A. [Testing Tools Resource](6-Appendix/A-Testing_Tools_Resource.md)
+### 5.1 [Estructura de los informes](5-Reporting/01-Reporting_Structure.md)
 
-## Appendix B. [Suggested Reading](6-Appendix/B-Suggested_Reading.md)
+### 5.2 [Esquemas de nomenclatura](5-Reporting/02-Naming_Schemes.md)
 
-## Appendix C. [Fuzzing](6-Appendix/C-Fuzzing.md)
+## Apéndice A. [Historial](6-Appendix/A-History.md)
 
-## Appendix D. [Encoded Injection](6-Appendix/D-Encoded_Injection.md)
+## Apéndice B. [Recursos de herramientas de pruebas](6-Appendix/B-Testing_Tools_Resource.md)
 
-## Appendix E. [History](6-Appendix/E-History.md)
+## Apéndice C. [Lecturas recomendadas](6-Appendix/C-Suggested_Reading.md)
 
-## Appendix F. [Leveraging Dev Tools](6-Appendix/F-Leveraging_Dev_Tools.md)
+## Apéndice D. [Fuzzing](6-Appendix/D-Fuzzing.md)
+
+## Apéndice E. [Inyección codificada](6-Appendix/E-Encoded_Injection.md)
+
+## Apéndice F. [Aprovechar las herramientas de desarrollo](6-Appendix/F-Leveraging_Dev_Tools.md)

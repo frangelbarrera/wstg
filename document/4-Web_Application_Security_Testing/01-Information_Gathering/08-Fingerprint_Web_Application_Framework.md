@@ -1,4 +1,4 @@
-# Huella Digital del Framework de Aplicación Web
+# Identificar la huella digital del framework de una aplicación web
 
 |ID          |
 |------------|
@@ -6,30 +6,30 @@
 
 ## Resumen
 
-No sería un stretch decir que casi cada idea concebible para una aplicación web ya ha sido puesta en desarrollo. Con el vasto número de proyectos de software free y open-source que están activamente desarrollados y deployed globalmente, es muy likely que una prueba de seguridad de aplicación encontrará un target que es entirely o partly dependent on these well-known applications or frameworks (e.g. WordPress, phpBB, Mediawiki, etc). Knowing the web application components that are being tested helps the testing process significantly and will also drastically reduce the effort required during the test. These well-known web applications have specific HTML headers, cookies, and directory structures that can be enumerated to identify the application. Most web frameworks have several markers in these locations, which can assist an attacker or tester in recognizing them. This is basically what all automatic tools do, they look for a marker from a predefined location and then compare it to the database of known signatures. For better accuracy, several markers are usually used.
+No sería exagerado afirmar que casi todas las ideas concebibles para una aplicación web ya se han puesto en desarrollo. Dada la enorme cantidad de proyectos de software libre y de código abierto que se desarrollan e implementan activamente en todo el mundo, es muy probable que una prueba de seguridad de aplicaciones encuentre un objetivo que dependa total o parcialmente de estas aplicaciones o frameworks conocidos (p. ej., WordPress, phpBB, Mediawiki, etc.). Conocer los componentes de la aplicación web que se están probando facilita considerablemente el proceso de pruebas y también reduce drásticamente el esfuerzo necesario durante la prueba. Estas aplicaciones web conocidas tienen encabezados HTML, cookies y estructuras de directorios específicos que se pueden enumerar para identificar la aplicación. La mayoría de los frameworks web tienen varios indicadores en estas ubicaciones, que pueden ayudar a un atacante o evaluador a reconocerlos. Básicamente, eso es lo que hacen todas las herramientas automáticas: buscan un indicador en una ubicación predefinida y luego lo comparan con la base de datos de firmas conocidas. Para obtener mayor precisión, se suelen utilizar varios indicadores.
 
-## Objetivos de Prueba
+## Objetivos de las pruebas
 
-- Fingerprint the components used by the web applications.
+- Identificar los componentes utilizados por las aplicaciones web.
 
-## Cómo Probar
+## Cómo probar
 
-### Pruebas de Caja Negra
+### Pruebas de caja negra
 
-There are several common locations to consider in order to identify frameworks or components:
+Hay varias ubicaciones habituales que se deben considerar para identificar frameworks o componentes:
 
-- HTTP headers
+- Encabezados HTTP
 - Cookies
-- HTML source code
-- Specific files and folders
-- File extensions
-- Error messages
+- Código fuente HTML
+- Archivos y carpetas específicos
+- Extensiones de archivo
+- Mensajes de error
 
-#### HTTP Headers
+#### Encabezados HTTP
 
-The most basic form of identifying a web framework is to look at the `X-Powered-By` field in the HTTP response header. Many tools can be used to fingerprint a target, the simplest one is netcat.
+La forma más básica de identificar un framework web es revisar el campo `X-Powered-By` del encabezado de respuesta HTTP. Se pueden utilizar muchas herramientas para identificar la huella digital de un objetivo; la más sencilla es netcat.
 
-Consider the following HTTP Request-Response:
+Considere la siguiente solicitud y respuesta HTTP:
 
 ```html
 $ nc 127.0.0.1 80
@@ -41,9 +41,9 @@ Server: nginx/1.0.14
 X-Powered-By: Mono
 ```
 
-From the `X-Powered-By` field, we understand that the web application framework is likely to be `Mono`. However, although this approach is simple and quick, this methodology doesn't work in all cases. It is possible to easily disable `X-Powered-By` header by a proper configuration. There are also several techniques that allow a site to obfuscate HTTP headers (see an example in the [Remediation](#remediation) section). In the example above, we can also note that a specific version of `nginx` is being used to serve the content.
+A partir del campo `X-Powered-By`, podemos deducir que es probable que el framework de la aplicación web sea `Mono`. Sin embargo, aunque este método es sencillo y rápido, no funciona en todos los casos. Es posible desactivar fácilmente el encabezado `X-Powered-By` mediante una configuración adecuada. También existen varias técnicas que permiten a un sitio ofuscar los encabezados HTTP (consulte un ejemplo en la sección [Mitigación](#mitigación)). En el ejemplo anterior, también podemos observar que se está utilizando una versión específica de `nginx` para servir el contenido.
 
-In the same example, the tester could either miss the `X-Powered-By` header or obtain an answer like the following:
+En el mismo ejemplo, es posible que el evaluador no detecte el encabezado `X-Powered-By` o que obtenga una respuesta como la siguiente:
 
 ```html
 HTTP/1.1 200 OK
@@ -55,7 +55,7 @@ Vary: Accept-Encoding
 X-Powered-By: Blood, sweat and tears
 ```
 
-Sometimes there are more HTTP headers that point at a certain framework. In the following example, according to the information from HTTP request, one can see that `X-Powered-By` header contains PHP version. However, the `X-Generator` header points out the used framework is actually `Swiftlet`, which helps a penetration tester to expand their attack vectors. When performing fingerprinting, carefully inspect every HTTP header for such leaks.
+A veces, hay otros encabezados HTTP que apuntan a un framework determinado. En el siguiente ejemplo, según la información de la solicitud HTTP, se observa que el encabezado `X-Powered-By` contiene la versión de PHP. Sin embargo, el encabezado `X-Generator` indica que el framework utilizado en realidad es `Swiftlet`, lo que ayuda a un evaluador de penetración a ampliar sus vectores de ataque. Al identificar la huella digital, inspeccione cuidadosamente todos los encabezados HTTP para detectar este tipo de filtraciones.
 
 ```html
 HTTP/1.1 200 OK
@@ -73,189 +73,184 @@ X-Generator: Swiftlet
 
 #### Cookies
 
-Another similar and somewhat more reliable way to determine the current web framework are framework-specific cookies.
+Otra forma similar y algo más fiable de determinar el framework web utilizado consiste en revisar las cookies específicas del framework.
 
-Consider the following HTTP request:
+Considere los siguientes encabezados de respuesta HTTP de una aplicación Laravel:
 
-![Cakephp HTTP Request](images/Cakephp_cookie.png)\
-*Figure 4.1.8-7: Cakephp HTTP Request*
+```http
+HTTP/1.1 200 OK
+Server: nginx
+Content-Type: text/html; charset=utf-8
+Cache-Control: no-cache, private
+Date: Sun, 13 Sep 2026 12:10:25 GMT
+Set-Cookie: XSRF-TOKEN=eyJpdiI6IkpyQWZUUUFjVXBPWWpkSjF3cHlJZnc9PSIsInZhbHVlIjoiZzZlVm1QWlMxRDlqVGpDVHlwdVVPa3BpWDhYd0F2NXlodm1jTmRSU2pFaUh1VUxvL3cyLzhNU2o1blBJSUpQS2srNnBQQUVpUlJJeW9wMkRvZXhqejBySnpGUVVzclllendrQzZDWDBUa0ZiVmVnNlRidDFwVExrdGRZekJyd1ciLCJtYWMiOiJjMjcyN2FjOThlNjEyMGY0YjZkYjEwNWJjZGI2YWE4MzJiNDZjZDg1NDQxN2U0YzcxMDg5NTJhOTVjODE5YzY2IiwidGFnIjoiIn0%3D; expires=Sun, 13 Sep 2026 14:10:26 GMT; Max-Age=7200; path=/; samesite=lax
+Set-Cookie: laravel_session=eyJpdiI6IlV4QkdjeWE2dGpzU2EyWEd4cDRHbXc9PSIsInZhbHVlIjoiMnlFWS9CcW9ncEFKODQzMFFxK0F6ekN4dStJbnF2b2NhaUlmRWVuRU81WFo2OHZwQTlYZ2owdGZlUVVLY29ScWRsZDllTTVVTXBuaE1SanBSak5JeU5NZFJnNFdZUmtOZnUwVTBUYndRbmpJdVRKdW9mZUtrMnRwRXg3TUxiM2MiLCJtYWMiOiI5NDU1ODY2Y2Q5NjhjMGI4NWZkNmZjNjI1NTI1ZDNiNTJjMDU3MTc3ZjAyZDc2YjlmZGE4OTM5NjFhNTY3ZTE3IiwidGFnIjoiIn0%3D; expires=Sun, 13 Sep 2026 14:10:26 GMT; Max-Age=7200; path=/; httponly; samesite=lax
+content-length: 88805
+```
 
-The cookie `CAKEPHP` has automatically been set, which gives information about the framework being used. A list of common cookie names is presented in [Cookies](#cookies-1) section. Limitations still exist in relying on this identification mechanism - it is possible to change the name of cookies. For example, for the selected `CakePHP` framework this could be done via the following configuration (excerpt from `core.php`):
+La cookie `laravel_session`, junto con la cookie `XSRF-TOKEN` que la acompaña y que se utiliza para la protección contra CSRF, se ha establecido automáticamente, lo que proporciona información sobre el framework utilizado. En la sección [Cookies](#cookies-1) se presenta una lista de nombres de cookies habituales. Este mecanismo de identificación tiene limitaciones: es posible cambiar el nombre de las cookies. Por ejemplo, en Laravel se puede hacer mediante el valor `cookie` de `config/session.php`:
 
 ```php
-/**
- * The name of CakePHP's session cookie.
- *
- * Note the guidelines for Session names states: "The session name references
- * the session id in cookies and URLs. It should contain only alphanumeric
- * characters."
- * @link https://php.net/session_name
- */
-Configure::write('Session.cookie', 'CAKEPHP');
+/*
+|--------------------------------------------------------------------------
+| Session Cookie Name
+|--------------------------------------------------------------------------
+|
+| Here you may change the name of the cookie used to identify a session
+| instance by ID. The name specified here will get used every time a
+| new session cookie is created by the framework for every driver.
+|
+*/
+
+'cookie' => env(
+    'SESSION_COOKIE',
+    Str::slug(env('APP_NAME', 'laravel'), '_').'_session'
+),
 ```
 
-However, these changes are less likely to be made than changes to the `X-Powered-By` header, making this approach to identification more reliable.
+Sin embargo, es menos probable que se realicen estos cambios que los cambios en el encabezado `X-Powered-By`, por lo que este método de identificación es más fiable.
 
-#### HTML Source Code
+#### Código fuente HTML
 
-This technique is based on finding certain patterns in the HTML page source code. Often one can find a lot of information which helps a tester to recognize a specific component. One of the common markers is HTML comments that directly lead to framework disclosure. More often, certain framework-specific paths can be found, i.e. links to framework-specific CSS or JS folders. Finally, specific script variables might also point to a certain framework.
+Esta técnica consiste en buscar ciertos patrones en el código fuente de la página HTML. A menudo se puede encontrar mucha información que ayuda al evaluador a reconocer un componente específico. Uno de los indicadores habituales son los comentarios HTML que revelan directamente el framework. Con más frecuencia, pueden encontrarse rutas específicas del framework, como enlaces a carpetas CSS o JS propias del framework. Por último, ciertas variables de scripts también pueden indicar un framework determinado.
 
-From the screenshot below, one can easily determine the framework in use and its version by the mentioned markers. The comment, specific paths and script variables can all help an attacker to quickly determine an instance of ZK framework.
+A partir de la captura de pantalla siguiente, es fácil determinar el framework utilizado y su versión mediante los indicadores mencionados. Por ejemplo, las aplicaciones Angular agregan un atributo `ng-version` directamente al elemento raíz de la página, lo que revela explícitamente la versión exacta del framework utilizado.
 
-![ZK Framework Sample](images/Zk_html_source.png)\
-*Figure 4.1.8-2: ZK Framework HTML Source Sample*
+![Ejemplo de código fuente HTML de Angular](images/08-angular_html_source.png)\
+*Figura 4.1.8-1: Ejemplo de código fuente HTML de Angular*
 
-Frequently such information is positioned in the `<head>` section of HTTP responses, in `<meta>` tags, or at the end of the page. Nevertheless, entire responses should be analyzed since it can be useful for other purposes such as inspection of other useful comments and hidden fields. Sometimes, web developers may not sufficiently obscure the information about the frameworks or components used. It is still possible to stumble upon something like this at the bottom of the page:
+A menudo, esta información se encuentra en la sección `<head>` de las respuestas HTTP, en etiquetas `<meta>` o al final de la página. No obstante, se deben analizar las respuestas completas, ya que esto puede ser útil para otros fines, como inspeccionar otros comentarios útiles y campos ocultos. En ocasiones, los desarrolladores web no ocultan suficientemente la información sobre los frameworks o componentes utilizados. Aún es posible encontrar algo como esto al final de la página, por ejemplo, un pie de página «Publicado con orgullo con Ghost» que revela que el sitio funciona con la plataforma de publicación [Ghost](https://ghost.org/):
 
-![Banshee Bottom Page](images/Banshee_bottom_page.png)\
-*Figure 4.1.8-3: Banshee Bottom Page*
+![Parte inferior de la página de Ghost](images/08-ghost_bottom_page.png)\
+*Figura 4.1.8-2: Parte inferior de la página de Ghost*
 
-### Specific Files and Folders
+### Archivos y carpetas específicos
 
-There is another approach which greatly helps an attacker or tester to identify applications or components with high accuracy. Every web application component has its specific file and folder structure on the server. It has been noted that one can see the specific path from the HTML page source but sometimes they are not explicitly presented there and may still reside on the server.
+Existe otro método que ayuda mucho a un atacante o evaluador a identificar aplicaciones o componentes con gran precisión. Cada componente de una aplicación web tiene una estructura de archivos y carpetas específica en el servidor. Se ha observado que es posible ver la ruta específica en el código fuente de la página HTML, pero a veces no se muestra explícitamente allí y puede seguir existiendo en el servidor.
 
-In order to uncover them, a technique known as forced browsing or "dirbusting" is used. Dirbusting is brute forcing a target with known folder and filenames and monitoring HTTP-responses to enumerate server content. This information can be used both for finding default files and attacking them, and for fingerprinting the web application. Dirbusting can be done in several ways, the example below shows a successful dirbusting attack against a WordPress-powered target with the help of defined list and intruder functionality of Burp Suite.
+Para encontrarlas, se utiliza una técnica conocida como navegación forzada o «dirbusting». El dirbusting consiste en aplicar fuerza bruta a un objetivo con nombres de carpetas y archivos conocidos, y supervisar las respuestas HTTP para enumerar el contenido del servidor. Esta información puede utilizarse tanto para encontrar archivos predeterminados y atacarlos como para identificar la huella digital de la aplicación web. El dirbusting se puede realizar de varias maneras; el ejemplo siguiente muestra un ataque de dirbusting exitoso contra un objetivo basado en WordPress, con la ayuda de una lista definida y la funcionalidad Intruder de Burp Suite.
 
-![Dirbusting with Burp](images/Wordpress_dirbusting.png)\
-*Figure 4.1.8-4: Dirbusting with Burp*
+![Dirbusting con Burp](images/08-wordpress_dirbusting.png)\
+*Figura 4.1.8-3: Dirbusting con Burp*
 
-We can see that for some WordPress-specific folders (for instance, `/wp-includes/`, `/wp-admin/` and `/wp-content/`) HTTP responses are 403 (Forbidden), 302 (Found, redirection to `wp-login.php`), and 200 (OK) respectively. This is a good indicator that the target is WordPress powered. The same way it is possible to dirbust different application plugin folders and their versions. In the screenshot below one can see a typical CHANGELOG file of a Drupal plugin, which provides information on the application being used and discloses a vulnerable plugin version.
+Podemos observar que, para algunas carpetas específicas de WordPress (por ejemplo, `/wp-includes/`, `/wp-admin/` y `/wp-content/`), las respuestas HTTP son 403 (Forbidden), 302 (Found, redirección a `wp-login.php`) y 200 (OK), respectivamente. Esto es un buen indicio de que el objetivo funciona con WordPress. Del mismo modo, es posible realizar dirbusting en diferentes carpetas de complementos de aplicaciones y determinar sus versiones. En la captura de pantalla siguiente se puede ver un archivo `readme.txt` típico de un complemento de WordPress, accesible en `/wp-content/plugins/<plugin-name>/readme.txt`, que proporciona información sobre el complemento utilizado y revela su versión exacta, potencialmente vulnerable, mediante el campo `Stable tag`.
 
-![Drupal Botcha Disclosure](images/Drupal_botcha_disclosure.png)\
-*Figure 4.1.8-5: Drupal Botcha Disclosure*
+![Divulgación del archivo Readme de un complemento de WordPress](images/08-wordpress_plugin_readme_disclosure.png)\
+*Figura 4.1.8-4: Divulgación del archivo Readme de un complemento de WordPress*
 
-Tip: before starting with dirbusting, check the `robots.txt` file first. Sometimes application specific folders and other sensitive information can be found there as well. An example of such a `robots.txt` file is presented on a screenshot below.
-
-![Robots Info Disclosure](images/Robots-info-disclosure.png)\
-*Figure 4.1.8-6: Robots Info Disclosure*
-
-Specific files and folders are different for each specific application. If the identified application or component is Open Source there may be value in setting up a temporary installation during penetration tests in order to gain a better understanding of what infrastructure or functionality is presented, and what files might be left on the server. However, several useful file lists already exist; one notable example is the [FuzzDB wordlists of predictable files/folders](https://github.com/fuzzdb-project/fuzzdb).
-
-#### File Extensions
-
-URLs may include file extensions that can also help identify the web platform or technology.
-
-For example, the OWASP wiki used PHP:
+Consejo: antes de empezar con el dirbusting, compruebe primero el archivo `robots.txt`. A veces también se pueden encontrar allí carpetas específicas de la aplicación y otra información confidencial. En la captura de pantalla siguiente se muestra un ejemplo de este tipo de archivo `robots.txt`.
 
 ```text
-https://wiki.owasp.org/index.php?title=Fingerprint_Web_Application_Framework&action=edit&section=4
+User-agent: *
+Disallow: /wp-admin/
+Allow: /wp-admin/admin-ajax.php
 ```
 
-Here are some common web file extensions and associated technologies:
+Los archivos y carpetas específicos varían según cada aplicación. Si la aplicación o el componente identificado es de código abierto, puede resultar útil configurar una instalación temporal durante las pruebas de penetración para comprender mejor qué infraestructura o funcionalidades se presentan y qué archivos podrían permanecer en el servidor. Sin embargo, ya existen varias listas útiles de archivos; un ejemplo destacado son las [listas de palabras de FuzzDB de archivos y carpetas predecibles](https://github.com/fuzzdb-project/fuzzdb).
+
+#### Extensiones de archivo
+
+Las URL pueden incluir extensiones de archivo que también ayudan a identificar la plataforma o tecnología web.
+
+Por ejemplo, la antigua wiki de OWASP utilizaba PHP:
+
+```text
+https://example.owasp.org/index.php?title=Fingerprint_Web_Application_Framework&action=edit&section=4
+```
+
+A continuación se muestran algunas extensiones de archivo web habituales y las tecnologías asociadas:
 
 - `.php` -- PHP
 - `.aspx` -- Microsoft ASP.NET
 - `.jsp` -- Java Server Pages
 
-#### Error Messages
+#### Mensajes de error
 
-As can be seen in the following screenshot the listed file system path points to use of WordPress (`wp-content`). Also, testers should be aware that WordPress is PHP-based (`functions.php`).
+Como puede verse en la captura de pantalla siguiente, la ruta del sistema de archivos indicada apunta al uso de WordPress (`wp-content`). Además, los evaluadores deben tener en cuenta que WordPress está basado en PHP (`functions.php`).
 
-![WordPress Parse error](images/wp-syntaxerror.png)\
-*Figure 4.1.8-7: WordPress Parse Error*
+![Error de análisis de WordPress](images/08-wp_syntaxerror.png)\
+*Figura 4.1.8-5: Error de análisis de WordPress*
 
-## Common Identifiers
+## Identificadores habituales
 
 ### Cookies
 
-| Framework    | Cookie name                       |
-|--------------|-----------------------------------|
-| Zope         | zope3                             |
-| CakePHP      | cakephp                           |
-| Kohana       | kohanasession                     |
-| Laravel      | laravel_session                   |
-| phpBB        | phpbb3_                           |
-| WordPress    | wp-settings                       |
-| 1C-Bitrix    | BITRIX_                           |
-| AMPcms       | AMP                               |
-| Django CMS   | django                            |
-| DotNetNuke   | DotNetNukeAnonymous               |
-| e107         | e107_tz                           |
-| EPiServer    | EPiTrace, EPiServer               |
-| Graffiti CMS | graffitibot                       |
-| Hotaru CMS   | hotaru_mobile                     |
-| ImpressCMS   | ICMSession                        |
-| Indico       | MAKACSESSION                      |
-| InstantCMS   | InstantCMS[logdate]               |
-| Kentico CMS  | CMSPreferredCulture               |
-| MODx         | SN4[12symb]                       |
-| TYPO3        | fe_typo_user                      |
-| Dynamicweb   | Dynamicweb                        |
-| LEPTON       | lep[some_numeric_value]+sessionid |
-| Wix          | Domain=.wix.com                   |
-| VIVVO        | VivvoSessionId                    |
-| Tiny File Manager | filemanager                  |
-| Zenphoto     | zenphoto_auth                     |
+| Framework          | Nombre de la cookie                                   |
+|--------------------|-----------------------------------------------|
+| WordPress          | `wordpress_logged_in_*`, `wp-settings-*`      |
+| Laravel            | `laravel_session`                             |
+| Django             | `sessionid`, `csrftoken`                      |
+| Express.js (Node)  | `connect.sid`                                 |
+| ASP.NET Core       | `.AspNetCore.Session`, `.AspNetCore.Antiforgery.*` |
+| phpBB              | `phpbb3_*`                                    |
+| Drupal             | `SESS*` / `SSESS*` (el nombre es un hash; no hay un prefijo fijo aparte de `SESS`/`SSESS`) |
+| CakePHP            | `CAKEPHP` (configurable; este es el valor predeterminado) |
+| TYPO3              | `fe_typo_user`                                |
+| DNN Platform (DotNetNuke) | `DotNetNukeAnonymous`                  |
 
-### HTML Source Code
+### Código fuente HTML
 
-| Application | Keyword                                                                        |
+| Aplicación | Palabra clave                                                                    |
 |-------------|--------------------------------------------------------------------------------|
-| WordPress   | `<meta name="generator" content="WordPress 3.9.2" />`                          |
+| WordPress   | `<meta name="generator" content="WordPress X.X" />`                            |
 | phpBB       | `<body id="phpbb"`                                                             |
-| Mediawiki   | `<meta name="generator" content="MediaWiki 1.21.9" />`                         |
+| MediaWiki   | `<meta name="generator" content="MediaWiki X.X" />`                            |
 | Joomla      | `<meta name="generator" content="Joomla! - Open Source Content Management" />` |
-| Drupal      | `<meta name="Generator" content="Drupal 7 (https://drupal.org)" />`             |
-| DotNetNuke  | `DNN Platform - [https://www.dnnsoftware.com](https://www.dnnsoftware.com)`      |
+| Drupal      | `<meta name="Generator" content="Drupal X (https://drupal.org)" />`            |
+| Ghost       | `<meta name="generator" content="Ghost X.X" />`                                |
+| DotNetNuke  | `DNN Platform - [https://www.dnnsoftware.com](https://www.dnnsoftware.com)`    |
+| Angular     | Atributo `ng-version="X.X.X"` en el elemento raíz de la aplicación              |
+| Next.js     | `<script id="__NEXT_DATA__" type="application/json">`                          |
 
-#### General Markers
+#### Indicadores generales
 
 - `%framework_name%`
 - `powered by`
 - `built upon`
 - `running`
 
-#### Specific Markers
+#### Indicadores específicos
 
-| Framework         | Keyword                        |
-|-------------------|--------------------------------|
-| Adobe ColdFusion  | `<!-- START headerTags.cfm` |
-| Microsoft ASP.NET | `__VIEWSTATE`                  |
-| ZK                | `<!-- ZK`                   |
-| Business Catalyst | `<!-- BC_OBNW -->`       |
-| Indexhibit        | `ndxz-studio`                  |
-
-## Remediación
-
-While efforts can be made to use different cookie names (through changing configs), hiding or changing file/directory paths (through rewriting or source code changes), removing known headers, etc., such efforts boil down to "security through obscurity". System owners/administrators should recognize that such efforts only slow down the most rudimentary adversaries. The time and effort might be better spent on increasing stakeholder awareness and maintaining solutions.
-
-## Herramientas
-
-A list of general and well-known tools is presented below. There are also a lot of other utilities, as well as framework-based fingerprinting tools.
+| Framework         | Palabra clave                                   |
+|-------------------|-------------------------------------------|
+| Adobe ColdFusion  | `<!-- START headerTags.cfm`               |
+| Microsoft ASP.NET | `__VIEWSTATE`                             |
+| ZK                | `<!-- ZK [.\d\s]+-->`, scripts under `zkau/` |
+| Indexhibit        | `ndxz-studio` (in `<link>`/`<a href>`, or as `<meta name="generator" content="Indexhibit">`) |
+| Next.js           | `<script id="__NEXT_DATA__" type="application/json">`, `x-powered-by: Next.js` |
+| Nuxt              | `<div id="__nuxt"`, inline `window.__NUXT__`, script paths under `/_nuxt/` |
+| htmx              | Global JS object `htmx`, script src matching `htmx.org@X.X.X`             |
 
 ### WhatWeb
 
-Site: [https://github.com/urbanadventurer/WhatWeb](https://github.com/urbanadventurer/WhatWeb)
+Sitio: [https://github.com/urbanadventurer/WhatWeb](https://github.com/urbanadventurer/WhatWeb)
 
-WhatWeb is one of the best open source fingerprinting tools currently available on the market and is included in the default [Kali Linux](https://www.kali.org/) build. Language: Ruby Matches for fingerprinting are made with:
+WhatWeb es una de las mejores herramientas de código abierto para identificar huellas digitales disponibles actualmente y se incluye en la instalación predeterminada de [Kali Linux](https://www.kali.org/). Lenguaje: Ruby. Las coincidencias para identificar huellas digitales se realizan mediante:
 
-- Text strings (case sensitive)
-- Regular expressions
-- Google Hack Database queries (limited set of keywords)
-- MD5 hashes
-- URL recognition
-- HTML tag patterns
-- Custom ruby code for passive and aggressive operations
+- Cadenas de texto (distinguen entre mayúsculas y minúsculas)
+- Expresiones regulares
+- Consultas a Google Hack Database (conjunto limitado de palabras clave)
+- Hashes MD5
+- Reconocimiento de URL
+- Patrones de etiquetas HTML
+- Código Ruby personalizado para operaciones pasivas y agresivas
 
-Sample output is presented on a screenshot below:
+A continuación se muestra un ejemplo de salida en una captura de pantalla:
 
-![Whatweb Output sample](images/Whatweb-sample.png)\
-*Figure 4.1.8-8: Whatweb Output sample*
+![Ejemplo de salida de WhatWeb](images/08-whatweb_sample.png)\
+*Figura 4.1.8-6: Ejemplo de salida de WhatWeb*
 
-### Wappalyzer
+## Mitigación
 
-Site: [https://www.wappalyzer.com/](https://www.wappalyzer.com/)
+Aunque se pueden tomar medidas como utilizar nombres de cookies distintos (cambiando las configuraciones), ocultar o cambiar las rutas de archivos y directorios (mediante reescrituras o cambios en el código fuente), eliminar encabezados conocidos, etc., estas medidas se reducen a «seguridad por oscuridad». Los propietarios o administradores de sistemas deben reconocer que estas medidas solo ralentizan a los adversarios más rudimentarios. Tal vez sería mejor dedicar ese tiempo y esfuerzo a aumentar la concienciación de las partes interesadas y mantener las soluciones.
 
-Wappalyzer is available in multiple usage models, the most popular of which is likely the Firefox/Chrome extensions. They work largely on regular expression matching and don't need anything beyond the page being loaded in a browser. It works completely at the browser level and gives results in the form of icons. Although sometimes it has false positives, this is very handy to have notion of what technologies were used to construct a target site immediately after browsing a page.
+## Herramientas
 
-Sample output of a plug-in is presented on a screenshot below.
-
-![Wappalyzer Output for OWASP Website](images/Owasp-wappalyzer.png)\
-*Figure 4.1.8-9: Wappalyzer Output for OWASP site*
+A continuación se presenta una lista de herramientas generales y conocidas. También existen muchas otras utilidades, así como herramientas para identificar huellas digitales basadas en frameworks.
 
 ## Referencias
 
-### Whitepapers
+### Artículos técnicos
 
-- [Saumil Shah: "An Introduction to HTTP fingerprinting"](https://web.archive.org/web/20190526182734/https://net-square.com/httprint_paper.html)
-- [Anant Shrivastava : "Web Application Finger Printing"](https://anantshri.info/articles/web_app_finger_printing.html)
+- [Saumil Shah: «An Introduction to HTTP fingerprinting»](https://web.archive.org/web/20190526182734/https://net-square.com/httprint_paper.html)
+- [Anant Shrivastava: «Web Application Finger Printing»](https://anantshri.info/articles/web_app_finger_printing.html)

@@ -74,7 +74,7 @@ Pon captions a imágenes y figuras usando title case. Usa los números de secci�
 Por ejemplo, pon caption a la primera imagen mostrada en sección 4.8, sub-sección 19 como sigue:
 
 ```md
-![SSTI XVWA Example](images/SSTI_XVWA.jpeg)\
+![SSTI XVWA Example](document/4-Web_Application_Security_Testing/07-Injection/images/07-ssti_xvwa.jpeg)\
 *Figure 4.7.19-1: SSTI XVWA Example*
 ```
 

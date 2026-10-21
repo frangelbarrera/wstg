@@ -1,27 +1,29 @@
-# Web Application Security Testing
+# Pruebas de seguridad de aplicaciones web
 
-4.0 [Introduction and Objectives](00-Introduction_and_Objectives/README.md)
+4.0 [Introducción y objetivos](00-Introduction_and_Objectives/README.md)
 
-4.1 [Information Gathering](01-Information_Gathering/README.md)
+4.1 [Recopilación de información](01-Information_Gathering/README.md)
 
-4.2 [Configuration and Deployment Management Testing](02-Configuration_and_Deployment_Management_Testing/README.md)
+4.2 [Gestión de la configuración y la implementación](02-Configuration_and_Deployment_Management/README.md)
 
-4.3 [Identity Management Testing](03-Identity_Management_Testing/README.md)
+4.3 [Gestión de identidades](03-Identity_Management/README.md)
 
-4.4 [Authentication Testing](04-Authentication_Testing/README.md)
+4.4 [Autenticación](04-Authentication/README.md)
 
-4.5 [Authorization Testing](05-Authorization_Testing/README.md)
+4.5 [Autorización](05-Authorization/README.md)
 
-4.6 [Session Management Testing](06-Session_Management_Testing/README.md)
+4.6 [Gestión de sesiones](06-Session_Management/README.md)
 
-4.7 [Input Validation Testing](07-Input_Validation_Testing/README.md)
+4.7 [Inyección](07-Injection/README.md)
 
-4.8 [Testing for Error Handling](08-Testing_for_Error_Handling/README.md)
+4.8 [Gestión de errores](08-Error_Handling/README.md)
 
-4.9 [Testing for Weak Cryptography](09-Testing_for_Weak_Cryptography/README.md)
+4.9 [Criptografía débil](09-Weak_Cryptography/README.md)
 
-4.10 [Business Logic Testing](10-Business_Logic_Testing/README.md)
+4.10 [Lógica de negocio](10-Business_Logic/README.md)
 
-4.11 [Client-side Testing](11-Client-side_Testing/README.md)
+4.11 [Lado del cliente](11-Client-side/README.md)
 
-4.12 [API Testing](12-API_Testing/README.md)
+4.12 [Pruebas de API](12-API_Testing/README.md)
+
+4.13 [Pruebas de WebAssembly](13-WebAssembly_Testing/README.md)

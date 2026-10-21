@@ -1,4 +1,4 @@
-# Huella Digital del Servidor Web
+# Identificación del servidor web
 
 |ID          |
 |------------|
@@ -6,29 +6,35 @@
 
 ## Resumen
 
-La huella digital del servidor web es la tarea de identificar el tipo y versión del servidor web que un objetivo está ejecutando. Mientras que la huella digital del servidor web a menudo está encapsulada en herramientas de pruebas automatizadas, es importante para investigadores entender los fundamentos de cómo estas herramientas intentan identificar software, y por qué esto es útil.
+La identificación del servidor web consiste en determinar el tipo y la versión del servidor web que ejecuta un objetivo. Aunque suele estar integrada en herramientas de pruebas automatizadas, es importante que los investigadores comprendan los fundamentos de cómo estas herramientas intentan identificar el software y por qué resulta útil.
 
-Descubrir con precisión el tipo de servidor web que una aplicación ejecuta puede habilitar a testers de seguridad a determinar si la aplicación es vulnerable a ataque. En particular, servidores ejecutando versiones más viejas de software sin parches de seguridad actualizados pueden ser susceptibles a exploits específicos de versión conocidos.
+Identificar con precisión el tipo de servidor web que ejecuta una aplicación puede permitir a los evaluadores de seguridad determinar si la aplicación es vulnerable a ataques. En particular, los servidores que ejecutan versiones antiguas de software sin los parches de seguridad más recientes pueden ser susceptibles a exploits conocidos específicos de esa versión.
 
-## Objetivos de Prueba
+## Objetivos de las pruebas
 
-- Determinar la versión y tipo de un servidor web ejecutándose para habilitar más descubrimiento de cualquier vulnerabilidad conocida.
+- Determinar la versión y el tipo de un servidor web en ejecución para facilitar la búsqueda de vulnerabilidades conocidas.
 
-## Cómo Probar
+## Cómo realizar las pruebas
 
-Técnicas usadas para huella digital del servidor web incluyen [banner grabbing](https://en.wikipedia.org/wiki/Banner_grabbing), eliciting respuestas a solicitudes malformadas, y usando herramientas automatizadas para realizar scans más robustos que usan una combinación de tácticas. La premisa fundamental en la que todas estas técnicas operan es la misma. Todas se esfuerzan por elicitar alguna respuesta del servidor web que puede entonces ser comparada a una base de datos de respuestas y comportamientos conocidos, y así matched a un tipo de servidor conocido.
+Entre las técnicas para identificar un servidor web se incluyen la [obtención de banners](https://en.wikipedia.org/wiki/Banner_grabbing), provocar respuestas mediante solicitudes malformadas y usar herramientas automatizadas para realizar análisis más exhaustivos que combinan varias tácticas. Todas estas técnicas se basan en la misma premisa fundamental: buscan obtener alguna respuesta del servidor web que luego pueda compararse con una base de datos de respuestas y comportamientos conocidos y, de ese modo, asociarse con un tipo de servidor conocido.
 
-### Banner Grabbing
+### Obtención de banners
 
-Un banner grab se realiza enviando una solicitud HTTP al servidor web y examinando su [response header](https://developer.mozilla.org/en-US/docs/Glossary/Response_header). Esto puede ser logrado usando una variedad de herramientas, incluyendo `telnet` para solicitudes HTTP, o `openssl` para solicitudes sobre TLS/SSL.
+La obtención de un banner se realiza enviando una solicitud HTTP al servidor web y examinando su [encabezado de respuesta](https://developer.mozilla.org/en-US/docs/Glossary/Response_header). Esto puede hacerse con `curl -I` (que envía una solicitud `HEAD` y muestra solo los encabezados de respuesta), con [httpx](https://github.com/projectdiscovery/httpx) para sondear listas extensas de hosts a gran escala, o con `openssl s_client` para realizar solicitudes mediante TLS/SSL.
 
-Por ejemplo, aquí está la respuesta a una solicitud enviada a un servidor Apache.
+Por ejemplo, el siguiente comando recupera únicamente los encabezados de respuesta de un servidor:
+
+```bash
+curl -I https://example.org
+```
+
+A continuación, se muestra la respuesta a una solicitud enviada a un servidor Apache.
 
 ```http
 HTTP/1.1 200 OK
 Date: Thu, 05 Sep 2019 17:42:39 GMT
-Server: Apache/2.4.41 (Unix)
-Last-Modified: Thu, 05 Sep 2019 17:40:42 GMT
+Server: Apache/2.4.43 (Unix)
+Last-Modified: Thu, 05 Sep 2026 17:40:42 GMT
 ETag: "75-591d1d21b6167"
 Accept-Ranges: bytes
 Content-Length: 117
@@ -37,36 +43,37 @@ Content-Type: text/html
 ...
 ```
 
-Aquí está otra respuesta, esta vez enviada por nginx.
+A continuación se muestra otra respuesta, esta vez enviada por Nginx.
 
 ```http
 HTTP/1.1 200 OK
-Server: nginx/1.17.3
-Date: Thu, 05 Sep 2019 17:50:24 GMT
+Server: nginx/1.31.5
+Date: Thu, 05 Sep 2026 17:50:24 GMT
 Content-Type: text/html
 Content-Length: 117
-Last-Modified: Thu, 05 Sep 2019 17:40:42 GMT
+Last-Modified: Thu, 05 Sep 2026 17:40:42 GMT
 Connection: close
 ETag: "5d71489a-75"
 Accept-Ranges: bytes
 ...
 ```
 
-Aquí está cómo se ve una respuesta enviada por lighttpd.
+Así es una respuesta enviada por lighttpd.
 
-```sh
-HTTP/1.0 200 OK
+```http
+HTTP/1.1 200 OK
 Content-Type: text/html
 Accept-Ranges: bytes
 ETag: "4192788355"
-Last-Modified: Thu, 05 Sep 2019 17:40:42 GMT
+Last-Modified: Thu, 05 Sep 2026 17:40:42 GMT
 Content-Length: 117
 Connection: close
-Date: Thu, 05 Sep 2019 17:57:57 GMT
-Server: lighttpd/1.4.54
+Date: Thu, 05 Sep 2026 17:57:57 GMT
+Server: lighttpd/1.4.85
+...
 ```
 
-En estos ejemplos, el tipo de servidor y versión está claramente expuesto. Sin embargo, aplicaciones conscientes de seguridad pueden ofuscar su información de servidor modificando el header. Por ejemplo, aquí está un excerpt de la respuesta a una solicitud para un sitio con un header modificado:
+En estos ejemplos, se muestran claramente el tipo y la versión del servidor. Sin embargo, las aplicaciones que prestan atención a la seguridad pueden ocultar la información del servidor modificando el encabezado. Por ejemplo, este es un fragmento de la respuesta a una solicitud para un sitio con un encabezado modificado:
 
 ```sh
 HTTP/1.1 200 OK
@@ -77,7 +84,7 @@ Status: 200 OK
 ...
 ```
 
-En casos donde la información del servidor está obscured, testers pueden adivinar el tipo de servidor basado en el ordering de los campos del header. Nota que en el ejemplo de Apache arriba, los campos siguen este orden:
+Cuando la información del servidor está oculta, los evaluadores pueden intentar deducir el tipo de servidor a partir del orden de los campos del encabezado. Observe que, en el ejemplo anterior de Apache, los campos aparecen en este orden:
 
 - Date
 - Server
@@ -88,19 +95,19 @@ En casos donde la información del servidor está obscured, testers pueden adivi
 - Connection
 - Content-Type
 
-Sin embargo, en ambos ejemplos de nginx y servidor obscured, los campos en común siguen este orden:
+Sin embargo, tanto en el ejemplo de Nginx como en el del servidor con la información oculta, los campos comunes aparecen en este orden:
 
 - Server
 - Date
 - Content-Type
 
-Testers pueden usar esta información para adivinar que el servidor obscured es nginx. Sin embargo, considerando que un número de diferentes servidores web pueden compartir el mismo field ordering y campos pueden ser modificados o removidos, este método no es definitivo.
+Los evaluadores pueden usar esta información para deducir que el servidor cuya información está oculta es Nginx. Sin embargo, dado que varios servidores web distintos pueden compartir el mismo orden de campos y que estos pueden modificarse o eliminarse, este método no es concluyente.
 
-### Sending Malformed Requests
+### Envío de solicitudes malformadas
 
-Servidores web pueden ser identificados examinando sus respuestas de error, y en los casos donde no han sido customized, sus páginas de error default. Una forma de compelir a un servidor a presentar estas es enviando solicitudes intencionalmente incorrectas o malformadas.
+Los servidores web pueden identificarse examinando sus respuestas de error y, si no se han personalizado, sus páginas de error predeterminadas. Una forma de obligar a un servidor a presentarlas consiste en enviar solicitudes intencionalmente incorrectas o malformadas.
 
-Por ejemplo, aquí está la respuesta a una solicitud para la versión HTTP no-existente `SANTA CLAUS` desde un servidor Apache.
+Por ejemplo, esta es la respuesta de un servidor Apache a una solicitud que usa la versión HTTP inexistente `SANTA CLAUS`.
 
 ```sh
 GET / SANTA CLAUS/1.1
@@ -123,7 +130,7 @@ Content-Type: text/html; charset=iso-8859-1
 </body></html>
 ```
 
-Aquí está la respuesta a la misma solicitud desde nginx.
+Esta es la respuesta de Nginx a la misma solicitud.
 
 ```sh
 GET / SANTA CLAUS/1.1
@@ -138,7 +145,7 @@ GET / SANTA CLAUS/1.1
 </html>
 ```
 
-Aquí está la respuesta a la misma solicitud desde lighttpd.
+Esta es la respuesta de lighttpd a la misma solicitud.
 
 ```sh
 GET / SANTA CLAUS/1.1
@@ -164,23 +171,24 @@ Server: lighttpd/1.4.54
 </html>
 ```
 
-Como páginas de error default ofrecen muchos factores diferenciadores entre tipos de servidores web, su examen puede ser un método efectivo para fingerprinting incluso cuando campos de header del servidor están obscured.  
-Además, este [resource](https://0xdf.gitlab.io/cheatsheets/404) puede ser handy, especialmente cuando te encuentras con páginas de error default que no divulgan el tipo de servidor web.
+Las páginas de error predeterminadas ofrecen muchos elementos que permiten diferenciar los tipos de servidores web; por eso, examinarlas puede ser un método eficaz para identificarlos incluso cuando los campos del encabezado del servidor están ocultos.  
+Además, este [recurso](https://0xdf.gitlab.io/cheatsheets/404) puede resultar útil, especialmente al encontrar páginas de error predeterminadas que no revelan el tipo de servidor web.
 
-### Using Automated Scanning Tools
+### Uso de herramientas de análisis automatizado
 
-Como se declaró anteriormente, la huella digital del servidor web a menudo está incluida como una funcionalidad de herramientas de scanning automatizadas. Estas herramientas son capaces de hacer solicitudes similares a las demostradas arriba, así como enviar otras probes más server-specific. Herramientas automatizadas pueden comparar respuestas de servidores web mucho más rápido que pruebas manuales, y utilizan grandes bases de datos de respuestas conocidas para intentar identificación de servidor. Por estas razones, herramientas automatizadas son más likely de producir resultados precisos.
+Como se indicó anteriormente, la identificación del servidor web suele estar incluida como una funcionalidad de las herramientas de análisis automatizado. Estas herramientas pueden realizar solicitudes similares a las mostradas anteriormente, así como enviar otras sondas más específicas para cada servidor. Las herramientas automatizadas pueden comparar las respuestas de los servidores web mucho más rápido que las pruebas manuales y utilizan grandes bases de datos de respuestas conocidas para intentar identificar el servidor. Por estos motivos, es más probable que las herramientas automatizadas produzcan resultados precisos.
 
-Aquí hay algunas herramientas de scan comúnmente usadas que incluyen funcionalidad de huella digital de servidor web.
+A continuación se enumeran algunas herramientas de análisis de uso común que incluyen funciones para identificar servidores web.
 
-- [Netcraft](https://toolbar.netcraft.com/site_report), una herramienta online que scans sitios para información, incluyendo detalles de servidor web.
-- [Nikto](https://github.com/sullo/nikto), una herramienta de scanning Open Source command-line.
-- [Nmap](https://nmap.org/), una herramienta Open Source command-line que también tiene una GUI, [Zenmap](https://nmap.org/zenmap/).
+- [Netcraft Site Report](https://sitereport.netcraft.com/), una herramienta en línea que analiza sitios para recopilar información, incluidos datos sobre el servidor web.
+- [Nikto](https://github.com/sullo/nikto), una herramienta de análisis de código abierto para la línea de comandos.
+- [Nmap](https://nmap.org/), una herramienta de código abierto para la línea de comandos que también dispone de una interfaz gráfica, [Zenmap](https://nmap.org/zenmap/).
+- [WhatWeb](https://github.com/urbanadventurer/WhatWeb) y [httpx](https://github.com/projectdiscovery/httpx) (`-tech-detect`), que identifican el software del servidor web junto con otras tecnologías (consulte [Identificación del framework de la aplicación web](08-Fingerprint_Web_Application_Framework.md) e [Identificación de la aplicación web](09-Fingerprint_Web_Application.md) para obtener más información sobre su uso para detectar el conjunto de tecnologías).
 
-## Remediación
+## Mitigación
 
-Mientras que información de servidor expuesta no es necesariamente en sí misma una vulnerabilidad, es información que puede asistir a atacantes en exploiting otras vulnerabilidades que pueden existir. Información de servidor expuesta también puede llevar a atacantes a encontrar vulnerabilidades específicas de versión de servidor que pueden ser usadas para exploit servidores sin parches. Por esta razón se recomienda que algunas precauciones sean tomadas. Estas acciones incluyen:
+La información expuesta sobre el servidor no constituye necesariamente una vulnerabilidad por sí sola, pero puede ayudar a los atacantes a aprovechar otras vulnerabilidades existentes. También puede ayudarles a encontrar vulnerabilidades del servidor específicas de una versión que permitan atacar servidores sin parches. Por este motivo, se recomienda tomar ciertas precauciones, entre ellas:
 
-- Ofuscando información de servidor web en headers, tales como con el [mod_headers module](https://httpd.apache.org/docs/current/mod/mod_headers.html) de Apache.
-- Usando un hardened [reverse proxy server](https://en.wikipedia.org/wiki/Proxy_server#Reverse_proxies) para crear una capa adicional de seguridad entre el servidor web y el internet.
-- Asegurando que servidores web sean mantenidos up-to-date con el último software y parches de seguridad.
+- Ocultar la información del servidor web en los encabezados, por ejemplo, mediante el módulo [mod_headers](https://httpd.apache.org/docs/current/mod/mod_headers.html) de Apache.
+- Usar un [servidor proxy inverso](https://en.wikipedia.org/wiki/Proxy_server#Reverse_proxies) reforzado para crear una capa de seguridad adicional entre el servidor web e Internet.
+- Asegurarse de que los servidores web estén actualizados con el software y los parches de seguridad más recientes.

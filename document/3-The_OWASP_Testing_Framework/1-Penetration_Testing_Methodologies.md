@@ -1,131 +1,131 @@
-# Metodologías de Pruebas de Penetración
+# Metodologías de pruebas de penetración
 
 ## Resumen
 
-- [Guías de Pruebas OWASP](#guías-de-pruebas-owasp)
-    - Guía de Pruebas de Seguridad Web (WSTG)
-    - Guía de Pruebas de Seguridad Móvil (MSTG)
-    - Metodología de Pruebas de Seguridad de Firmware
-- [Estándar de Ejecución de Pruebas de Penetración](#estándar-de-ejecución-de-pruebas-de-penetración)
-- [Guía de Pruebas de Penetración PCI](#guía-de-pruebas-de-penetración-pci)
-    - [Orientación de Pruebas de Penetración PCI DSS](#orientación-de-pruebas-de-penetración-pci-dss)
-    - [Requisitos de Pruebas de Penetración PCI DSS](#requisitos-de-pruebas-de-penetración-pci-dss)
-- [Marco de Pruebas de Penetración](#marco-de-pruebas-de-penetración)
-- [Guía Técnica para Pruebas y Evaluación de Seguridad de la Información](#guía-técnica-para-pruebas-y-evaluación-de-seguridad-de-la-información)
-- [Manual de Metodología de Pruebas de Seguridad de Código Abierto](#manual-de-metodología-de-pruebas-de-seguridad-de-código-abierto)
+- [Guías de pruebas OWASP](#guías-de-pruebas-owasp)
+    - Guía de pruebas de seguridad web (WSTG)
+    - Guía de pruebas de seguridad móvil (MSTG)
+    - Metodología de pruebas de seguridad de firmware
+- [Estándar de ejecución de pruebas de penetración](#estándar-de-ejecución-de-pruebas-de-penetración)
+- [Guía de pruebas de penetración PCI](#guía-de-pruebas-de-penetración-pci)
+    - [Orientación sobre pruebas de penetración PCI DSS](#orientación-sobre-pruebas-de-penetración-pci-dss)
+    - [Requisitos de pruebas de penetración PCI DSS](#requisitos-de-pruebas-de-penetración-pci-dss)
+- [Marco de pruebas de penetración](#marco-de-pruebas-de-penetración)
+- [Guía técnica para pruebas y evaluación de la seguridad de la información](#guía-técnica-para-pruebas-y-evaluación-de-la-seguridad-de-la-información)
+- [Manual de metodología de pruebas de seguridad de código abierto](#manual-de-metodología-de-pruebas-de-seguridad-de-código-abierto)
 - [Referencias](#referencias)
 
-## Guías de Pruebas OWASP
+## Guías de pruebas OWASP
 
-En términos de ejecución técnica de pruebas de seguridad, las guías de pruebas OWASP son altamente recomendadas. Dependiendo de los tipos de aplicaciones, las guías de pruebas se listan a continuación para servicios web/nube, aplicación móvil (Android/iOS), o firmware IoT respectivamente.
+En cuanto a la ejecución técnica de pruebas de seguridad, se recomiendan ampliamente las guías de pruebas de OWASP. Según el tipo de aplicación, a continuación se enumeran las guías para servicios web y en la nube, aplicaciones móviles (Android/iOS) o firmware de IoT, respectivamente.
 
-- [Guía de Pruebas de Seguridad Web OWASP](https://owasp.org/www-project-web-security-testing-guide/)
-- [Guía de Pruebas de Seguridad Móvil OWASP](https://owasp.org/www-project-mobile-security-testing-guide/)
-- [Metodología de Pruebas de Seguridad de Firmware OWASP](https://github.com/scriptingxss/owasp-fstm)
+- [Guía de pruebas de seguridad web de OWASP](https://owasp.org/www-project-web-security-testing-guide/)
+- [Guía de pruebas de seguridad móvil de OWASP](https://mas.owasp.org/)
+- [Metodología de pruebas de seguridad de firmware de OWASP](https://github.com/scriptingxss/owasp-fstm)
 
-## Estándar de Ejecución de Pruebas de Penetración
+## Estándar de ejecución de pruebas de penetración
 
-El Estándar de Ejecución de Pruebas de Penetración (PTES) define las pruebas de penetración como 7 fases. Particularmente, las Directrices Técnicas PTES dan sugerencias prácticas sobre procedimientos de pruebas, y recomendación para herramientas de pruebas de seguridad.
+El Estándar de ejecución de pruebas de penetración (PTES) define las pruebas de penetración en 7 fases. En particular, las Directrices técnicas de PTES ofrecen sugerencias prácticas sobre los procedimientos de prueba y recomendaciones de herramientas para pruebas de seguridad.
 
-- Interacciones Pre-Compromiso
-- Recopilación de Inteligencia
-- Modelado de Amenazas
-- Análisis de Vulnerabilidades
+- Interacciones previas al compromiso
+- Recopilación de inteligencia
+- Modelado de amenazas
+- Análisis de vulnerabilidades
 - Explotación
-- Post Explotación
-- Reporte
+- Explotación posterior
+- Elaboración de informes
 
-[Directrices Técnicas PTES](http://www.pentest-standard.org/index.php/PTES_Technical_Guidelines)
+[Directrices técnicas de PTES](http://www.pentest-standard.org/index.php/PTES_Technical_Guidelines)
 
-## Guía de Pruebas de Penetración PCI
+## Guía de pruebas de penetración PCI
 
-El Estándar de Seguridad de Datos de la Industria de Tarjetas de Pago (PCI DSS) Requisito 11.3 define las pruebas de penetración. PCI también define Orientación de Pruebas de Penetración.
+El requisito 11.3 del Estándar de Seguridad de Datos de la Industria de Tarjetas de Pago (PCI DSS) define las pruebas de penetración. PCI también establece directrices para las pruebas de penetración.
 
-### Orientación de Pruebas de Penetración PCI DSS
+### Orientación sobre pruebas de penetración PCI DSS
 
-La directriz de pruebas de penetración PCI DSS proporciona orientación sobre lo siguiente:
+La directriz de pruebas de penetración de PCI DSS proporciona orientación sobre lo siguiente:
 
-- Componentes de Pruebas de Penetración
-- Calificaciones de un Probador de Penetración
-- Metodologías de Pruebas de Penetración
-- Directrices de Reporte de Pruebas de Penetración
+- Componentes de las pruebas de penetración
+- Cualificaciones de un profesional de pruebas de penetración
+- Metodologías de pruebas de penetración
+- Directrices para elaborar informes de pruebas de penetración
 
-### Requisitos de Pruebas de Penetración PCI DSS
+### Requisitos de pruebas de penetración PCI DSS
 
-Los requisitos PCI DSS se refieren al Estándar de Seguridad de Datos de la Industria de Tarjetas de Pago (PCI DSS) Requisito 11.3
+El requisito de PCI DSS hace referencia al requisito 11.3 del Estándar de Seguridad de Datos de la Industria de Tarjetas de Pago (PCI DSS).
 
-- Basado en enfoques aceptados por la industria
-- Cobertura para CDE y sistemas críticos
-- Incluye pruebas externas e internas
-- Prueba para validar reducción de alcance
-- Pruebas de capa de aplicación
-- Pruebas de capa de red para red y OS
+- Basarse en enfoques aceptados por la industria
+- Cubrir el CDE y los sistemas críticos
+- Incluir pruebas externas e internas
+- Realizar pruebas para validar la reducción del alcance
+- Realizar pruebas de la capa de aplicación
+- Realizar pruebas de la capa de red para la red y el sistema operativo
 
-[Orientación de Pruebas de Penetración PCI DSS](https://www.pcisecuritystandards.org/documents/Penetration-Testing-Guidance-v1_1.pdf)
+[Orientación sobre pruebas de penetración PCI DSS](https://www.pcisecuritystandards.org/documents/Penetration-Testing-Guidance-v1_1.pdf)
 
-## Marco de Pruebas de Penetración
+## Marco de pruebas de penetración
 
-El Marco de Pruebas de Penetración (PTF) proporciona una guía completa práctica de pruebas de penetración. También lista usos de las herramientas de pruebas de seguridad en cada categoría de pruebas. El área mayor de pruebas de penetración incluye:
+El Marco de pruebas de penetración (PTF) ofrece una guía práctica y completa sobre pruebas de penetración. También enumera los usos de las herramientas de pruebas de seguridad en cada categoría de pruebas. Las principales áreas de las pruebas de penetración incluyen:
 
-- Huella de Red (Reconocimiento)
-- Descubrimiento y Sondaje
+- Reconocimiento de la red
+- Descubrimiento y sondeo
 - Enumeración
-- Cracking de contraseñas
-- Evaluación de Vulnerabilidades
-- Auditoría AS/400
-- Pruebas Específicas de Bluetooth
-- Pruebas Específicas de Cisco
-- Pruebas Específicas de Citrix
-- Backbone de Red
-- Pruebas Específicas de Servidor
-- Seguridad VoIP
-- Penetración Inalámbrica
-- Seguridad Física
-- Reporte Final - plantilla
+- Descifrado de contraseñas
+- Evaluación de vulnerabilidades
+- Auditoría de AS/400
+- Pruebas específicas de Bluetooth
+- Pruebas específicas de Cisco
+- Pruebas específicas de Citrix
+- Infraestructura troncal de red
+- Pruebas específicas de servidores
+- Seguridad de VoIP
+- Pruebas de penetración inalámbrica
+- Seguridad física
+- Informe final: plantilla
 
-[Marco de Pruebas de Penetración](https://web.archive.org/web/20130925044437/http://www.vulnerabilityassessment.co.uk/Penetration%20Test.html)
+[Marco de pruebas de penetración](https://web.archive.org/web/20130925044437/http://www.vulnerabilityassessment.co.uk/Penetration%20Test.html)
 
-## Guía Técnica para Pruebas y Evaluación de Seguridad de la Información
+## Guía técnica para pruebas y evaluación de la seguridad de la información
 
-La Guía Técnica para Pruebas y Evaluación de Seguridad de la Información (NIST 800-115) fue publicada por NIST, incluye algunas técnicas de evaluación listadas a continuación.
+La Guía técnica para pruebas y evaluación de la seguridad de la información (NIST 800-115), publicada por el NIST, incluye algunas técnicas de evaluación que se enumeran a continuación.
 
-- Técnicas de Revisión
-- Técnicas de Identificación y Análisis de Objetivos
-- Técnicas de Validación de Vulnerabilidades de Objetivos
-- Planificación de Evaluación de Seguridad
-- Ejecución de Evaluación de Seguridad
-- Actividades Post-Pruebas
+- Técnicas de revisión
+- Técnicas de identificación y análisis de objetivos
+- Técnicas de validación de vulnerabilidades de objetivos
+- Planificación de la evaluación de seguridad
+- Ejecución de la evaluación de seguridad
+- Actividades posteriores a las pruebas
 
-El NIST 800-115 puede accederse [aquí](https://csrc.nist.gov/publications/detail/sp/800-115/final)
+Para más detalles, consulte [NIST 800-115](https://csrc.nist.gov/publications/detail/sp/800-115/final).
 
-## Manual de Metodología de Pruebas de Seguridad de Código Abierto
+## Manual de metodología de pruebas de seguridad de código abierto
 
-El Manual de Metodología de Pruebas de Seguridad de Código Abierto (OSSTMM) es una metodología para probar la seguridad operacional de ubicaciones físicas, flujo de trabajo, pruebas de seguridad humana, pruebas de seguridad física, pruebas de seguridad inalámbrica, pruebas de seguridad de telecomunicaciones, pruebas de seguridad de redes de datos y cumplimiento. OSSTMM puede ser referencia de apoyo de ISO 27001 en lugar de una guía de penetración de aplicación técnica o práctica.
+El Manual de metodología de pruebas de seguridad de código abierto (OSSTMM) es una metodología para evaluar la seguridad operativa de ubicaciones físicas, flujos de trabajo, seguridad humana, seguridad física, seguridad inalámbrica, seguridad de las telecomunicaciones, seguridad de las redes de datos y cumplimiento. OSSTMM puede servir como referencia complementaria de ISO 27001, en lugar de como guía práctica o técnica para pruebas de penetración de aplicaciones.
 
-OSSTMM incluye las siguientes secciones clave:
+OSSTMM incluye las siguientes secciones principales:
 
-- Análisis de Seguridad
-- Métricas de Seguridad Operacional
-- Análisis de Confianza
-- Flujo de Trabajo
-- Pruebas de Seguridad Humana
-- Pruebas de Seguridad Física
-- Pruebas de Seguridad Inalámbrica
-- Pruebas de Seguridad de Telecomunicaciones
-- Pruebas de Seguridad de Redes de Datos
-- Regulaciones de Cumplimiento
-- Reporte con el STAR (Informe de Auditoría de Pruebas de Seguridad)
+- Análisis de seguridad
+- Métricas de seguridad operativa
+- Análisis de confianza
+- Flujo de trabajo
+- Pruebas de seguridad humana
+- Pruebas de seguridad física
+- Pruebas de seguridad inalámbrica
+- Pruebas de seguridad de las telecomunicaciones
+- Pruebas de seguridad de redes de datos
+- Normativa de cumplimiento
+- Elaboración de informes con STAR (informe de auditoría de pruebas de seguridad)
 
-[Manual de Metodología de Pruebas de Seguridad de Código Abierto](https://www.isecom.org/OSSTMM.3.pdf)
+[Manual de metodología de pruebas de seguridad de código abierto](https://www.isecom.org/OSSTMM.3.pdf)
 
 ## Referencias
 
-- [Estándar de Seguridad de Datos PCI - Orientación de Pruebas de Penetración](https://www.pcisecuritystandards.org/documents/Penetration-Testing-Guidance-v1_1.pdf)
+- [Estándar de seguridad de datos PCI: orientación sobre pruebas de penetración](https://www.pcisecuritystandards.org/documents/Penetration-Testing-Guidance-v1_1.pdf)
 - [Estándar PTES](http://www.pentest-standard.org/index.php/Main_Page)
-- [Manual de Metodología de Pruebas de Seguridad de Código Abierto (OSSTMM)](https://www.isecom.org/research.html#content5-9d)
-- [Guía Técnica para Pruebas y Evaluación de Seguridad de la Información NIST SP 800-115](https://csrc.nist.gov/publications/detail/sp/800-115/final)
-- [Orientación de Pruebas de Seguridad HIPAA](https://www.hhs.gov/hipaa/for-professionals/security/guidance/cybersecurity/index.html)
-- [Marco de Pruebas de Penetración 0.59 (Archivado)](https://web.archive.org/web/20130925044437/http://www.vulnerabilityassessment.co.uk/Penetration%20Test.html)
-- [Guía de Pruebas de Seguridad Móvil OWASP](https://owasp.org/www-project-mobile-security-testing-guide/)
+- [Manual de metodología de pruebas de seguridad de código abierto (OSSTMM)](https://www.isecom.org/research.html#content5-9d)
+- [Guía técnica para pruebas y evaluación de la seguridad de la información NIST SP 800-115](https://csrc.nist.gov/publications/detail/sp/800-115/final)
+- [Orientación sobre pruebas de seguridad de HIPAA](https://www.hhs.gov/hipaa/for-professionals/security/guidance/cybersecurity/index.html)
+- [Marco de pruebas de penetración 0.59 (archivado)](https://web.archive.org/web/20130925044437/http://www.vulnerabilityassessment.co.uk/Penetration%20Test.html)
+- [Guía de pruebas de seguridad móvil de OWASP](https://mas.owasp.org/)
 - [Kali Linux](https://www.kali.org/)
-- [Suplemento de Información: Requisito 11.3 Pruebas de Penetración](https://www.pcisecuritystandards.org/pdfs/infosupp_11_3_penetration_testing.pdf)
+- [Suplemento informativo: requisito 11.3, pruebas de penetración](https://www.pcisecuritystandards.org/pdfs/infosupp_11_3_penetration_testing.pdf)

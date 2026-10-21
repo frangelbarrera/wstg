@@ -1,13 +1,13 @@
-# Appendix
+# Apéndice
 
-Appendix A. [Testing Tools Resource](A-Testing_Tools_Resource.md)
+Apéndice A. [Historial](A-History.md)
 
-Appendix B. [Suggested Reading](B-Suggested_Reading.md)
+Apéndice B. [Recursos sobre herramientas de pruebas](B-Testing_Tools_Resource.md)
 
-Appendix C. [Fuzzing](C-Fuzzing.md)
+Apéndice C. [Lecturas recomendadas](C-Suggested_Reading.md)
 
-Appendix D. [Encoded Injection](D-Encoded_Injection.md)
+Apéndice D. [Fuzzing](D-Fuzzing.md)
 
-Appendix E. [History](E-History.md)
+Apéndice E. [Inyección codificada](E-Encoded_Injection.md)
 
-Appendix F. [Leveraging Dev Tools](F-Leveraging_Dev_Tools.md)
+Apéndice F. [Uso de herramientas de desarrollo](F-Leveraging_Dev_Tools.md)

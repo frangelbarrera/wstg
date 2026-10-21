@@ -1,56 +1,52 @@
-# Prefacio
+# 0. Prefacio
 
-El problema del software inseguro es quizás el desafío técnico más importante de nuestro tiempo. El aumento dramático de aplicaciones web habilitando negocios, redes sociales, etc. ha solo compuesto los requisitos para establecer un enfoque robusto para escribir y asegurar nuestro internet, aplicaciones web y datos.
-
-En el Proyecto de Seguridad de Aplicaciones Web Abierto Mundial® (OWASP®), estamos intentando hacer del mundo un lugar donde el software inseguro sea la anomalía, no la norma. La Guía de Pruebas de OWASP tiene un papel importante que jugar en resolver este serio problema. Es vitalmente importante que nuestro enfoque para probar software en busca de problemas de seguridad se base en los principios de ingeniería y ciencia. Necesitamos un enfoque consistente, repetible y definido para probar aplicaciones web. Un mundo sin algunos estándares mínimos en términos de ingeniería y tecnología es un mundo en caos.
-
-Va sin decir que no se puede construir una aplicación segura sin realizar pruebas de seguridad en ella. Las pruebas son parte de un enfoque más amplio para construir un sistema seguro. Muchas organizaciones de desarrollo de software no incluyen pruebas de seguridad como parte de su proceso estándar de desarrollo de software. Lo que es aún peor es que muchos proveedores de seguridad entregan pruebas con varios grados de calidad y rigor.
-
-Las pruebas de seguridad, por sí mismas, no son una medida particularmente buena de cuán segura es una aplicación, porque hay un número infinito de maneras en que un atacante podría ser capaz de hacer que una aplicación falle, y simplemente no es posible probarlas todas. No podemos hackearnos a seguridad ya que solo tenemos un tiempo limitado para probar y defender donde un atacante no tiene tales restricciones.
-
-En conjunto con otros proyectos de OWASP tales como la Guía de Revisión de Código, la Guía de Desarrollo y herramientas tales como [ZAP](https://www.zaproxy.org/), este es un gran comienzo hacia la construcción y mantenimiento de aplicaciones seguras. Esta Guía de Pruebas te mostrará cómo verificar la seguridad de tu aplicación en ejecución. Recomiendo altamente usar estas guías como parte de tus iniciativas de seguridad de aplicaciones.
+*Por confirmar.*
 
 ## ¿Por qué OWASP?
 
-Crear una guía como esta es una empresa enorme, requiriendo la experiencia de cientos de personas alrededor del mundo. Hay muchas maneras diferentes de probar en busca de fallos de seguridad y esta guía captura el consenso de los principales expertos sobre cómo realizar esta prueba rápidamente, con precisión y eficiencia. OWASP da a personas de seguridad con ideas afines la capacidad de trabajar juntas y formar un enfoque de práctica líder a un problema de seguridad.
+Open Worldwide Application Security Project® (OWASP®) es una fundación sin fines de lucro cuya visión es que no haya más software inseguro. Su misión es ser la comunidad abierta global que impulsa el desarrollo de software seguro mediante la educación, las herramientas y la colaboración.
 
-La importancia de tener esta guía disponible de manera completamente libre y abierta es importante para la misión de la fundación. Da a cualquiera la capacidad de entender las técnicas usadas para probar en busca de problemas comunes de seguridad. La seguridad no debería ser un arte oscuro o secreto cerrado que solo unos pocos puedan practicar. Debería estar abierta a todos y no exclusiva para profesionales de seguridad sino también QA, Desarrolladores y Gerentes Técnicos. El proyecto para construir esta guía mantiene esta experiencia en las manos de las personas que la necesitan - tú, yo y cualquiera que esté involucrado en construir software.
+Crear una guía como esta requiere la experiencia de cientos de personas de todo el mundo. Hay muchas maneras de probar si existen fallos de seguridad, y esta guía intenta recoger el consenso sobre cómo realizar esas pruebas con rapidez, precisión y eficiencia. OWASP reúne a profesionales para desarrollar un enfoque basado en las mejores prácticas para abordar los problemas de seguridad del software, como comunidad independiente de proveedores y no como proveedor comercial ni organismo regulador.
 
-Esta guía debe hacer su camino a las manos de desarrolladores y testers de software. No hay suficientes expertos de seguridad de aplicaciones en el mundo para hacer una abolladura significativa en el problema general. La responsabilidad inicial para la seguridad de aplicaciones debe caer sobre los hombros de los desarrolladores porque ellos escriben el código. No debería ser una sorpresa que los desarrolladores no estén produciendo código seguro si no están probando para ello o considerando los tipos de bugs que introducen vulnerabilidad.
+Ofrecer esta guía de forma totalmente gratuita y abierta contribuye a esa misión. Cualquiera puede aprender las técnicas que se utilizan para probar problemas de seguridad comunes. La seguridad no debería ser un arte oscuro ni un secreto cerrado. Debería estar al alcance de los profesionales de seguridad, así como de desarrolladores, equipos de QA y responsables técnicos. Este proyecto mantiene esos conocimientos en manos de quienes crean y publican software.
 
-Mantener esta información actualizada es un aspecto crítico de este proyecto de guía. Al adoptar el enfoque wiki, la comunidad de OWASP puede evolucionar y expandir la información en esta guía para mantener el ritmo con el panorama de amenazas de seguridad de aplicaciones de movimiento rápido.
+Esta guía debe llegar a desarrolladores y testers de software. No hay suficientes especialistas en seguridad de aplicaciones para resolver el problema por sí solos. Gran parte de la responsabilidad de la seguridad de las aplicaciones recae en los desarrolladores, porque son quienes escriben el código. No se puede esperar que los desarrolladores produzcan software seguro si nunca prueban las clases de errores que introducen vulnerabilidades.
 
-Esta Guía es un gran testamento a la pasión y energía que nuestros miembros y voluntarios del proyecto tienen por este tema. Ciertamente ayudará a cambiar el mundo una línea de código a la vez.
+Es fundamental mantener esta información actualizada. La comunidad de OWASP mantiene y amplía esta guía mediante Issues y Pull Requests en [GitHub](https://github.com/OWASP/wstg/), para que pueda seguir el ritmo del panorama de amenazas a la seguridad de las aplicaciones.
 
-## Adaptación y Priorización
+Esta guía es testimonio de la pasión y la energía de los miembros de OWASP y de quienes colaboran como voluntarios en el proyecto. Ayuda a cambiar el mundo, una línea de código a la vez.
 
-Deberías adoptar esta guía en tu organización. Podrías necesitar adaptar la información para que coincida con las tecnologías, procesos y estructura organizacional de tu organización.
+## Adaptación y priorización
 
-En general hay varios roles diferentes dentro de las organizaciones que podrían usar esta guía:
+Adopta esta guía en tu organización. Adapta el material a tus tecnologías, procesos y estructura.
 
-- Los desarrolladores deberían usar esta guía para asegurar que están produciendo código seguro. Estas pruebas deberían ser parte de los procedimientos normales de pruebas de código y unitarias.
-- Los testers de software y QA deberían usar esta guía para expandir el conjunto de casos de prueba que aplican a aplicaciones. Atrapar estas vulnerabilidades temprano ahorra considerable tiempo y esfuerzo más tarde.
-- Los especialistas de seguridad deberían usar esta guía en combinación con otras técnicas como una manera de verificar que no se hayan perdido agujeros de seguridad en una aplicación.
-- Los Gerentes de Proyecto deberían considerar la razón por la que esta guía existe y que los problemas de seguridad se manifiestan vía bugs en código y diseño.
+Hay varios roles que suelen utilizar esta guía:
 
-Lo más importante a recordar al realizar pruebas de seguridad es repriorizar continuamente. Hay maneras infinitas en que una aplicación podría fallar, y las organizaciones siempre tienen tiempo y recursos limitados de prueba. Asegurarse de que el tiempo y los recursos se gasten sabiamente. Intentar enfocarse en los agujeros de seguridad que son un riesgo real para tu negocio. Intentar contextualizar el riesgo en términos de la aplicación y sus casos de uso.
+- Los desarrolladores deberían usar esta guía para ayudar a producir código seguro. Estas pruebas deberían formar parte de los procedimientos habituales de pruebas de código y pruebas unitarias.
+- Los testers de software y los equipos de QA deberían usar esta guía para ampliar los casos de prueba que aplican. Detectar estas vulnerabilidades a tiempo ahorra mucho tiempo, esfuerzo y dinero más adelante.
+- Los especialistas en seguridad deberían usar esta guía junto con otras técnicas para verificar que no se hayan pasado por alto problemas de seguridad.
+- Los gerentes de proyecto deberían tratar los problemas de seguridad como errores en el código y el diseño, y planificar en consecuencia.
 
-Esta guía es mejor vista como un conjunto de técnicas que puedes usar para encontrar diferentes tipos de agujeros de seguridad. Pero no todas las técnicas son igualmente importantes. Intentar evitar usar la guía como una lista de verificación, nuevas vulnerabilidades siempre se están manifestando y ninguna guía puede ser una lista exhaustiva de "cosas para probar", sino más bien un gran lugar para comenzar.
+Al realizar pruebas de seguridad, vuelve a establecer las prioridades continuamente. Una aplicación puede fallar de infinitas maneras, y las organizaciones siempre disponen de tiempo y recursos limitados para las pruebas. Dedica ese tiempo a los problemas de seguridad que representen un riesgo real para la empresa. Contextualiza el riesgo en función de la aplicación y sus casos de uso.
 
-## El Papel de Herramientas Automatizadas
+Considera esta guía como un conjunto de técnicas para encontrar distintos tipos de problemas de seguridad. No todas las técnicas son igual de importantes para todos los sistemas. Evita tratar la guía como una lista de verificación. Siguen apareciendo nuevas vulnerabilidades, y ninguna guía puede incluir una lista exhaustiva de todo lo que se debe probar. Úsala como un buen punto de partida.
 
-Hay un número de compañías vendiendo herramientas automatizadas de análisis y prueba de seguridad. Recordar las limitaciones de estas herramientas para que puedas usarlas para lo que son buenas. Como Michael Howard lo puso en la Conferencia OWASP AppSec 2006 en Seattle, "¡Las herramientas no hacen el software seguro! Ellas ayudan a escalar el proceso y ayudan a imponer políticas."
+## El papel de las herramientas automatizadas
 
-Lo más importante, estas herramientas son genéricas - lo que significa que no están diseñadas para tu código personalizado, sino para aplicaciones en general. Eso significa que mientras pueden encontrar algunos problemas genéricos, no tienen suficiente conocimiento de tu aplicación para permitirles detectar la mayoría de los fallos. En mi experiencia, los problemas de seguridad más serios son los que no son genéricos, sino profundamente entrelazados en tu lógica de negocio y diseño de aplicación personalizado.
+Las herramientas automatizadas de seguridad, como las de pruebas dinámicas de seguridad de aplicaciones (DAST), pruebas estáticas de seguridad de aplicaciones (SAST) y análisis de composición de software (SCA), ayudan a ampliar la escala de las pruebas y a encontrar muchas clases de problemas. Úsalas para aquello que hacen bien: ofrecer una cobertura amplia, realizar comprobaciones repetibles y hacer cumplir las políticas de referencia. Las herramientas abiertas del ecosistema, como [ZAP](https://www.zaproxy.org/), pueden ayudar en esta labor sin atar a los equipos a un único proveedor.
 
-Estas herramientas también pueden ser muy útiles, ya que encuentran muchos problemas potenciales. Mientras que ejecutar las herramientas no toma mucho tiempo, cada uno de los problemas potenciales toma tiempo para investigar y verificar. Si la meta es encontrar y eliminar los fallos más serios lo más rápido posible, considerar si tu tiempo se gasta mejor con herramientas automatizadas o con las técnicas descritas en esta guía. Aún así, estas herramientas son ciertamente parte de un programa de seguridad de aplicaciones bien equilibrado. Usadas sabiamente, pueden apoyar tus procesos generales para producir código más seguro.
+Estas herramientas siguen siendo genéricas. Están diseñadas para aplicaciones en general, no para tu código personalizado ni para tus reglas de negocio. Pueden encontrar muchos problemas comunes, pero a menudo carecen del contexto específico de la aplicación necesario para detectar fallos más profundos. Los problemas más graves suelen estar estrechamente relacionados con la lógica de negocio y el diseño personalizado, y es ahí donde más importan las técnicas de esta guía.
 
-## Llamado a la Acción
+Por lo general, ejecutar una herramienta es rápido. Investigar y verificar cada hallazgo lleva tiempo. Si el objetivo es encontrar y eliminar los fallos más graves lo más rápido posible, combina el análisis automatizado con las técnicas manuales y semiautomatizadas descritas aquí. Los programas de seguridad de aplicaciones equilibrados utilizan ambos: herramientas para una cobertura amplia y esta guía para profundizar y ejercer el criterio.
 
-Si estás construyendo, diseñando o probando software, te alentamos fuertemente a familiarizarte con la guía de pruebas de seguridad en este documento. Es una gran hoja de ruta para probar los problemas más comunes que las aplicaciones enfrentan hoy, pero no es exhaustiva. Si encuentras errores, por favor añade una nota a la página de discusión o haz el cambio tú mismo. Estarás ayudando a miles de otros que usan esta guía.
+## Llamado a la acción
 
-Por favor considera [unirte a nosotros](https://owasp.org/membership/) como miembro individual o corporativo para que podamos continuar produciendo materiales como esta guía de pruebas y todos los otros grandes proyectos en OWASP.
+Si desarrollas, diseñas o pruebas software, familiarízate con las directrices de pruebas de seguridad de este documento. Es una hoja de ruta para probar muchos de los problemas que afectan a las aplicaciones actuales, pero no es exhaustiva. Si encuentras errores o lagunas, abre un Issue o envía un Pull Request en el [repositorio de WSTG en GitHub](https://github.com/OWASP/wstg/). Así ayudarás a miles de personas que utilizan esta guía.
 
-Gracias a todos los contribuyentes pasados y futuros de esta guía, tu trabajo ayudará a hacer las aplicaciones en todo el mundo más seguras.
+Considera [unirte a nosotros](https://owasp.org/membership/) como miembro individual o corporativo para que podamos seguir elaborando materiales como esta guía de pruebas y los demás proyectos de OWASP.
 
-Open Worldwide Application Security Project y OWASP son marcas registradas de la Fundación OWASP, Inc.
+Gracias a todas las personas que han contribuido y contribuirán a esta guía. Su trabajo ayuda a que las aplicaciones de todo el mundo sean más seguras.
+
+---
+
+Open Worldwide Application Security Project y OWASP son marcas registradas de OWASP Foundation, Inc.

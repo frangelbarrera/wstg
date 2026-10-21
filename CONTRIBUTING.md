@@ -84,7 +84,7 @@ Para aumentar las chances de que tu PR sea fusionada, por favor asegura que:
 3. Tu escritura sigue los [materiales de plantilla de artículo](template) y [guía de estilo](style_guide.md).
 4. Tus snippets de código son correctos, bien probados, y comentados donde sea necesario para comprensión.
 
-Una vez que la PR esté completa, la fusionaremos! En ese punto, puedes querer agregarte a [la lista del proyecto de autores, revisores o editores](document/1-Frontispiece/README.md).
+Una vez que la PR esté completa, la fusionaremos! En ese punto, puedes querer agregarte a [la lista del proyecto de autores, revisores o editores](document/1-About/README.md).
 
 ## Cómo Configurar Tu Entorno de Contribuidor
 

@@ -62,7 +62,7 @@ Este proyecto solo es posible gracias al trabajo de muchos voluntarios dedicados
 
 Para aprender cómo contribuir exitosamente, lee la [guía de contribución](CONTRIBUTING.md).
 
-Los contribuyentes exitosos aparecen en [la lista de autores, revisores o editores del proyecto](document/1-Frontispiece/README.md).
+Los contribuyentes exitosos aparecen en [la lista de autores, revisores o editores del proyecto](document/1-About/README.md).
 
 ## Chatea Con Nosotros
 
